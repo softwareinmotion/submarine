@@ -3,8 +3,8 @@ class Issue < ActiveRecord::Base
   
   validates_presence_of :name, :type
 
-  def self.children_types
-    [['Bug', :bug], ['Task', :task], ['UserStory', :user_story]]
+  def self.children_type_names
+    ['Bug', 'Task', 'UserStory']
   end
 
   def formatted_story_points
