@@ -9,4 +9,6 @@ de:
         description: 'Beschreibung'
         story_points: 'Story Points'
         type: 'Typ'
+  issue:
+    new: 'Eintrag erstellen'
         
