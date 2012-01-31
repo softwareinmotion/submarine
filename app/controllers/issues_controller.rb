@@ -9,12 +9,12 @@ class IssuesController < ApplicationController
 
   def new
     @issue = Issue.new
-    prepare_projects
+    prepare_form
   end
 
   def edit
     @issue = Issue.find(params[:id])
-    prepare_projects
+    prepare_form
   end
 
   def create
@@ -23,6 +23,7 @@ class IssuesController < ApplicationController
     if @issue.save
       redirect_to @issue, notice: 'Issue was successfully created.'
     else
+      prepare_form
       render action: "new"
     end
   end
@@ -33,6 +34,7 @@ class IssuesController < ApplicationController
     if @issue.update_attributes(params[:issue])
       redirect_to @issue, notice: 'Issue was successfully updated.'
     else
+      prepare_form
       render action: "edit"
     end
   end
@@ -45,9 +47,10 @@ class IssuesController < ApplicationController
 
   private
 
-  def prepare_projects
+  def prepare_form
     @projects = Project.all(:order => 'name ASC').collect do |project|
       [project.name, project.id]
     end
+    @types = Issue.children_types
   end
 end
