@@ -1,5 +1,11 @@
 <h2>Backlog</h2>
 
+<%= link_to new_issue_path, :class => :button do %>
+<%= image_tag("/assets/add.png") %> <%= t 'issue.new' %>
+<% end %>
+
+<br>
+
 <table>
   <tr>
     <th><%= t 'activerecord.attributes.issue.id' %></th>
@@ -13,17 +19,17 @@
     <td>#<%= issue.id %></td>
     <td><%= issue.type %></td>
     <td><%= issue.name %></td>
-    <td><%= issue.story_points %></td>
-    <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
-    <td>Aufklappen<td>
+    <td><%= issue.formatted_story_points %></td>
+    <td>
+      <%= link_to edit_issue_path(issue) do %>
+      <%= image_tag("/assets/pencil.png") %>
+      <% end %>
+    </td>
+    <td><%= image_tag("/assets/resultset_more.png") %><td>
   </tr>
   <tr >
-   <td colspan="6" style="display: none;"><%= issue.description %></td>
+   <td colspan="6" style="color: gray; font-size: 8pt;"><%= issue.description %></td>
   </tr>
 
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Issue', new_issue_path %>
