@@ -18,7 +18,9 @@ class IssuesController < ApplicationController
   end
 
   def create
-    @issue = Issue.new(params[:issue])
+    type = params[:issue][:type]
+    model_class = Kernel.const_get type
+    @issue = model_class.new(params[:issue])
 
     if @issue.save
       redirect_to @issue, notice: 'Issue was successfully created.'
@@ -51,6 +53,9 @@ class IssuesController < ApplicationController
     @projects = Project.all(:order => 'name ASC').collect do |project|
       [project.name, project.id]
     end
-    @types = Issue.children_types
+    a_number = 0
+    @types = Issue.children_type_names.map do |name|
+      [name, name]
+    end
   end
 end
