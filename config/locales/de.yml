@@ -9,6 +9,7 @@ de:
         description: 'Beschreibung'
         story_points: 'Story Points'
         type: 'Typ'
+        project_id: 'Produkt'
   issue:
     new: 'Eintrag erstellen'
         

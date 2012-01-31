@@ -25,11 +25,11 @@
   </div>
   <div class="field">
     <%= f.label :type %><br />
-    <%= f.text_field :type %>
+    <%= f.select :type, @types %>
   </div>
   <div class="field">
-    <%= f.label :project %><br />
-    <%= f.select :project, @projects %>
+    <%= f.label :project_id %><br />
+    <%= f.select :project_id, @projects %>
   </div>
   <div class="actions">
     <%= f.submit do %>
