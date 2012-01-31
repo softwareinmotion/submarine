@@ -1,0 +1,3 @@
+class Bug < Issue
+
+end
