@@ -1,0 +1,12 @@
+de:
+  save: 'Speichern'
+  cancel: 'Abbrechen'
+  activerecord:
+    attributes:
+      issue:
+        id: 'Nr.'
+        name: 'Name'
+        description: 'Beschreibung'
+        story_points: 'Story Points'
+        type: 'Typ'
+        

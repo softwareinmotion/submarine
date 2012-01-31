@@ -1,0 +1,3 @@
+class UserStory < Issue
+
+end
