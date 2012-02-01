@@ -25,7 +25,7 @@ class IssuesController < ApplicationController
     end
 
     if @issue && @issue.save
-      redirect_to @issue, notice: 'Issue was successfully created.'
+      redirect_to issues_path, notice: 'Issue was successfully created.'
     else
       prepare_form
       render action: "new"
@@ -36,7 +36,7 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
 
     if @issue.update_attributes(params[:issue])
-      redirect_to @issue, notice: 'Issue was successfully updated.'
+      redirect_to issues_path, notice: 'Issue was successfully updated.'
     else
       prepare_form
       render action: "edit"
