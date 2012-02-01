@@ -12,4 +12,5 @@ de:
         project_id: 'Produkt'
   issue:
     new: 'Eintrag erstellen'
+    edit: 'Eintrag bearbeiten'
         

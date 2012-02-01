@@ -19,10 +19,12 @@ class IssuesController < ApplicationController
 
   def create
     type = params[:issue][:type]
-    model_class = Kernel.const_get type
-    @issue = model_class.new(params[:issue])
+    if Issue.children_type_names.include? type
+      model_class = Kernel.const_get type 
+      @issue = model_class.new(params[:issue])
+    end
 
-    if @issue.save
+    if @issue && @issue.save
       redirect_to @issue, notice: 'Issue was successfully created.'
     else
       prepare_form

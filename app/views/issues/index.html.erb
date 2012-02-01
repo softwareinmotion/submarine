@@ -1,7 +1,7 @@
 <h2>Backlog</h2>
 
 <%= link_to new_issue_path, :class => :button do %>
-<%= image_tag("/assets/add.png") %> <%= t 'issue.new' %>
+<%= image_tag("add.png") %> <%= t 'issue.new' %>
 <% end %>
 
 <br>
@@ -11,10 +11,10 @@
     <th><%= t 'activerecord.attributes.issue.id' %></th>
     <th><%= t 'activerecord.attributes.issue.type' %></th>
     <th colspan="2"><%= t 'activerecord.attributes.issue.name' %></th>
-    <th colspan="2"><%= t 'activerecord.attributes.issue.story_points' %></th>
+    <th colspan="1"><%= t 'activerecord.attributes.issue.story_points' %></th>
   </tr>
 
-<% @issues.each do |issue| %>
+  <% @issues.each do |issue| %>
   <tr>
     <td>#<%= issue.id %></td>
     <td><%= issue.type %></td>
@@ -22,14 +22,13 @@
     <td><%= issue.formatted_story_points %></td>
     <td>
       <%= link_to edit_issue_path(issue) do %>
-      <%= image_tag("/assets/pencil.png") %>
+      <%= image_tag("pencil.png") %>
       <% end %>
     </td>
-    <td><%= image_tag("/assets/resultset_more.png") %><td>
   </tr>
-  <tr >
-   <td colspan="6" style="color: gray; font-size: 8pt;"><%= issue.description %></td>
+  <tr class="description">
+    <td></td>
+    <td colspan="4" style="color: gray; font-size: 8pt;"><%= issue.description %></td>
   </tr>
-
-<% end %>
+  <% end %>
 </table>
