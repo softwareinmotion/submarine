@@ -11,8 +11,11 @@ a {
   text-decoration: none;
 }
 a:hover {
-  background-color: #6e8fd4;
+  background-color: #009d91;
 }
 h1 > a, h1 > a:visited {
   color: #1144AA;
+}
+h1 > a:hover {
+  background-color: white;
 }
