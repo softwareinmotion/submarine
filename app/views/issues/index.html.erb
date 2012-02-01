@@ -10,14 +10,17 @@
   <tr>
     <th><%= t 'activerecord.attributes.issue.id' %></th>
     <th><%= t 'activerecord.attributes.issue.type' %></th>
-    <th colspan="2"><%= t 'activerecord.attributes.issue.name' %></th>
-    <th colspan="1"><%= t 'activerecord.attributes.issue.story_points' %></th>
+    <th><%= t 'activerecord.attributes.issue.project_id' %></th>
+    <th><%= t 'activerecord.attributes.issue.name' %></th>
+    <th><%= t 'activerecord.attributes.issue.story_points' %></th>
+    <th></th>
   </tr>
 
   <% @issues.each do |issue| %>
   <tr>
     <td>#<%= issue.id %></td>
     <td><%= issue.type %></td>
+    <td><%= issue.project.name %></td>
     <td><%= issue.name %></td>
     <td><%= issue.formatted_story_points %></td>
     <td>
@@ -28,7 +31,7 @@
   </tr>
   <tr class="description">
     <td></td>
-    <td colspan="4" style="color: gray; font-size: 8pt;"><%= issue.description %></td>
+    <td colspan="5"><%= issue.description %></td>
   </tr>
   <% end %>
 </table>

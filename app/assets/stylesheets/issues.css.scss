@@ -1,3 +1,18 @@
-// Place all the styles related to the Issues controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/* http://colorschemedesigner.com/#3J31Tw0w0w0w0 */
+th, td {
+  padding-right: 2em;
+  text-align: left;
+}
+tr.description > td {
+  color: gray;
+  font-size: 8pt;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  background-color: #6e8fd4;
+}
+h1 > a, h1 > a:visited {
+  color: #1144AA;
+}
