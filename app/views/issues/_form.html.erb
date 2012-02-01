@@ -32,8 +32,6 @@
     <%= f.select :project_id, @projects %>
   </div>
   <div class="actions">
-    <%= f.submit do %>
-    <%= t 'save' %>
-    <% end %>
+    <%= f.submit t('save') %>
   </div>
 <% end %>
