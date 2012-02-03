@@ -23,7 +23,6 @@ a:visited {
 a:hover {
   background-color: #009d91;
   color: white;
-  padding: 3px;
 }
 h1 > a:hover {
   background-color: white;
