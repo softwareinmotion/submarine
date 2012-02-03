@@ -8,6 +8,10 @@ class Issue < ActiveRecord::Base
   end
 
   def formatted_story_points
-    self.story_points == 0.5 ? '1/2' : story_points.to_i.to_s
+    if self.story_points
+      self.story_points == 0.5 ? '1/2' : story_points.to_i.to_s
+    else
+      ''
+    end
   end
 end

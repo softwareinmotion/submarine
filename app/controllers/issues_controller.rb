@@ -25,7 +25,7 @@ class IssuesController < ApplicationController
     end
 
     if @issue && @issue.save
-      redirect_to issues_path, notice: 'Issue was successfully created.'
+      redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
     else
       prepare_form
       render action: "new"
@@ -33,11 +33,22 @@ class IssuesController < ApplicationController
   end
 
   def update
-    @issue = Issue.find(params[:id])
+    types = Issue.children_type_names
+    @issue = nil
+    types.each do |t|
+      @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
+      if params[@type.to_sym]
+        @issue = Issue.find(params[:id])
+        new_type = params[@type.to_sym].delete :type
+        @issue[:type] = new_type
+        break
+      end
+    end
 
-    if @issue.update_attributes(params[:issue])
-      redirect_to issues_path, notice: 'Issue was successfully updated.'
+    if @issue && @issue.update_attributes(params[@type.to_sym])
+      redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
     else
+      @issue = Issue.find(params[:id])
       prepare_form
       render action: "edit"
     end
