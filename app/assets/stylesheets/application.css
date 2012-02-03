@@ -5,3 +5,27 @@
  *= require_self
  *= require_tree . 
 */
+#flashnotice {
+  color: #009D91;
+  border: 1px solid #009D91;
+  min-width: 100px;
+  width: 450px;
+}
+a {
+  text-decoration: none;
+}
+h1 > a, h1 > a:visited {
+  color: #1144AA;
+}
+a:visited {
+  color: #00665E;
+}
+a:hover {
+  background-color: #009d91;
+  color: white;
+  padding: 3px;
+}
+h1 > a:hover {
+  background-color: white;
+  padding: 0;
+}

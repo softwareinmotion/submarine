@@ -7,7 +7,9 @@
 </head>
 <body>
 <h1><a href='/'>Submarine</a></h1>
-
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg, id: "flash#{name}" %>
+  <% end %>
 <%= yield %>
 
 </body>
