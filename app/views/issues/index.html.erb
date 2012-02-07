@@ -6,35 +6,42 @@
 
 <br>
 
-<table>
-  <tr>
-    <th><%= t 'activerecord.attributes.issue.id' %></th>
-    <th><%= t 'activerecord.attributes.issue.type' %></th>
-    <th><%= t 'activerecord.attributes.issue.project_id' %></th>
-    <th><%= t 'activerecord.attributes.issue.name' %></th>
-    <th><%= t 'activerecord.attributes.issue.story_points' %></th>
-    <th></th>
-  </tr>
-
-  <% @issues.each do |issue| %>
-  <tr>
-    <td>#<%= issue.id %></td>
-    <td><%= issue.type %></td>
-    <td><%= issue.project.name %></td>
-    <td><%= issue.name %></td>
-    <td><%= issue.formatted_story_points %></td>
-    <td>
-      <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
-      <%= image_tag("pencil.png") %>
-      <% end %>
-      <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
-      <%= image_tag("cross.png") %>
-      <% end %>
-    </td>
-  </tr>
-  <tr class="description">
-    <td></td>
-    <td colspan="5"><%= issue.description %></td>
-  </tr>
-  <% end %>
+<table id="issues_table">
+  <thead>
+    <tr id="issues_headings">
+      <th><%= t 'activerecord.attributes.issue.id' %></th>
+      <th><%= t 'activerecord.attributes.issue.type' %></th>
+      <th><%= t 'activerecord.attributes.issue.project_id' %></th>
+      <th><%= t 'activerecord.attributes.issue.name' %></th>
+      <th><%= t 'activerecord.attributes.issue.story_points' %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issues.each do |issue| %>
+    <tr data-id="<%= issue.id %>" id="#<%= issue.id %>">
+      <td>#<%= issue.id %></td>
+      <td><%= issue.type -%>
+        <div>
+          <div class="description short"><%= issue.description %></div>
+        </div>
+      </td>
+      <td><%= issue.project.name %></td>
+      <td><%= issue.name %></td>
+      <td><%= issue.formatted_story_points %></td>
+      <td>
+        <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
+        <%= image_tag("pencil.png") %>
+        <% end %>
+        <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
+        <%= image_tag("cross.png") %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
 </table>
+<script type="text/javascript">
+SUBMARINE.changeOrderURL = "<%= change_order_path %>";
+SUBMARINE.messages.save_failed = '<%= t 'issue.save_failed' %>';
+</script>

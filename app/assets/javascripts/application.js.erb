@@ -1,0 +1,42 @@
+// This is a manifest file that'll be compiled into including all the files listed below.
+// Add new JavaScript/Coffee code in separate files in this directory and they'll automatically
+// be included in the compiled file accessible from http://example.com/assets/application.js
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
+//
+//= require jquery
+//= require jquery_ujs
+//= require jquery.tablednd
+//= require_self
+
+SUBMARINE = {
+  changeOrderHandler: function(table, row){
+    var data = { moved_issue_id: $(row).attr("data-id") };
+    data.predecessor_id = $(row).prev() && $(row).prev().attr("data-id");
+    $.ajax({
+      type: 'POST',
+      url: SUBMARINE.changeOrderURL,
+      data: data,
+      error: function(){window.alert(SUBMARINE.messages.save_failed)}    
+    })
+  },
+  toggleDescription: function(event){
+    if($(this).hasClass("short")){
+      $(this).removeClass("short");
+      var div_height = $(this).height();
+      $(this).parents("tr").find("td").css("height",div_height+15);
+    } else {
+      $(this).addClass("short").parents("tr").find("td").css("height", "auto" );
+    }
+  },
+  messages: {}
+}
+
+$(document).ready(function(){
+  $("body > table > tbody").tableDnD({
+    onDrop: SUBMARINE.changeOrderHandler,
+    onDragClass: 'dragging'
+  });
+  $("div.description").bind("click", SUBMARINE.toggleDescription);
+});
+
