@@ -1,9 +1,29 @@
 /* http://colorschemedesigner.com/#3J31Tw0w0w0w0 */
+table {
+  border-collapse: collapse;
+}
 th, td {
+  padding: 5px;
   padding-right: 2em;
   text-align: left;
+  padding-bottom: 20px;
+  max-width: 300px;
+  vertical-align: top;
+  div {
+    position: relative;
+  }
 }
-tr.description > td {
+div.description {
   color: gray;
   font-size: 8pt;
+  position: absolute;
+  width: 400px; 
+  padding: 5px;
+}
+div.short {
+  height: 18px;
+  overflow: hidden;
+}
+table .dragging {
+  background-color: #eee;
 }

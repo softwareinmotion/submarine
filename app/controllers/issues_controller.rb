@@ -1,6 +1,11 @@
 class IssuesController < ApplicationController
   def index
-    @issues = Issue.all
+    issue = Issue.find_by_predecessor_id nil
+    @issues = [issue]
+    while issue.descendant do
+      issue = issue.descendant
+      @issues << issue
+    end 
   end
 
   def show
@@ -58,6 +63,12 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
     @issue.destroy
     redirect_to issues_url
+  end
+
+  def change_order
+    moved_issue = Issue.find params[:moved_issue_id]
+    moved_issue.reload.pin_after params[:predecessor_id]
+    render :nothing => true
   end
 
   private
