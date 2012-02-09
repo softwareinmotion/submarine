@@ -75,7 +75,7 @@ describe Issue do
   end
   
   describe '#close_gap' do
-    it 'should ' do 
+    it 'should delete an issue and close the gap if the first issue of the list is deleted' do 
       issue3 = Factory.create :issue, type: "Task"
       issue2 = Factory.create :issue, type: "Task"
       issue1 = Factory.create :issue, type: "Task"
@@ -84,8 +84,31 @@ describe Issue do
       
       issue3.reload.predecessor_id.should == issue2.id
       issue2.reload.predecessor_id.should be_nil
-      issue1.reload.should be_nil
+      Issue.exists?(issue1).should be_false
+    end
+
+    it 'should delete an issue and close the gap if the last issue of the list is deleted' do 
+      issue3 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task"
+      issue1 = Factory.create :issue, type: "Task"
+      
+      issue3.reload.destroy
+      
+      issue1.reload.predecessor_id.should be_nil
+      issue2.reload.predecessor_id.should == issue1.id
+      Issue.exists?(issue3).should be_false
+    end
+
+    it 'should delete an issue and close the gap if an issue from the middle of the list is deleted' do 
+      issue3 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task"
+      issue1 = Factory.create :issue, type: "Task"
+      
+      issue2.reload.destroy
+      
+      issue1.reload.predecessor_id.should be_nil
+      issue3.reload.predecessor_id.should == issue1.id
+      Issue.exists?(issue2).should be_false
     end
   end
-
 end

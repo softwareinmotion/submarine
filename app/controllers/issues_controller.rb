@@ -1,11 +1,14 @@
 class IssuesController < ApplicationController
   def index
     issue = Issue.find_by_predecessor_id nil
-    @issues = [issue]
-    while issue.descendant do
-      issue = issue.descendant
-      @issues << issue
-    end 
+    @issues = []
+    if issue
+    @issues << issue
+      while issue.descendant do
+        issue = issue.descendant
+        @issues << issue
+      end
+    end
   end
 
   def show
