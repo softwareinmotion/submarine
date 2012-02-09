@@ -26,10 +26,23 @@ class IssuesController < ApplicationController
   end
 
   def create
-    type = params[:issue][:type]
-    if Issue.children_type_names.include? type
-      model_class = Kernel.const_get type 
-      @issue = model_class.new(params[:issue])
+    if params[:issue]
+      type = params[:issue][:type]
+      if Issue.children_type_names.include? type
+        model_class = Kernel.const_get type 
+        @issue = model_class.new(params[:issue])
+      end
+    else
+      types = Issue.children_type_names
+      @issue = nil
+      types.each do |t|
+        @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
+        if params[@type.to_sym]
+          model_class = Kernel.const_get t
+          @issue = model_class.new(params[@type.to_sym])
+          break
+        end
+      end
     end
 
     if @issue && @issue.save
