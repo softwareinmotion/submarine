@@ -73,5 +73,19 @@ describe Issue do
       issue3.reload.predecessor_id.should == issue2.id
     end
   end
+  
+  describe '#close_gap' do
+    it 'should ' do 
+      issue3 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task"
+      issue1 = Factory.create :issue, type: "Task"
+      
+      issue1.reload.destroy
+      
+      issue3.reload.predecessor_id.should == issue2.id
+      issue2.reload.predecessor_id.should be_nil
+      issue1.reload.should be_nil
+    end
+  end
 
 end
