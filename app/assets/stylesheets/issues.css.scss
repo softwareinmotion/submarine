@@ -24,6 +24,11 @@ div.short {
   height: 18px;
   overflow: hidden;
 }
-table .dragging {
+table > tbody > tr:nth-child(2n+1) {
   background-color: #eee;
+}
+table .dragging,
+ table > tbody > tr.dragging {
+  background-color: #009D91;
+  color: white;
 }
