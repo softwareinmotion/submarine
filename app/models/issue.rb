@@ -4,7 +4,7 @@ class Issue < ActiveRecord::Base
   # next item in the list
   has_one :descendant, :class_name => 'Issue', :foreign_key => :predecessor_id
   
-  validates_presence_of :name, :type
+  validates :name, :type, :project, presence: true
 
   after_create :set_predecessor
   before_destroy :close_gap
