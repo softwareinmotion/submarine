@@ -1,11 +1,13 @@
 class Issue < ActiveRecord::Base
   belongs_to :project
   belongs_to :predecessor, :class_name => 'Issue', :foreign_key => :predecessor_id
+  # next item in the list
   has_one :descendant, :class_name => 'Issue', :foreign_key => :predecessor_id
   
   validates_presence_of :name, :type
 
   after_create :set_predecessor
+  before_destroy :close_gap
 
   def self.children_type_names
     ['Bug', 'Task', 'UserStory']
@@ -45,4 +47,14 @@ class Issue < ActiveRecord::Base
       list_head.save!
     end
   end
+  
+  def close_gap
+    descendant = self.descendant
+    if descendant
+      descendant.predecessor_id = self.predecessor_id
+      descendant.save!
+    end
+    self.predecessor_id = nil
+  end
+  
 end
