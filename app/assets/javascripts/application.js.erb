@@ -29,6 +29,23 @@ SUBMARINE = {
       $(this).addClass("short").parents("tr").find("td").css("height", "auto" );
     }
   },
+  showStoryPointsSum: function(event){
+    var rowIndex = $(event.target).parent('tr').get(0).rowIndex;
+    var sum = 0;
+    var elements = $("table > tbody > tr > td.story_points");
+    for(i = 0; i < rowIndex; i++) {
+      value = $(elements[i]).html();
+      if(value == "1/2"){
+        value = 0.5;
+      } else if(!value){
+        value = 0;
+      } else {
+        value = parseInt(value, 10);
+      }
+      sum += value;
+      $(event.target).attr("title", "Summe: " + sum);
+    }
+  },
   messages: {}
 }
 
@@ -38,5 +55,6 @@ $(document).ready(function(){
     onDragClass: 'dragging'
   });
   $("div.description").bind("click", SUBMARINE.toggleDescription);
+  $("table > tbody > tr > td.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });
 
