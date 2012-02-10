@@ -28,7 +28,7 @@
       </td>
       <td><%= issue.project.name if issue.project %></td>
       <td><%= issue.name %></td>
-      <td><%= issue.formatted_story_points %></td>
+      <td class="story_points"><%= issue.formatted_story_points %></td>
       <td>
         <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
         <%= image_tag("pencil.png") %>
