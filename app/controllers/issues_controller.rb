@@ -1,14 +1,24 @@
 class IssuesController < ApplicationController
   def index
-    issue = Issue.find_by_predecessor_id nil
-    @issues = []
-    if issue
-    @issues << issue
-      while issue.descendant do
-        issue = issue.descendant
-        @issues << issue
+    backlog_issue = Issue.in_backlog.find_by_predecessor_id(nil)
+    @backlog_issues = []
+    if backlog_issue
+    @backlog_issues << backlog_issue
+      while backlog_issue.descendant do
+        backlog_issue = backlog_issue.descendant
+        @backlog_issues << backlog_issue
       end
     end
+    sprint_issue = Issue.in_sprint.find_by_predecessor_id(nil)
+    @sprint_issues = []
+    if sprint_issue
+    @sprint_issues << sprint_issue
+      while sprint_issue.descendant do
+        sprint_issue = sprint_issue.descendant
+        @sprint_issues << sprint_issue
+      end
+    end
+
   end
 
   def show

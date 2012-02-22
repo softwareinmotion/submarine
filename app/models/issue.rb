@@ -9,6 +9,9 @@ class Issue < ActiveRecord::Base
   after_create :set_predecessor
   before_destroy :close_gap
 
+  scope :in_backlog, where("issues.sprint_flag is null")
+  scope :in_sprint, where("issues.sprint_flag is not null")
+
   def self.children_type_names
     ['Bug', 'Task', 'UserStory']
   end

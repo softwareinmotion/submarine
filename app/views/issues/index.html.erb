@@ -18,7 +18,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @issues.each do |issue| %>
+    <% @backlog_issues.each do |issue| %>
     <tr data-id="<%= issue.id %>" id="#<%= issue.id %>">
       <td>#<%= issue.id %></td>
       <td><%= issue.type -%>
@@ -45,3 +45,9 @@
 SUBMARINE.changeOrderURL = "<%= change_order_path %>";
 SUBMARINE.messages.save_failed = '<%= t 'issue.save_failed' %>';
 </script>
+<section id="sprint">
+  <h2>Backlog</h2>
+  
+    
+</section>
+
