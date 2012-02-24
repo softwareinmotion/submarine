@@ -28,3 +28,14 @@ h1 > a:hover {
   background-color: white;
   padding: 0;
 }
+div#wrapper{
+  width: 1200px;
+}
+section#backlog{
+  float: left;
+  width: 600px;
+}
+section#sprint{
+  width: 600px;
+  float: right;
+}
