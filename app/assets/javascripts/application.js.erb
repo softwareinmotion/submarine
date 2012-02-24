@@ -6,6 +6,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery_ui
+//= require jquery_tmpl
+//= require jquery_validate
 //= require jquery.tablednd
 //= require_self
 
@@ -32,7 +35,7 @@ SUBMARINE = {
   showStoryPointsSum: function(event){
     var rowIndex = $(event.target).parent('tr').get(0).rowIndex;
     var sum = 0;
-    var elements = $("table > tbody > tr > td.story_points");
+    var elements = $("table#issues_table > tbody > tr > td.story_points");
     for(i = 0; i < rowIndex; i++) {
       value = $(elements[i]).html();
       if(value == "1/2"){
@@ -50,11 +53,11 @@ SUBMARINE = {
 }
 
 $(document).ready(function(){
-  $("body > table > tbody").tableDnD({
+  $("table#issues_table > tbody").tableDnD({
     onDrop: SUBMARINE.changeOrderHandler,
     onDragClass: 'dragging'
   });
   $("div.description").bind("click", SUBMARINE.toggleDescription);
-  $("table > tbody > tr > td.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
+  $("table#issues_table > tbody > tr > td.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });
 
