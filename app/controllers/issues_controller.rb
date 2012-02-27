@@ -90,12 +90,15 @@ class IssuesController < ApplicationController
     @issue.destroy
     redirect_to issues_url
   end
+  
+ def change_list
+ end
 
-def change_order
+ def change_order
     moved_issue = Issue.find params[:moved_issue_id]
     moved_issue.reload.pin_after params[:predecessor_id]
-    render :nothing => true
-  end
+    render :nothing => true  
+ end
 
   private
 
