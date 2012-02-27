@@ -13,9 +13,10 @@
 //= require_self
 
 SUBMARINE = {
-  changeOrderHandler: function(table, row){
-    var data = { moved_issue_id: $(row).attr("data-id") };
-    data.predecessor_id = $(row).prev() && $(row).prev().attr("data-id");
+  changeOrderHandler: function(event){
+    var rowIndex = $(event.target).parent('li');
+    var data = { moved_issue_id: rowIndex.attr("data-id") };
+    data.predecessor_id = $(rowIndex).prev() && $(rowIndex).prev().attr("data-id");
     $.ajax({
       type: 'POST',
       url: SUBMARINE.changeOrderURL,
@@ -33,9 +34,9 @@ SUBMARINE = {
     }
   },
   showStoryPointsSum: function(event){
-    var rowIndex = $(event.target).parent('tr').get(0).rowIndex;
+    var rowIndex = $(event.target).parent('li').parent('ul').children.length;
     var sum = 0;
-    var elements = $("table#issues_table > tbody > tr > td.story_points");
+    var elements = $("ul > li > span.story_points");
     for(i = 0; i < rowIndex; i++) {
       value = $(elements[i]).html();
       if(value == "1/2"){
@@ -44,7 +45,7 @@ SUBMARINE = {
         value = 0;
       } else {
         value = parseInt(value, 10);
-      }
+        }i
       sum += value;
       $(event.target).attr("title", "Summe: " + sum);
     }
@@ -53,11 +54,7 @@ SUBMARINE = {
 }
 
 $(document).ready(function(){
-  $("table#issues_table > tbody").tableDnD({
-    onDrop: SUBMARINE.changeOrderHandler,
-    onDragClass: 'dragging'
-  });
   $("div.description").bind("click", SUBMARINE.toggleDescription);
-  $("table#issues_table > tbody > tr > td.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
+  $("ul > li > span.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });
 
