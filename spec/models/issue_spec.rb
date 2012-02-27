@@ -111,4 +111,22 @@ describe Issue do
       Issue.exists?(issue2).should be_false
     end
   end
+  
+  describe '#move_issue' do
+    it 'should move an issue from the backlog to the sprint list' do 
+      issue3 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue1 = Factory.create :issue, type: "Task"
+      issue_array = Issue.in_sprint
+      issue_array[0].sprint_flag.should be_true
+    end
+    
+    it 'should move an issue from the sprint to the backlog list' do
+      issue3 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue1 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue_array = Issue.in_backlog
+      issue_array[0].sprint_flag.should be_false
+    end
+  end
 end

@@ -14,7 +14,7 @@
     <span><%= t 'activerecord.attributes.issue.story_points' %></span>
     <span></span>
 </div>
-<ul id="sortable1" class="connectedSortable">
+<ul id="backlog_list" class="connectedSortable">
   <% @backlog_issues.each do |issue| %>
 	<li data-id="<%= issue.id %>" id="#<%= issue.id %>">
     <span>#<%= issue.id %></span>
@@ -44,7 +44,7 @@
     <span><%= t 'activerecord.attributes.issue.story_points' %></span>
     <span></span>
 </div>
-<ul id="sortable2" class="connectedSortable">
+<ul id="sprint_backlog_list" class="connectedSortable">
   <% @sprint_issues.each do |issue| %>
   <li data-id="<%= issue.id %>" id="#<%= issue.id %>">
     <span>#<%= issue.id %></span>
@@ -68,12 +68,13 @@
 
 <script>
 	$(function() {
-		$("#sortable1, #sortable2").sortable({
+		$("#sprint_backlog_list, #backlog_list").sortable({
 			connectWith: ".connectedSortable",
       update: SUBMARINE.changeOrderHandler
 		}).disableSelection();
 	});
 SUBMARINE.changeOrderURL = "<%= change_order_path %>";
+SUBMARINE.changeListURL = "<%= change_list_path %>";
 SUBMARINE.messages.save_failed = '<%= t 'issue.save_failed' %>';
 </script>
 
