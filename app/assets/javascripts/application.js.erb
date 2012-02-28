@@ -44,9 +44,15 @@ SUBMARINE = {
     }
   },
   showStoryPointsSum: function(event){
-    var rowIndex = $(event.target).parent('li').parent('ul').children.length;
+    var list_type = $(event.target).parent('li').parent('ul')[0].id;
+    var rowIndex = $(list_type).children.length;
     var sum = 0;
-    var elements = $("ul > li > span.story_points");
+    var elements;
+    if(list_type == "backlog_list") {
+      elements = $('ul#backlog_list > li > span.story_points');
+    } else if(list_type == "sprint_backlog_list") {
+      elements = $('ul#sprint_backlog_list > li > span.story_points');
+    }
     for(i = 0; i < rowIndex; i++) {
       value = $(elements[i]).html();
       if(value == "1/2"){

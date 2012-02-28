@@ -102,14 +102,16 @@ class IssuesController < ApplicationController
    moved_issue = Issue.find params[:moved_issue_id]
    backlog_list = params[:backlog_list]
    sprint_backlog_list = params[:sprint_backlog_list]
-   if sprint_backlog_list.include?(moved_issue.id)
-     moved_issue.sprint_flag = true;
-     moved_issue.save
-   else
-     moved_issue.sprint_flag = false;
-     moved_issue.save
+   if sprint_backlog_list
+    if sprint_backlog_list.include?(moved_issue.id)
+      moved_issue.sprint_flag = true;
+      moved_issue.save
+    else
+      moved_issue.sprint_flag = false;
+      moved_issue.save
+    end
+    moved_issue.reload.update_lists backlog_list, sprint_backlog_list 
    end
-   moved_issue.reload.update_lists backlog_list, sprint_backlog_list 
    render :nothing => true
   end
 

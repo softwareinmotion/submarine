@@ -1,6 +1,5 @@
 Submarine::Application.routes.draw do
   get '/' => 'issues#index'
-  post 'change_order' => 'issues#change_order', :as => 'change_order'
   post 'change_list' => 'issues#change_list', :as => 'change_list'
 
   resources :issues
