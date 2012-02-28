@@ -15,8 +15,8 @@
 SUBMARINE = {
   changeListHandler: function(event){
     event.preventDefault();
-    var rowIndex = $(event.target).parent('li'); 
-    if(rowIndex.parent('ul')[0].id == "sprint_backlog_list"){
+    var rowIndex = $(event.target).parent('li');
+    if(rowIndex.parent('ul')[0].id == "sprint_backlog_list" || rowIndex.parent('ul')[0].id == "backlog_list"){
       var data = { moved_issue_id: rowIndex.attr("data-id"), backlog_list: [], sprint_backlog_list: [] };
       data.predecessor_id = $(rowIndex).prev() && $(rowIndex).prev().attr("data-id");
       $('ul#backlog_list > li').each(function(i, li){
@@ -33,19 +33,6 @@ SUBMARINE = {
       })
       return false 
     }
-  },
-  changeOrderHandler: function(event){
-      var rowIndex = $(event.target).parent('li');
-      var data = { moved_issue_id: rowIndex.attr("data-id") };
-      data.predecessor_id = $(rowIndex).prev() && $(rowIndex).prev().attr("data-id");
-      if(rowIndex.parent('ul')[0].id == "backlog_list"){
-        $.ajax({
-            type: 'POST',
-            url: SUBMARINE.changeOrderURL,
-            data: data,
-            error: function(){window.alert(SUBMARINE.messages.save_failed)}    
-        })
-      }
   },
   toggleDescription: function(event){
     if($(this).hasClass("short")){

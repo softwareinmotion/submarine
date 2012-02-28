@@ -9,8 +9,8 @@ class Issue < ActiveRecord::Base
   after_create :set_predecessor
   before_destroy :close_gap
 
-  scope :in_backlog, where("issues.sprint_flag is null")
-  scope :in_sprint, where("issues.sprint_flag is not null")
+  scope :in_backlog, where("issues.sprint_flag is null or issues.sprint_flag is ?", false)
+  scope :in_sprint, where("issues.sprint_flag is ?", true)
 
   def self.children_type_names
     ['Bug', 'Task', 'UserStory']
@@ -21,6 +21,15 @@ class Issue < ActiveRecord::Base
       self.story_points == 0.5 ? '1/2' : story_points.to_i.to_s
     else
       ''
+    end
+  end
+  
+  def update_lists backlog_list, sprint_backlog_list
+    backlog_list.each_with_index do |id, i|
+      Issue.find(id).update_attributes!(:predecessor_id => (i == 0 ? nil : backlog_list[i-1]), :sprint_flag => false)
+    end
+    sprint_backlog_list.each_with_index do |id, i|
+      Issue.find(id).update_attributes!(:predecessor_id => (i == 0 ? nil : sprint_backlog_list[i-1]), :sprint_flag => true)
     end
   end
 
