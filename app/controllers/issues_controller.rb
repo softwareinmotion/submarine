@@ -90,15 +90,32 @@ class IssuesController < ApplicationController
     @issue.destroy
     redirect_to issues_url
   end
-  
- def change_list
- end
 
- def change_order
+  # moves backlog_item from one backlog to the other backlog
+  #
+  # @param [JSON-string] params[] moved item, backlog list, sprint backlog list
+  # example:
+  # {"moved_issue_id" => "3",
+  # "backlog_list" => [[0] "4",[1] "1",[2] "2"],
+  # "sprint_backlog_list" => [[0] "3"]}
+  def change_list
+   moved_issue = Issue.find params[:moved_issue_id]
+   backlog_list = params[:backlog_list]
+   sprint_backlog_list = params[:sprint_backlog_list]
+   if sprint_backlog_list.include?(moved_issue.id)
+     moved_issue.sprint_flag = 1;
+   else
+     moved_issue.sprint_flag = 0;
+   end
+   moved_issue.reload.pin_after params[:predecessor_id]
+   render :nothing => true
+  end
+
+  def change_order
     moved_issue = Issue.find params[:moved_issue_id]
     moved_issue.reload.pin_after params[:predecessor_id]
     render :nothing => true  
- end
+  end
 
   private
 
