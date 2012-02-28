@@ -103,18 +103,14 @@ class IssuesController < ApplicationController
    backlog_list = params[:backlog_list]
    sprint_backlog_list = params[:sprint_backlog_list]
    if sprint_backlog_list.include?(moved_issue.id)
-     moved_issue.sprint_flag = 1;
+     moved_issue.sprint_flag = true;
+     moved_issue.save
    else
-     moved_issue.sprint_flag = 0;
+     moved_issue.sprint_flag = false;
+     moved_issue.save
    end
-   moved_issue.reload.pin_after params[:predecessor_id]
+   moved_issue.reload.update_lists backlog_list, sprint_backlog_list 
    render :nothing => true
-  end
-
-  def change_order
-    moved_issue = Issue.find params[:moved_issue_id]
-    moved_issue.reload.pin_after params[:predecessor_id]
-    render :nothing => true  
   end
 
   private
