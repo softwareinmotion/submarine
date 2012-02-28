@@ -70,7 +70,8 @@
 	$(function() {
 		$("#sprint_backlog_list, #backlog_list").sortable({
 			connectWith: ".connectedSortable",
-      update: SUBMARINE.changeOrderHandler
+                        stop: SUBMARINE.changeOrderHandler,
+                        receive: SUBMARINE.changeListHandler
 		}).disableSelection();
 	});
 SUBMARINE.changeOrderURL = "<%= change_order_path %>";
