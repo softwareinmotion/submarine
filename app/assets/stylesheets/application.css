@@ -43,5 +43,10 @@ section#sprint{
 #backlog_list li, #sprint_backlog_list li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
 
 #sprint_backlog_list{
-  min-width: 200px;
+  min-width: 300px;
+  min-height: 150px;
+}
+#backlog_list{
+  min-width: 300px;
+  min-height: 150px;
 }
