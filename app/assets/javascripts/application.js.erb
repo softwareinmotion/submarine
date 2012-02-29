@@ -14,9 +14,8 @@
 
 SUBMARINE = {
   changeListHandler: function(event){
-    event.preventDefault();
+    //event.preventDefault();
     var rowIndex = $(event.target).parent('li');
-    if(rowIndex.parent('ul')[0].id == "sprint_backlog_list" || rowIndex.parent('ul')[0].id == "backlog_list"){
       var data = { moved_issue_id: rowIndex.attr("data-id"), backlog_list: [], sprint_backlog_list: [] };
       data.predecessor_id = $(rowIndex).prev() && $(rowIndex).prev().attr("data-id");
       $('ul#backlog_list > li').each(function(i, li){
@@ -25,14 +24,15 @@ SUBMARINE = {
       $('ul#sprint_backlog_list > li').each(function(i, li){
         data.sprint_backlog_list.push($(li).attr("data-id")); 
       });
+      $(event.target).parent('li').parent('ul').append(rowIndex);
+      $("#sprint_backlog_list, #backlog_list").sortable("refresh");
       $.ajax({
             type: 'POST',
             url: SUBMARINE.changeListURL,
             data: data,
             error: function(){window.alert(SUBMARINE.messages.save_failed)}    
-      })
-      return false 
-    }
+          })
+    //return false 
   },
   toggleDescription: function(event){
     if($(this).hasClass("short")){
