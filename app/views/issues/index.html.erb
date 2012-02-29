@@ -19,6 +19,7 @@
 	<li data-id="<%= issue.id %>" id="#<%= issue.id %>">
     <span>#<%= issue.id %></span>
     <span><%= issue.type %></span>
+    <span class="description"></span>
     <span><%= issue.project.name if issue.project %></span>
     <span><%= issue.name %></span>
     <span class="story_points"><%= issue.formatted_story_points %></span>
@@ -34,6 +35,7 @@
   <% end %>
 </ul>
 </section>
+
 <section id="sprint">
 <h2>Sprint Backlog</h2>
 <div>
@@ -65,7 +67,6 @@
 </ul>
 </section>
 </div>
-
 <script>
 	$(function() {
 		$("#sprint_backlog_list, #backlog_list").sortable({

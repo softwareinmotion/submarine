@@ -14,25 +14,21 @@
 
 SUBMARINE = {
   changeListHandler: function(event){
-    //event.preventDefault();
     var rowIndex = $(event.target).parent('li');
-      var data = { moved_issue_id: rowIndex.attr("data-id"), backlog_list: [], sprint_backlog_list: [] };
-      data.predecessor_id = $(rowIndex).prev() && $(rowIndex).prev().attr("data-id");
-      $('ul#backlog_list > li').each(function(i, li){
-        data.backlog_list.push($(li).attr("data-id")); 
-      });
-      $('ul#sprint_backlog_list > li').each(function(i, li){
-        data.sprint_backlog_list.push($(li).attr("data-id")); 
-      });
-      $(event.target).parent('li').parent('ul').append(rowIndex);
-      $("#sprint_backlog_list, #backlog_list").sortable("refresh");
-      $.ajax({
-            type: 'POST',
-            url: SUBMARINE.changeListURL,
-            data: data,
-            error: function(){window.alert(SUBMARINE.messages.save_failed)}    
+    var data = { moved_issue_id: rowIndex.attr("data-id"), backlog_list: [], sprint_backlog_list: [] };
+    data.predecessor_id = $(rowIndex).prev() && $(rowIndex).prev().attr("data-id");
+    $('ul#backlog_list > li').each(function(i, li){
+      data.backlog_list.push($(li).attr("data-id")); 
+    });
+    $('ul#sprint_backlog_list > li').each(function(i, li){
+      data.sprint_backlog_list.push($(li).attr("data-id")); 
+    });
+    $.ajax({
+          type: 'POST',
+          url: SUBMARINE.changeListURL,
+          data: data,
+          error: function(){window.alert(SUBMARINE.messages.save_failed)}    
           })
-    //return false 
   },
   toggleDescription: function(event){
     if($(this).hasClass("short")){
@@ -70,7 +66,6 @@ SUBMARINE = {
 }
 
 $(document).ready(function(){
-  $("div.description").bind("click", SUBMARINE.toggleDescription);
+  $("ul > li > span.description").bind("click", SUBMARINE.toggleDescription);
   $("ul > li > span.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });
-

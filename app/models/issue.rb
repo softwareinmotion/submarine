@@ -43,23 +43,6 @@ class Issue < ActiveRecord::Base
       first_sprint_backlog_issue.save
     end
   end
-
-  def pin_after issue_id
-    old_descendant = Issue.find_by_predecessor_id self.id
-    if old_descendant 
-      old_descendant.predecessor_id = self.predecessor_id
-      old_descendant.save
-    end
-
-    new_descendant = Issue.find_by_predecessor_id issue_id
-    self.predecessor_id = issue_id
-    self.save
-
-    if new_descendant
-      new_descendant.predecessor_id = self.id
-      new_descendant.save
-    end
-  end
   
   private
   
