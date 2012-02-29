@@ -34,13 +34,15 @@ div#wrapper{
 section#backlog{
   float: left;
   width: 600px;
+  font-size: 1.2em;
 }
 section#sprint{
   width: 600px;
   float: right;
+  font-size: 1.2em;
 }
 #backlog_list, #sprint_backlog_list { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
-#backlog_list li, #sprint_backlog_list li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+#backlog_list li, #sprint_backlog_list li { margin: 0 5px 5px 5px; padding: 5px; min-width: 300px;}
 
 #sprint_backlog_list{
   min-width: 300px;

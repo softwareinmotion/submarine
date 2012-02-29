@@ -1,18 +1,4 @@
 /* http://colorschemedesigner.com/#3J31Tw0w0w0w0 */
-table {
-  border-collapse: collapse;
-}
-th, td {
-  padding: 5px;
-  padding-right: 2em;
-  text-align: left;
-  padding-bottom: 20px;
-  max-width: 300px;
-  vertical-align: top;
-  div {
-    position: relative;
-  }
-}
 div.description {
   color: gray;
   font-size: 8pt;
@@ -24,11 +10,7 @@ div.short {
   height: 18px;
   overflow: hidden;
 }
-table > tbody > tr:nth-child(2n+1) {
+ul > li:nth-child(2n+1) {
   background-color: #eee;
 }
-table .dragging,
- table > tbody > tr.dragging {
-  background-color: #009D91;
-  color: white;
-}
+
