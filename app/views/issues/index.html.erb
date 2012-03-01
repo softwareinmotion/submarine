@@ -19,18 +19,20 @@
 	<li data-id="<%= issue.id %>" id="#<%= issue.id %>">
     <span>#<%= issue.id %></span>
     <span><%= issue.type %></span>
-    <span class="description"></span>
     <span><%= issue.project.name if issue.project %></span>
     <span><%= issue.name %></span>
     <span class="story_points"><%= issue.formatted_story_points %></span>
-      <span>
+    <span>
         <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
         <%= image_tag("pencil.png") %>
         <% end %>
         <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
         <%= image_tag("cross.png") %>
         <% end %>
-      </span>
+    </span> 
+    <div>
+      <div class="description short"><%= issue.description %></div>
+    </div>
   </li>
   <% end %>
 </ul>
@@ -54,14 +56,17 @@
     <span><%= issue.project.name if issue.project %></span>
     <span><%= issue.name %></span>
     <span class="story_points"><%= issue.formatted_story_points %></span>
-      <span>
+    <span>
         <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
         <%= image_tag("pencil.png") %>
         <% end %>
         <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
         <%= image_tag("cross.png") %>
         <% end %>
-      </span>
+    </span>
+    <div>
+      <div class="description short"><%= issue.description %></div>
+    </div>
   </li>
   <% end %>
 </ul>
