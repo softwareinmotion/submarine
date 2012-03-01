@@ -31,12 +31,15 @@ SUBMARINE = {
           })
   },
   toggleDescription: function(event){
+    console.log($(this).hasClass("short"));
+    console.log($(this).parents("li").find("span").css("height", div_height+15));
     if($(this).hasClass("short")){
       $(this).removeClass("short");
       var div_height = $(this).height();
-      $(this).parents("tr").find("td").css("height",div_height+15);
+      console.log(div_height);
+      $(this).parents("li").css("height", div_height+15);
     } else {
-      $(this).addClass("short").parents("tr").find("td").css("height", "auto" );
+      $(this).addClass("short").parents("li").css("height", "auto");
     }
   },
   showStoryPointsSum: function(event){
@@ -66,6 +69,6 @@ SUBMARINE = {
 }
 
 $(document).ready(function(){
-  $("ul > li > span.description").bind("click", SUBMARINE.toggleDescription);
+  $("ul > li > div div.description").bind("click", SUBMARINE.toggleDescription);
   $("ul > li > span.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });
