@@ -5,6 +5,7 @@ div.description {
   position: absolute;
   width: 300px; 
   padding: 5px;
+  margin-left: 63px;
 }
 div.short {
   height: 18px;
@@ -13,4 +14,3 @@ div.short {
 ul > li:nth-child(2n+1) {
   background-color: #eee;
 }
-

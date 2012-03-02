@@ -28,32 +28,37 @@ h1 > a:hover {
   background-color: white;
   padding: 0;
 }
-div#wrapper{
+div#wrapper {
   width: 1200px;
 }
 div#wrapper section div span {
   margin: 0 50px 0 0;
 }
-section#backlog{
+section#backlog {
   float: left;
   width: 600px;
   font-size: 1.2em;
 }
-section#sprint{
+section#sprint {
   width: 600px;
   float: right;
   font-size: 1.2em;
 }
-#backlog_list, #sprint_backlog_list { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
-#backlog_list li, #sprint_backlog_list li { margin: 0 5px 5px 0; padding: 5px 2em 20px 5px; min-width: 300px; min-height: 15px;}
-
-#backlog_list li span, #sprint_backlog_list li span {margin: 0 50px 0 0;}
-
-#sprint_backlog_list{
+#backlog_list, #sprint_backlog_list { 
   min-width: 300px;
   min-height: 150px;
+  list-style-type: none; 
+  margin: 0; 
+  padding: 0 0 2.5em; 
+  float: left; 
+  margin-right: 10px; 
 }
-#backlog_list{
-  min-width: 300px;
-  min-height: 150px;
+#backlog_list li, #sprint_backlog_list li { 
+  margin: 0 5px 5px 0; 
+  padding: 5px 2em 20px 5px; 
+  min-width: 300px; 
+  min-height: 15px;
+}
+#backlog_list li span, #sprint_backlog_list li span {
+  margin: 0 50px 0 0;
 }
