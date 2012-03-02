@@ -14,9 +14,22 @@
 
 SUBMARINE = {
   changeListHandler: function(event){
-    var rowIndex = $(event.target).parent('li');
-    var data = { moved_issue_id: rowIndex.attr("data-id"), backlog_list: [], sprint_backlog_list: [] };
-    data.predecessor_id = $(rowIndex).prev() && $(rowIndex).prev().attr("data-id");
+    var moved_issue_id;
+    var list_element;
+    if($(event.target).is("li")) {
+      list_element = $(event.target);
+      moved_issue_id = list_element.attr("data-id");
+    }
+    if($(event.target).is("span")) {
+      list_element = $(event.target).parent('li'); 
+      moved_issue_id = list_element.attr("data-id");
+    }
+    if($(event.target).is("div.description")) {
+      list_element = $(event.target).parent('div').parent('li');
+      moved_issue_id = list_element.attr("data-id");
+    }
+    var data = { moved_issue_id: moved_issue_id, backlog_list: [], sprint_backlog_list: [] };
+    data.predecessor_id = $(list_element).prev() && $(list_element).prev().attr("data-id");
     $('ul#backlog_list > li').each(function(i, li){
       data.backlog_list.push($(li).attr("data-id")); 
     });
@@ -31,15 +44,12 @@ SUBMARINE = {
           })
   },
   toggleDescription: function(event){
-    console.log($(this).hasClass("short"));
-    console.log($(this).parents("li").find("span").css("height", div_height+15));
     if($(this).hasClass("short")){
       $(this).removeClass("short");
       var div_height = $(this).height();
-      console.log(div_height);
-      $(this).parents("li").css("height", div_height+15);
+      $(this).parents("li").find("span").css("height", div_height+15);
     } else {
-      $(this).addClass("short").parents("li").css("height", "auto");
+      $(this).addClass("short").parents("li").find("span").css("height", "auto");
     }
   },
   showStoryPointsSum: function(event){
