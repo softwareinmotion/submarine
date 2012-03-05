@@ -13,21 +13,16 @@
 //= require_self
 
 SUBMARINE = {
-  changeListHandler: function(event){
+  changeListHandler: function(event,ui){
+    $(ui.item).removeClass("dragging");
     var moved_issue_id;
     var list_element;
     if($(event.target).is("li")) {
       list_element = $(event.target);
-      moved_issue_id = list_element.attr("data-id");
+    } else {
+      list_element = $(event.target).parents('li'); 
     }
-    if($(event.target).is("span")) {
-      list_element = $(event.target).parent('li'); 
-      moved_issue_id = list_element.attr("data-id");
-    }
-    if($(event.target).is("div.description")) {
-      list_element = $(event.target).parent('div').parent('li');
-      moved_issue_id = list_element.attr("data-id");
-    }
+    moved_issue_id = list_element.attr("data-id");
     var data = { moved_issue_id: moved_issue_id, backlog_list: [], sprint_backlog_list: [] };
     data.predecessor_id = $(list_element).prev() && $(list_element).prev().attr("data-id");
     $('ul#backlog_list > li').each(function(i, li){
@@ -47,22 +42,16 @@ SUBMARINE = {
     if($(this).hasClass("short")){
       $(this).removeClass("short");
       var div_height = $(this).height();
-      $(this).parents("li").find("span").css("height", div_height+15);
     } else {
-      $(this).addClass("short").parents("li").find("span").css("height", "auto");
+      $(this).addClass("short");
     }
   },
   showStoryPointsSum: function(event){
     var list_type = $(event.target).parent('li').parent('ul')[0].id;
-    var rowIndex = $(list_type).children.length;
+    var rowIndex = $(event.target).parent("li").index();
     var sum = 0;
-    var elements;
-    if(list_type == "backlog_list") {
-      elements = $('ul#backlog_list > li > span.story_points');
-    } else if(list_type == "sprint_backlog_list") {
-      elements = $('ul#sprint_backlog_list > li > span.story_points');
-    }
-    for(i = 0; i < rowIndex; i++) {
+    var elements = $('ul#' + list_type + ' > li > span.issue_story_points');
+    for(i = 0; i <= rowIndex; i++) {
       value = $(elements[i]).html();
       if(value == "1/2"){
         value = 0.5;
@@ -79,6 +68,6 @@ SUBMARINE = {
 }
 
 $(document).ready(function(){
-  $("ul > li > div div.description").bind("click", SUBMARINE.toggleDescription);
-  $("ul > li > span.story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
+  $("ul > li > div.description").bind("click", SUBMARINE.toggleDescription);
+  $("ul > li > span.issue_story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });

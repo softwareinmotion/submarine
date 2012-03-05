@@ -6,78 +6,21 @@
 <div id="wrapper">
 <section id="backlog">
 <h2>Backlog</h2>
-<div>
-    <span><%= t 'activerecord.attributes.issue.id' %></span>
-    <span><%= t 'activerecord.attributes.issue.type' %></span>
-    <span><%= t 'activerecord.attributes.issue.project_id' %></span>
-    <span><%= t 'activerecord.attributes.issue.name' %></span>
-    <span><%= t 'activerecord.attributes.issue.story_points' %></span>
-    <span></span>
-</div>
-<ul id="backlog_list" class="connectedSortable">
-  <% @backlog_issues.each do |issue| %>
-	<li data-id="<%= issue.id %>" id="#<%= issue.id %>">
-    <span>#<%= issue.id %></span>
-    <span><%= issue.type %></span>
-    <span><%= issue.project.name if issue.project %></span>
-    <span><%= issue.name %></span>
-    <span class="story_points"><%= issue.formatted_story_points %></span>
-    <span style="margin-left: 60px"></span>
-    <span>
-        <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
-        <%= image_tag("pencil.png") %>
-        <% end %>
-        <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
-        <%= image_tag("cross.png") %>
-        <% end %>
-    </span> 
-    <div>
-      <div class="description short"><%= issue.description %></div>
-    </div>
-  </li>
-  <% end %>
-</ul>
+<%= render :partial => "list", :locals => {:list_id => "backlog_list", :list_items => @backlog_issues} %>
 </section>
 
 <section id="sprint">
 <h2>Sprint Backlog</h2>
-<div>
-    <span><%= t 'activerecord.attributes.issue.id' %></span>
-    <span><%= t 'activerecord.attributes.issue.type' %></span>
-    <span><%= t 'activerecord.attributes.issue.project_id' %></span>
-    <span><%= t 'activerecord.attributes.issue.name' %></span>
-    <span><%= t 'activerecord.attributes.issue.story_points' %></span>
-    <span></span>
-</div>
-<ul id="sprint_backlog_list" class="connectedSortable">
-  <% @sprint_issues.each do |issue| %>
-  <li data-id="<%= issue.id %>" id="#<%= issue.id %>">
-    <span>#<%= issue.id %></span>
-    <span><%= issue.type %></span>
-    <span><%= issue.project.name if issue.project %></span>
-    <span><%= issue.name %></span>
-    <span class="story_points"><%= issue.formatted_story_points %></span>
-    <span style="margin-left: 60px"></span>
-    <span>
-        <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
-        <%= image_tag("pencil.png") %>
-        <% end %>
-        <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
-        <%= image_tag("cross.png") %>
-        <% end %>
-    </span>
-    <div>
-      <div class="description short"><%= issue.description %></div>
-    </div>
-  </li>
-  <% end %>
-</ul>
+<%= render :partial => "list", :locals => {:list_id => "sprint_backlog_list", :list_items => @sprint_issues} %>
 </section>
 </div>
 <script>
 	$(function() {
 		$("#sprint_backlog_list, #backlog_list").sortable({
 			connectWith: ".connectedSortable",
+      start: function(event,ui){
+        $(ui.item).addClass("dragging");
+      },
       stop: SUBMARINE.changeListHandler,
 		}).disableSelection();
   });
