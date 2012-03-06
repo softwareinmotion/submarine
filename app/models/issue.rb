@@ -9,8 +9,8 @@ class Issue < ActiveRecord::Base
   after_create :set_predecessor
   before_destroy :close_gap
 
-  scope :in_backlog, where("issues.sprint_flag is null or issues.sprint_flag is ?", false)
-  scope :in_sprint, where("issues.sprint_flag is ?", true)
+  scope :in_backlog, where("issues.sprint_flag is null or issues.sprint_flag = ?", false)
+  scope :in_sprint, where("issues.sprint_flag = ?", true)
 
   def self.children_type_names
     ['Bug', 'Task', 'UserStory']
