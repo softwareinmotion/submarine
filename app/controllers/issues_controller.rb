@@ -18,7 +18,6 @@ class IssuesController < ApplicationController
         @sprint_issues << sprint_issue
       end
     end
-
   end
 
   def show
