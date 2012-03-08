@@ -1,23 +1,6 @@
 class IssuesController < ApplicationController
   def index
-    backlog_issue = Issue.in_backlog.find_by_predecessor_id(nil)
-    @backlog_issues = []
-    if backlog_issue
-    @backlog_issues << backlog_issue
-      while backlog_issue.descendant do
-        backlog_issue = backlog_issue.descendant
-        @backlog_issues << backlog_issue
-      end
-    end
-    sprint_issue = Issue.in_sprint.find_by_predecessor_id(nil)
-    @sprint_issues = []
-    if sprint_issue
-    @sprint_issues << sprint_issue
-      while sprint_issue.descendant do
-        sprint_issue = sprint_issue.descendant
-        @sprint_issues << sprint_issue
-      end
-    end
+    prepare_lists
   end
 
   def show
@@ -55,6 +38,7 @@ class IssuesController < ApplicationController
     end
 
     if @issue && @issue.save
+      prepare_lists
       redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
     else
       prepare_form
@@ -76,6 +60,7 @@ class IssuesController < ApplicationController
     end
 
     if @issue && @issue.update_attributes(params[@type.to_sym])
+      prepare_lists
       redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
     else
       @issue = Issue.find(params[:id])
@@ -130,4 +115,26 @@ class IssuesController < ApplicationController
       [name, name]
     end
   end
+  
+  def prepare_lists
+    backlog_issue = Issue.in_backlog.find_by_predecessor_id(nil)
+    @backlog_issues = []
+    if backlog_issue
+    @backlog_issues << backlog_issue
+      while backlog_issue.descendant do
+        backlog_issue = backlog_issue.descendant
+        @backlog_issues << backlog_issue
+      end
+    end
+    sprint_issue = Issue.in_sprint.find_by_predecessor_id(nil)
+    @sprint_issues = []
+    if sprint_issue
+    @sprint_issues << sprint_issue
+      while sprint_issue.descendant do
+        sprint_issue = sprint_issue.descendant
+        @sprint_issues << sprint_issue
+      end
+    end
+  end
+  
 end
