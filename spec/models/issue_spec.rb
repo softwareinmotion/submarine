@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Issue do
   describe '#close_gap' do
     it 'should delete an issue and close the gap if the first issue of the list is deleted' do 
-      issue3 = Factory.create :issue, type: "Task"
-      issue2 = Factory.create :issue, type: "Task"
       issue1 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task", predecessor_id: issue1.id
+      issue3 = Factory.create :issue, type: "Task", predecessor_id: issue2.id
       
       issue1.reload.destroy
       
@@ -15,9 +15,9 @@ describe Issue do
     end
 
     it 'should delete an issue and close the gap if the last issue of the list is deleted' do 
-      issue3 = Factory.create :issue, type: "Task"
-      issue2 = Factory.create :issue, type: "Task"
       issue1 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task", predecessor_id: issue1.id
+      issue3 = Factory.create :issue, type: "Task", predecessor_id: issue2.id
       
       issue3.reload.destroy
       
@@ -27,9 +27,9 @@ describe Issue do
     end
 
     it 'should delete an issue and close the gap if an issue from the middle of the list is deleted' do 
-      issue3 = Factory.create :issue, type: "Task"
-      issue2 = Factory.create :issue, type: "Task"
       issue1 = Factory.create :issue, type: "Task"
+      issue2 = Factory.create :issue, type: "Task", predecessor_id: issue1.id
+      issue3 = Factory.create :issue, type: "Task", predecessor_id: issue2.id
       
       issue2.reload.destroy
       
