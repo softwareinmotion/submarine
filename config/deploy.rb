@@ -1,3 +1,4 @@
+ssh_options[:user] = "administrator"
 set :rails_env, 'production'
 set :application, "submarine"
 set :deploy_to, "/var/lib/submarine"
