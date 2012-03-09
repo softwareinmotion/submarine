@@ -53,9 +53,15 @@ class IssuesController < ApplicationController
         end
       end
     end
-    @issue.sprint_flag = false;
-    
+    old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
+    @issue.predecessor_id = nil
+    @issue.sprint_flag = false
+
     if @issue && @issue.save
+      if old_first_issue
+        old_first_issue.predecessor_id = @issue.id
+        old_first_issue.save
+      end
       redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
     else
       prepare_form
