@@ -6,7 +6,6 @@ class Issue < ActiveRecord::Base
   
   validates :name, :type, :project, :description, presence: true
 
-  after_create :set_predecessor
   before_destroy :close_gap
 
   scope :in_backlog, where("issues.sprint_flag is null or issues.sprint_flag = ?", false)
@@ -46,13 +45,6 @@ class Issue < ActiveRecord::Base
   
   private
   
-  def set_predecessor
-    list_head = Issue.where("id <> ?", self.id).find_by_predecessor_id nil
-    if list_head
-      list_head.predecessor_id = self.id
-      list_head.save!
-    end
-  end
   
   def close_gap
     descendant = self.descendant
