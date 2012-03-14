@@ -1,4 +1,50 @@
 /* http://colorschemedesigner.com/#3J31Tw0w0w0w0 */
+
+$li_border: 1px solid #ddd;
+
+@mixin ul-base {
+  width: 100%;
+  list-style-type: none; 
+  margin: 0; 
+  padding: 0; 
+  float: left; 
+  margin-right: 10px; 
+  background: white;
+}
+
+ul.list_header {
+  @include ul-base;
+  border-radius: 2px 2px;
+  font-size: 18px;
+  font-weight: bold;
+  border: $li_border;
+
+  li {
+    float: left;
+    padding: 10px 5px;
+  }
+
+  li.btn_in_header {
+    float: right;
+    padding: 5px 5px;
+  }
+}
+
+ul.connectedSortable { 
+  @include ul-base;
+  min-height: 150px;
+  border-left: $li_border;
+  border-right: $li_border;
+
+  li {
+    margin: 0; 
+    cursor:pointer;cursor:hand;
+    clear: both;
+    padding-bottom: 5px;
+    border-bottom: $li_border;
+  }
+}
+
 div.description {
   color: gray;
   font-size: 8pt;
@@ -11,14 +57,6 @@ div.description {
 div.short {
   height: 12px;
   overflow: hidden;
-}
-ul {
-  > li:nth-child(2n+1) {
-    background-color: #eee;
-  }
-  > li:nth-child(2n){
-    background-color: white;
-  }
 }
 .issue_id {
   display: block;
