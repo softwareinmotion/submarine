@@ -6,12 +6,23 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
-<h1><a href='/'>Submarine</a></h1>
+
+<header>
+  <%= link_to issues_path do %>
+    <%= image_tag "logo.png" %>
+  <% end %>
+</header>
+
   <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, id: "flash#{name}" %>
   <% end %>
 <%= yield %>
+
+<footer>
+  <a href="http://www.softwareinmotion.de">softwareinmotion</a>
+</footer>
 
 </body>
 </html>

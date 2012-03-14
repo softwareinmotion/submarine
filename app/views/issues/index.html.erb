@@ -1,19 +1,15 @@
-<%= link_to new_issue_path, :class => :button do %>
-<%= image_tag("add.png") %> <%= t 'issue.new' %>
-<% end %>
+<section id="main">
 
-<br>
-<div id="wrapper">
-<section id="backlog">
-<h2>Backlog</h2>
-<%= render :partial => "list", :locals => {:list_id => "backlog_list", :list_items => @backlog_issues} %>
+<article class="log" id="backlog">
+<%= render :partial => "list", :locals => {:list_title => "Backlog", :list_id => "backlog_list", :list_items => @backlog_issues, :show_new_btn => true} %>
+</article>
+
+<article class="log" id="sprint">
+<%= render :partial => "list", :locals => {:list_title => "Sprint Backlog", :list_id => "sprint_backlog_list", :list_items => @sprint_issues, :show_new_btn => false} %>
+</article>
+
 </section>
 
-<section id="sprint">
-<h2>Sprint Backlog</h2>
-<%= render :partial => "list", :locals => {:list_id => "sprint_backlog_list", :list_items => @sprint_issues} %>
-</section>
-</div>
 <script>
 	$(function() {
 		$("#sprint_backlog_list, #backlog_list").sortable({
