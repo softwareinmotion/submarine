@@ -16,12 +16,10 @@ $strip-line: 1px solid #ddd;
 }
 
 html {
-/*  background: url(background-linen.jpg) no-repeat top left;
-  background-size: 100%;*/
   background: -webkit-linear-gradient(#DDD 0%,#F2F1F0 300px);
-  background: -moz-linear-gradient(#E3E3E2 0%,#D2D1D0 300px);
-  background: -o-linear-gradient(#E3E3E2 0%,#D2D1D0 300px);
-  background: linear-gradient(#E3E3E2 0%,#D2D1D0 300px);
+  background: -moz-linear-gradient(#DDD 0%,#F2F1F0 300px);
+  background: -o-linear-gradient(#DDD 0%,#F2F1F0 300px);
+  background: linear-gradient(#DDD 0%,#F2F1F0 300px);
   margin: 0;
 }
 
@@ -30,7 +28,7 @@ body {
   padding: 0;
   border: 0;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-size: 10pt;
 }
 
 header {

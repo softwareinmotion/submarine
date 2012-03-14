@@ -41,10 +41,17 @@ SUBMARINE = {
   toggleDescription: function(event){
     if($(this).hasClass("short")){
       $(this).removeClass("short");
-      var div_height = $(this).height();
+	  $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");
+	  $(this).parent().css('height', $(this).height());	  
     }
+  },
+  showControls: function(event){
+    $(this).find('div.controls').fadeIn(80);
+  },
+  hideControls: function(event){
+    $(this).find('div.controls').fadeOut(80);
   },
   showStoryPointsSum: function(event){
     var list_type = $(event.target).parent('li').parent('ul')[0].id;
@@ -68,6 +75,7 @@ SUBMARINE = {
 }
 
 $(document).ready(function(){
-  $("ul > li > div.description").bind("click", SUBMARINE.toggleDescription);
+  $("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
+  $("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
   $("ul > li > span.issue_story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });

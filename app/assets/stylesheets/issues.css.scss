@@ -15,9 +15,12 @@ $li_border: 1px solid #ddd;
 ul.list_header {
   @include ul-base;
   border-radius: 2px 2px;
-  font-size: 18px;
-  font-weight: bold;
   border: $li_border;
+  background: -webkit-linear-gradient(#F2F1F0 0%,#DDD 30px);
+  background: -moz-linear-gradient(#F2F1F0 0%,#DDD 30px);
+  background: -o-linear-gradient(#F2F1F0 0%,#DDD 30px);
+  background: linear-gradient(#F2F1F0 0%,#DDD 30px);
+  font-size: 14pt;
 
   li {
     float: left;
@@ -27,6 +30,10 @@ ul.list_header {
   li.btn_in_header {
     float: right;
     padding: 5px 5px;
+    
+    img {
+      padding-top: 5px;
+    }
   }
 }
 
@@ -42,37 +49,62 @@ ul.connectedSortable {
     clear: both;
     padding-bottom: 5px;
     border-bottom: $li_border;
+    
+    .issue_line {
+      clear: both;
+      
+      div {
+        float: left;
+        padding-top: 3px;
+      }
+      
+      div:nth-child(1) {
+        width: 40px;
+        padding-left: 3px;
+      }
+
+      div:nth-child(2) {
+        overflow: hidden;
+      }
+
+      div.issue_type {
+        float: right;
+        width: 30px;
+      }
+
+      div.issue_id {
+        float: right;
+        width: 40px;
+        text-align: left;
+      }
+      
+      div.controls_container {
+        margin-top: -5px;
+        margin-right: 3px;
+        width: 40px;
+        float: right;
+
+        div.controls {
+          position: absolute;
+          width: 50px;
+          z-index: 3;
+          display: none;
+        }
+      }      
+    }
+    
+    .issue_story_points {
+    }
+
+    div.description {
+      color: gray;
+      font-size: 8pt;
+      max-width: 490px;
+    }
+    
+    div.short {
+      height: 2.4ex;
+    }
   }
 }
 
-div.description {
-  color: gray;
-  font-size: 8pt;
-  margin-left: 50px;
-  margin-right: 90px;
-  margin-bottom: 5px;
-  padding: 0 5px;
-  clear: both;
-}
-div.short {
-  height: 12px;
-  overflow: hidden;
-}
-.issue_id {
-  display: block;
-  width: 40px;
-}
-.issue_type, .issue_project_name {
-  display: block;
-  width: 80px;
-}
-.issue_story_points {
-  display: block;
-  width: 20px;
-  float: right;
-}
-.controls {
-  display: block;
-  width: 50px;
-  float: right;
-}
