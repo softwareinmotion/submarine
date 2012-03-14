@@ -11,20 +11,28 @@
 <ul id="<%= list_id %>" class="connectedSortable">
   <% list_items.each do |issue| %>
 	<li data-id="<%= issue.id %>" id="#<%= issue.id %>">
-    <span class="issue_id">#<%= issue.id %></span>
-    <span class="issue_type"><%= issue.type %></span>
-    <span class="issue_project_name"><%= issue.project.name if issue.project %></span>
-    <span class="issue_name"><%= issue.name %></span>
-    <span class="controls">
-        <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
-        <%= image_tag("pencil.png") %>
-        <% end %>
-        <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
-        <%= image_tag("cross.png") %>
-        <% end %>
-    </span> 
-    <span class="issue_story_points"><%= issue.formatted_story_points %></span>
-    <div class="description short"><%= issue.description %></div>
+    <div class="issue_line">
+      <div><%= issue.project.name if issue.project %></div>
+      <div><%= issue.name %></div>
+      <div class="issue_id">#<%= issue.id %></div>
+      <div class="issue_type"><%= issue.type %></div>
+      &nbsp;
+    </div>
+    <div class="issue_line">
+      <div class="issue_story_points"><%= issue.formatted_story_points %>&nbsp;</div>
+      <div class="description short"><%= issue.description %></div>
+      <div class="controls_container">
+      <div class="controls">
+          <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
+          <%= image_tag("edit.png") %>
+          <% end %>
+          <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
+          <%= image_tag("delete.png") %>
+          <% end %>
+      </div>
+      </div>
+      &nbsp;
+    </div>
   </li>
   <% end %>
 </ul>
