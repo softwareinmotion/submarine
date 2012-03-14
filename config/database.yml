@@ -4,8 +4,13 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: utf8
+  database: submarine-test
+  host: ent
+  port: 5432
+  username: postgres
+  password: Pass2Swim!
   pool: 5
   timeout: 5000
 

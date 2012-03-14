@@ -1,11 +1,13 @@
-<div>
-    <span class="issue_id"><%= t 'activerecord.attributes.issue.id' %></span>
-    <span class="issue_type"><%= t 'activerecord.attributes.issue.type' %></span>
-    <span class="issue_project_name"><%= t 'activerecord.attributes.issue.project_id' %></span>
-    <span class="issue_name"><%= t 'activerecord.attributes.issue.name' %></span>
-    <span class="controls">&nbsp;</span>
-    <span class="issue_story_points"><%= t 'activerecord.attributes.issue.story_points' %></span>
-</div>
+<ul class="list_header">
+  <li><%= list_title %></li>
+  <% if show_new_btn %>
+  <li class="btn_in_header">
+    <%= link_to new_issue_path do %>
+      <%= image_tag("new.png") %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>
 <ul id="<%= list_id %>" class="connectedSortable">
   <% list_items.each do |issue| %>
 	<li data-id="<%= issue.id %>" id="#<%= issue.id %>">
