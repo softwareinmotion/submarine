@@ -32,10 +32,15 @@ body {
 }
 
 header {
-  height: 73px;
+  height: 83px;
   background: white;
   border-bottom: $strip-line;
-  margin-bottom: 66px;
+  margin-bottom: 45px;
+  
+  img#logo {
+    padding-left: 10px;
+    padding-top: 10px;
+  }
 }
 
 #main {

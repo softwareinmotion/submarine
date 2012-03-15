@@ -1,16 +1,19 @@
 <ul class="list_header">
-  <li><%= list_title %></li>
-  <% if show_new_btn %>
-  <li class="btn_in_header">
-    <%= link_to new_issue_path do %>
-      <%= image_tag("new.png") %>
-    <% end %>
-  </li>
+  <% if is_sprint %>
+    <li>Sprint Backlog</li>
+    <li id="story_points_sum"></li>
+  <% else %>
+    <li>Backlog</li>
+    <li class="btn_in_header">
+      <%= link_to new_issue_path do %>
+        <%= image_tag("new.png") %>
+      <% end %>
+    </li>
   <% end %>
 </ul>
-<ul id="<%= list_id %>" class="connectedSortable">
+<ul id="<%= is_sprint ? 'sprint_backlog_list' : 'backlog_list' %>" class="connectedSortable">
   <% list_items.each do |issue| %>
-	<li data-id="<%= issue.id %>" id="#<%= issue.id %>">
+	<li data-id="<%= issue.id %>" id="#<%= issue.id %>" data-story_points="<%= issue.formatted_story_points %>">
     <div class="issue_line">
       <div class="project_logo"><%= image_tag("logo_#{issue.project.name.downcase}.png") if issue.project %></div>
       <div class="issue_name"><%= issue.name %></div>

@@ -35,8 +35,8 @@ SUBMARINE = {
           type: 'POST',
           url: SUBMARINE.changeListURL,
           data: data,
-          error: function(){window.alert(SUBMARINE.messages.save_failed)}    
-          })
+          error: function(){window.alert(SUBMARINE.messages.save_failed)}});
+    SUBMARINE.showStoryPointsSum();
   },
   toggleDescription: function(event){
     if($(this).hasClass("short")){
@@ -53,29 +53,22 @@ SUBMARINE = {
   hideControls: function(event){
     $(this).find('div.controls').fadeOut(80);
   },
-  showStoryPointsSum: function(event){
-    var list_type = $(event.target).parent('li').parent('ul')[0].id;
-    var rowIndex = $(event.target).parent("li").index();
+  showStoryPointsSum: function(){
     var sum = 0;
-    var elements = $('ul#' + list_type + ' > li > span.issue_story_points');
-    for(i = 0; i <= rowIndex; i++) {
-      value = $(elements[i]).html();
-      if(value == "1/2"){
-        value = 0.5;
-      } else if(!value){
-        value = 0;
-      } else {
-        value = parseInt(value, 10);
-        }i
-      sum += value;
-      $(event.target).attr("title", "Summe: " + sum);
-    }
+    var elements = $('ul#sprint_backlog_list > li');
+    $.each(elements, function(i, element) {
+      value = parseInt($(element).attr('data-story_points'), 10);
+      if(!!value) {
+        sum += value;
+      }
+    });
+    $('#story_points_sum').html(sum);
   },
   messages: {}
 }
 
 $(document).ready(function(){
+  SUBMARINE.showStoryPointsSum();
   $("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
   $("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
-  $("ul > li > span.issue_story_points").bind("mouseover", SUBMARINE.showStoryPointsSum);
 });
