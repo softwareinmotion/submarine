@@ -21,15 +21,23 @@
 </div>
 <div class="field">
   <%= f.label :story_points %>
-  <%= f.text_field :story_points %>
+  <div>
+    <% [0, 0.5, 1, 3, 5, 8, 13, 20].each do |number| %>
+      <%= image_tag "sp_#{number}.png" %>
+    <% end %>
+  </div>
 </div>
 <div class="field">
   <%= f.label :type %>
-  <%= f.select :type, @types %>
+  <% ['userstory', 'task', 'bug'].each do |type| %>
+    <%= image_tag "#{type}.png" %>
+  <% end %>
 </div>
 <div class="field">
   <%= f.label :project_id %>
-  <%= f.select :project_id, @projects %>
+  <% ['cherokey', 'lisaweb', 'submarine', 'sonstiges'].each do |project| %>
+  <%= image_tag "logo_#{project}.png" %>
+  <% end %>
 </div>
 <div class="actions">
   <%= f.submit t('save') %>
