@@ -58,24 +58,48 @@ ul.connectedSortable {
         padding-top: 3px;
       }
       
-      div:nth-child(1) {
+      div.project_logo {
         width: 40px;
         padding-left: 3px;
       }
 
-      div:nth-child(2) {
+      div.issue_name {
         overflow: hidden;
       }
 
       div.issue_type {
         float: right;
         width: 30px;
+        margin-top: 2px;
       }
 
       div.issue_id {
         float: right;
         width: 40px;
         text-align: left;
+      }  
+        
+      div.issue_story_points {
+        font-size: 8pt;
+        font-weight: bold;
+        color: #339A97;
+        height: 22px;
+        width: 48px;
+        margin-top: -2px;
+        float: right;
+      }
+
+      div.description {
+        max-width: 490px;
+        margin-left: 40px;
+        padding-left: 3px;
+        color: gray;
+        font-size: 8pt;
+        overflow: hidden;
+      }
+    
+      div.short {
+        height: 2.4ex;
       }
       
       div.controls_container {
@@ -92,19 +116,7 @@ ul.connectedSortable {
         }
       }      
     }
-    
-    .issue_story_points {
-    }
 
-    div.description {
-      color: gray;
-      font-size: 8pt;
-      max-width: 490px;
-    }
-    
-    div.short {
-      height: 2.4ex;
-    }
   }
 }
 
