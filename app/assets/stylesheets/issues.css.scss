@@ -1,8 +1,15 @@
 /* http://colorschemedesigner.com/#3J31Tw0w0w0w0 */
 
-$li_border: 1px solid #ddd;
+$default_border: 1px solid #ddd;
+$article_default_width: 600px;
 
-@mixin ul-base {
+.log {
+  float: left;
+  width: $article_default_width;
+  padding: 0 10px;
+}
+
+@mixin ul_base {
   width: 100%;
   list-style-type: none; 
   margin: 0; 
@@ -12,22 +19,26 @@ $li_border: 1px solid #ddd;
   background: white;
 }
 
-ul.list_header {
-  @include ul-base;
+@mixin ul_header {
   border-radius: 2px 2px;
-  border: $li_border;
+  border: $default_border;
   background: -webkit-linear-gradient(#F2F1F0 0%,#DDD 30px);
   background: -moz-linear-gradient(#F2F1F0 0%,#DDD 30px);
   background: -o-linear-gradient(#F2F1F0 0%,#DDD 30px);
   background: linear-gradient(#F2F1F0 0%,#DDD 30px);
   font-size: 14pt;
+}
+
+ul.list_header {
+  @include ul_base;
+  @include ul-header;
 
   li {
     float: left;
     padding: 10px 5px;
   }
 
-  li.btn_in_header {
+  li#btn_in_header {
     float: right;
     padding: 5px 5px;
     
@@ -35,20 +46,31 @@ ul.list_header {
       padding-top: 5px;
     }
   }
+  
+  li#story_points_sum {
+    float: right;
+    padding: 7px 5px;
+    background: url("sp_sum.png") no-repeat center;
+    margin-top: 6px;
+    margin-right: 83px;
+    font-size: 11pt;
+    color: white;
+  }
 }
 
 ul.connectedSortable { 
-  @include ul-base;
+  @include ul_base;
+  
   min-height: 150px;
-  border-left: $li_border;
-  border-right: $li_border;
+  border-left: $default_border;
+  border-right: $default_border;
 
   li {
     margin: 0; 
     cursor:pointer;cursor:hand;
     clear: both;
     padding-bottom: 5px;
-    border-bottom: $li_border;
+    border-bottom: $default_border;
     
     .issue_line {
       clear: both;
@@ -116,7 +138,56 @@ ul.connectedSortable {
         }
       }      
     }
-
+  }
+  
+  form {
   }
 }
+
+.issue_form {
+  width: $article_default_width;
+  border: $default_border;
+  margin-bottom: 50px;
+  background: white;
+  
+  ul.form_header {
+    @include ul_header;
+    list-style-type: none; 
+    margin-bottom: 30px;
+    padding: 0;
+    margin-top: 0;
+  }
+  
+  .field {
+	  padding-bottom: 8px;
+  }
+
+  label {
+    width: 120px;
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+  }
+  
+  input[type="text"] {
+	  width: 400px;
+  }
+  
+  textarea {
+	  width: 400px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
