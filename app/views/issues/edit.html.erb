@@ -1,5 +1,16 @@
-<h2><%= t 'issue.edit' %></h2>
+<section id="main">
 
-<%= render 'form' %>
+	<article class="issue_form">
 
-<%= link_to t('cancel'), issues_path %>
+		<ul class="form_header">
+			<li><%= t 'issue.edit' %></li>
+		</ul>
+
+
+		<%= render 'form' %>
+
+		<%= link_to t('cancel'), issues_path %>
+
+	</article>
+
+</section>
