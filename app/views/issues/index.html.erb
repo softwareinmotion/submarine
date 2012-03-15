@@ -1,11 +1,11 @@
 <section id="main">
 
 <article class="log" id="backlog">
-<%= render :partial => "list", :locals => {:list_title => "Backlog", :list_id => "backlog_list", :list_items => @backlog_issues, :show_new_btn => true} %>
+	<%= render :partial => "list", :locals => {:is_sprint => false, :list_items => @backlog_issues} %>
 </article>
 
 <article class="log" id="sprint">
-<%= render :partial => "list", :locals => {:list_title => "Sprint Backlog", :list_id => "sprint_backlog_list", :list_items => @sprint_issues, :show_new_btn => false} %>
+	<%= render :partial => "list", :locals => {:is_sprint => true, :list_items => @sprint_issues} %>
 </article>
 
 </section>
