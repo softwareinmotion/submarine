@@ -41,7 +41,10 @@
   <% end %>
 </div>
 <div class="actions">
-  <button type="submit"><%= image_tag "btn_save.png" %></button>
-  <button type="button" id="btn_cancel"><%= image_tag "btn_cancel.png" %></button>
+  <button type="submit"><%= image_tag "btn_save.png" %></button> 
+  <%= link_to issues_path, class: "button" do %>
+    <%= image_tag "btn_cancel.png" %> 
+  <% end %>
+  <!--<button type="button" id="btn_cancel"><%= image_tag "btn_cancel.png" %></button> -->
 </div>
 <% end %>
