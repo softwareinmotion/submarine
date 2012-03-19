@@ -7,7 +7,7 @@ de:
         id: 'Nr.'
         name: 'Name'
         description: 'Beschreibung'
-        story_points: 'SP'
+        story_points: 'Story Points'
         type: 'Typ'
         project_id: 'Produkt'
   issue:

@@ -19,7 +19,7 @@
       <div class="issue_name"><%= issue.name %></div>
       <div class="issue_id">#<%= issue.id %></div>
       <div class="issue_type"><%= image_tag("#{issue.type.downcase}.png") %></div>
-      <div class="issue_story_points"><%= image_tag("sp_#{issue.formatted_story_points}.png", :size => "40x39") if issue.story_points %>&nbsp;</div>
+      <div class="issue_story_points"><%= image_tag("sp_#{issue.formatted_story_points}.png", :size => "22x22") if issue.story_points %>&nbsp;</div>
       &nbsp;
     </div>
     <div class="issue_line">
