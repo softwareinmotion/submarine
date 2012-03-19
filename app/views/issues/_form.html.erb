@@ -19,12 +19,13 @@
   <%= f.label :description %>
   <%= f.text_area :description %>
 </div>
-<div class="field">
+<div class="field sp_radio_images">
   <%= f.label :story_points %>
   <div>
     <% [0, 0.5, 1, 3, 5, 8, 13, 20].each do |number| %>
-      <%= image_tag "sp_#{number}.png" %>
+      <div class="radio_image" data-sp-value="<%= number %>"><%= image_tag "sp_#{number}.png" %></div>
     <% end %>
+    <%= f.hidden_field :story_points %>
   </div>
 </div>
 <div class="field">
@@ -41,5 +42,7 @@
 </div>
 <div class="actions">
   <%= f.submit t('save') %>
+  <button type="submit"><%= image_tag "btn_save.png" %></button>
+  <button type="button" id="btn_cancel"><%= image_tag "btn_cancel.png" %></button>
 </div>
 <% end %>
