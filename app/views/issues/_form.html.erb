@@ -19,7 +19,7 @@
   <%= f.label :description %>
   <%= f.text_area :description %>
 </div>
-<div class="field sp_radio_images">
+<div class="field sp_radio_images image_select">
   <%= f.label :story_points %>
   <div>
     <% [0, 0.5, 1, 3, 5, 8, 13, 20].each do |number| %>
@@ -28,20 +28,19 @@
     <%= f.hidden_field :story_points %>
   </div>
 </div>
-<div class="field">
+<div class="field type_radio_images image_select">
   <%= f.label :type %>
   <% ['userstory', 'task', 'bug'].each do |type| %>
-    <%= image_tag "#{type}.png" %>
+    <div class="radio_image"><%= image_tag "#{type}.png" %></div>
   <% end %>
 </div>
-<div class="field">
+<div class="field project_radio_images image_select">
   <%= f.label :project_id %>
   <% ['cherokey', 'lisaweb', 'submarine', 'sonstiges'].each do |project| %>
-  <%= image_tag "logo_#{project}.png" %>
+  <div class="radio_image"><%= image_tag "logo_#{project}.png" %></div>
   <% end %>
 </div>
 <div class="actions">
-  <%= f.submit t('save') %>
   <button type="submit"><%= image_tag "btn_save.png" %></button>
   <button type="button" id="btn_cancel"><%= image_tag "btn_cancel.png" %></button>
 </div>
