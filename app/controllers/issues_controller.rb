@@ -72,17 +72,17 @@ class IssuesController < ApplicationController
   def update
     types = Issue.children_type_names
     @issue = nil
+    
     types.each do |t|
       @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
-      if params[@type.to_sym]
+      if params[@type]
         @issue = Issue.find(params[:id])
-        new_type = params[@type.to_sym].delete :type
+        new_type = params[@type].delete :type
         @issue[:type] = new_type
         break
       end
     end
-
-    if @issue && @issue.update_attributes(params[@type.to_sym])
+    if @issue && @issue.update_attributes(params[@type])
       redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
     else
       @issue = Issue.find(params[:id])

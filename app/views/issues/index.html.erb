@@ -11,15 +11,18 @@
 </section>
 
 <script>
-	$(function() {
-		$("#sprint_backlog_list, #backlog_list").sortable({
-			connectWith: ".connectedSortable",
-      start: function(event,ui){
-        $(ui.item).addClass("dragging");
-      },
-      stop: SUBMARINE.changeListHandler,
-		}).disableSelection();
-  });
+$(function() {
+	$("#sprint_backlog_list, #backlog_list").sortable({
+		connectWith: ".connectedSortable",
+		start: function(event,ui){
+			$(ui.item).addClass("dragging");
+		},
+		stop: SUBMARINE.changeListHandler,
+	}).disableSelection();
+	SUBMARINE.showStoryPointsSum();
+	$("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
+	$("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
+});
 SUBMARINE.changeListURL = "<%= change_list_path %>";
 SUBMARINE.messages.save_failed = '<%= t 'issue.save_failed' %>';
 </script>
