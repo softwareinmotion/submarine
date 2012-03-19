@@ -65,15 +65,27 @@ SUBMARINE = {
     });
     $('#story_points_sum').html(sum);
   },
-  check_radio_image: function(){
-    // animate
-    $('.sp_radio_images .radio_image').addClass('inactive');
-    $(this).animate({transform: 'translateY(-10px) scale(1.3)'});
-    $(this).removeClass('inactive');
-    $('.radio_image.inactive').animate({transform: 'translateY(0px) scale(1)'});
+  check_sp_radio_image: function(){
+    SUBMARINE.animate_radio_image(this, 'sp_radio_images');
 
     // set value in form
     $(this).siblings('input').val($(this).attr('data-sp-value'));
+  },
+  check_type_radio_image: function(){
+    SUBMARINE.animate_radio_image(this, 'type_radio_images');
+  },
+  check_project_radio_image: function(){
+    SUBMARINE.animate_radio_image(this, 'project_radio_images');
+  },
+  animate_radio_image: function(element, image_type){
+    $('.' + image_type + ' .radio_image').addClass('inactive');
+    var translation = '5px';
+    if(image_type == 'sp_radio_images') {
+      translation = '10px';
+    }
+    $(element).animate({transform: 'translateY(-' + translation + ') scale(1.3)'});
+    $(element).removeClass('inactive');
+    $('.radio_image.inactive').animate({transform: 'translateY(0px) scale(1)'});
   },
   messages: {}
 }
