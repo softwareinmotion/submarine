@@ -75,34 +75,54 @@ span {
 }
 
 .dragging {
-  background-color: #6E0D25 !important;
+  background-color: #C2474B !important;
   color: white;
 }
 
 #notice {
   color: green; }
 
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table; }
+.field_with_errors > input,
+ .field_with_errors > textarea {
+  border: 2px solid #C2474B;
+  border-radius: 2px 2px 2px 2px;
+}
 
 #error_explanation {
-  width: 450px;
-  border: 2px solid red;
+  width: 386px;
+  border: 1px solid #C2474B;
+  border-radius: 2px 2px 2px 2px;
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
+  margin-left: 130px;
+  background: -webkit-linear-gradient(#DDD 0%, #F2F1F0);
+  background: -moz-linear-gradient(#DDD 0%, #F2F1F0);
+  background: -o-linear-gradient(#DDD 0%, #F2F1F0);
+  background: linear-gradient(#DDD 0%, #F2F1F0);
   h2 {
     text-align: left;
-    font-weight: bold;
-    padding: 5px 5px 5px 15px;
-    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    padding: 5px;
+    padding-bottom: 2px;
+    font-size: 10.5pt;
     margin: -7px;
     margin-bottom: 0px;
-    background-color: #c00;
-    color: #fff; }
-  ul li {
-    font-size: 12px;
-    list-style: square; } }
+    color: #555;
+  }
+  ul {
+    padding-left: 0;
+    li {
+      font-size: 8.5pt;
+      list-style: none;
+      padding-bottom: 3px;
+      margin-bottom: 4px;
+      
+      h3 {
+        font-weight: bold;
+        margin: 2px 0;
+      }
+    }
+  }
+}

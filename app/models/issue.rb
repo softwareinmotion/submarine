@@ -12,7 +12,7 @@ class Issue < ActiveRecord::Base
   scope :in_sprint, where("issues.sprint_flag = ?", true)
 
   def self.children_type_names
-    ['Bug', 'Task', 'UserStory']
+    ['UserStory', 'Task', 'Bug']
   end
 
   def formatted_story_points
