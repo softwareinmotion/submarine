@@ -20,10 +20,6 @@ class IssuesController < ApplicationController
     end 
   end
 
-  def show
-    @issue = Issue.find(params[:id])
-  end
-
   def new
     @issue = Issue.new
     prepare_form
@@ -38,7 +34,8 @@ class IssuesController < ApplicationController
     if params[:issue]
       type = params[:issue][:type]
       if Issue.children_type_names.include? type
-        model_class = Kernel.const_get type 
+        model_class = Kernel.const_get type
+        params[:issue][:story_points] = nil if params[:issue][:story_points] == 'unknown'
         @issue = model_class.new(params[:issue])
       end
     else
@@ -49,10 +46,12 @@ class IssuesController < ApplicationController
         if params[@type.to_sym]
           model_class = Kernel.const_get t
           @issue = model_class.new(params[@type.to_sym])
+          params[@type.to_sym][:story_points] = nil if params[@type.to_sym][:story_points] == 'unknown'
           break
         end
       end
     end
+
     old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
     @issue.predecessor_id = nil
     @issue.sprint_flag = false
@@ -82,10 +81,12 @@ class IssuesController < ApplicationController
         break
       end
     end
+
+    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
+
     if @issue && @issue.update_attributes(params[@type])
       redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
     else
-      @issue = Issue.find(params[:id])
       prepare_form
       render action: "edit"
     end
@@ -134,7 +135,8 @@ class IssuesController < ApplicationController
     end
     a_number = 0
     @types = Issue.children_type_names.map do |name|
-      [name, name]
+      name
     end
+    @story_points = ['unknown', 0, 0.5, 1, 2, 3, 5, 8, 13, 20]
   end
 end

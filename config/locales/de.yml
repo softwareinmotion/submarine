@@ -1,6 +1,7 @@
 de:
   save: 'Speichern'
   cancel: 'Abbrechen'
+  errors_occured: 'Folgende Fehler sind aufgetreten'
   activerecord:
     attributes:
       issue:
@@ -10,8 +11,10 @@ de:
         story_points: 'Story Points'
         type: 'Typ'
         project_id: 'Produkt'
+    errors:
+      messages:
+        blank: 'Das Feld darf nicht leer sein.'
   issue:
     new: 'Eintrag erstellen'
     edit: 'Eintrag bearbeiten'
-    delete: 'Eintrag löschen'
-        
+    delete: 'Eintrag löschen' 
