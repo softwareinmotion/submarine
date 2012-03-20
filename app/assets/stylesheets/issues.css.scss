@@ -20,6 +20,7 @@ $article_default_width: 600px;
 }
 
 @mixin ul_header {
+  height: 43px;
   border-radius: 2px 2px;
   border: $default_border;
   background: -webkit-linear-gradient(#F2F1F0 0%,#DDD 30px);
@@ -31,7 +32,7 @@ $article_default_width: 600px;
 
 ul.list_header {
   @include ul_base;
-  @include ul-header;
+  @include ul_header;
 
   li {
     float: left;
@@ -52,9 +53,12 @@ ul.list_header {
     padding: 7px 5px;
     background: url("sp_sum.png") no-repeat center;
     margin-top: 6px;
-    margin-right: 83px;
+    margin-right: 88px;
     font-size: 11pt;
     color: white;
+    width: 30px;
+    text-align: center;
+    vertical-align: middle;
   }
 }
 
@@ -99,6 +103,7 @@ ul.connectedSortable {
         float: right;
         width: 40px;
         text-align: left;
+        color: gray;
       }  
         
       div.issue_story_points {
@@ -156,10 +161,20 @@ ul.connectedSortable {
     margin-bottom: 30px;
     padding: 0;
     margin-top: 0;
+
+    li {
+      float: left;
+      padding: 10px 5px;
+    }
   }
   
   .field {
 	  padding-bottom: 8px;
+    clear: both;
+  }
+
+  .image_select {
+    height: 20px;
   }
 
   label {
@@ -177,7 +192,9 @@ ul.connectedSortable {
 	  width: 400px;
   }
   
-  .sp_radio_images {
+  .sp_radio_images,
+   .type_radio_images,
+   .project_radio_images {
     padding-top: 12px;
   }
 
@@ -186,7 +203,14 @@ ul.connectedSortable {
     height: 22px;
     width: 21px;
     padding-right: 10px;
+    width: auto;
     -webkit-transform: translate(0 30px);
+  }
+
+  .actions {
+    margin: 15px auto;
+    display: block;
+    width: 255px;
   }
 }
 

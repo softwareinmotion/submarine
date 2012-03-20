@@ -1,5 +1,21 @@
-<h2><%= t 'issue.new' %></h2>
+<section id="main">
 
-<%= render 'form' %>
+	<article class="issue_form">
 
-<%= link_to t('cancel'), issues_path %>
+		<ul class="form_header">
+			<li><%= t 'issue.new' %></li>
+		</ul>
+
+		<%= render 'form' %>
+
+	</article>
+
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("div.sp_radio_images div.radio_image").click(SUBMARINE.check_sp_radio_image);
+  $("div.type_radio_images div.radio_image").click(SUBMARINE.check_type_radio_image);
+  $("div.project_radio_images div.radio_image").click(SUBMARINE.check_project_radio_image);
+});
+</script>
