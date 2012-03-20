@@ -1,11 +1,14 @@
 <%= form_for(@issue) do |f| %>
 <% if @issue.errors.any? %>
 <div id="error_explanation">
-  <h2><%= pluralize(@issue.errors.count, "error") %> prohibited this issue from being saved:</h2>
+  <h2><%= t "errors_occured" %>:</h2>
 
   <ul>
-    <% @issue.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
+    <% @issue.errors.messages.each do |key, msg| %>
+    <li>
+      <h3><%= t 'activerecord.attributes.issue.' + key.to_s %></h3>
+      <%= msg[0] %>
+    </li>
     <% end %>
   </ul>
 </div>
@@ -22,29 +25,30 @@
 <div class="field sp_radio_images image_select">
   <%= f.label :story_points %>
   <div>
-    <% [0, 0.5, 1, 3, 5, 8, 13, 20].each do |number| %>
-      <div class="radio_image" data-sp-value="<%= number %>"><%= image_tag "sp_#{number}.png" %></div>
+    <% @story_points.each do |number| %>
+      <div class="radio_image sp_<%= number %>" data-sp-value="<%= number %>"><%= image_tag "sp_#{number}_gray.png" %></div>
     <% end %>
-    <%= f.hidden_field :story_points %>
+    <%= f.hidden_field :story_points, :value => (@issue.story_points ? @issue.formatted_story_points : @story_points[0]) %>
   </div>
 </div>
 <div class="field type_radio_images image_select">
   <%= f.label :type %>
-  <% ['userstory', 'task', 'bug'].each do |type| %>
-    <div class="radio_image"><%= image_tag "#{type}.png" %></div>
+  <% @types.each do |type| %>
+    <div class="radio_image <%= type.downcase %>" data-type="<%= type %>"><%= image_tag "#{type.downcase}_gray.png" %></div>
   <% end %>
+    <%= f.hidden_field :type, :value => (@issue.type ? @issue.type : @types[0]) %>
 </div>
 <div class="field project_radio_images image_select">
   <%= f.label :project_id %>
-  <% ['cherokey', 'lisaweb', 'submarine', 'sonstiges'].each do |project| %>
-  <div class="radio_image"><%= image_tag "logo_#{project}.png" %></div>
+  <% @projects.each do |project| %>
+  <div class="radio_image <%= project[0].downcase %>" data-project-id="<%= project[1] %>"><%= image_tag "logo_#{project[0].downcase}_gray.png" %></div>
   <% end %>
+  <%= f.hidden_field :project_id, :value => (@issue.project_id ? @issue.project_id : @projects[0][1]) %>
 </div>
 <div class="actions">
-  <button type="submit"><%= image_tag "btn_save.png" %></button> 
+  <%= image_submit_tag "btn_save.png" %>
   <%= link_to issues_path, class: "button" do %>
     <%= image_tag "btn_cancel.png" %> 
   <% end %>
-  <!--<button type="button" id="btn_cancel"><%= image_tag "btn_cancel.png" %></button> -->
 </div>
 <% end %>

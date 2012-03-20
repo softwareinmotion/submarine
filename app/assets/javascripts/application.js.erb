@@ -73,19 +73,49 @@ SUBMARINE = {
   },
   check_type_radio_image: function(){
     SUBMARINE.animate_radio_image(this, 'type_radio_images');
+
+    // set value in form
+    $(this).siblings('input').val($(this).attr('data-type'));
   },
   check_project_radio_image: function(){
     SUBMARINE.animate_radio_image(this, 'project_radio_images');
+
+    // set value in form
+    $(this).siblings('input').val($(this).attr('data-project-id'))
   },
   animate_radio_image: function(element, image_type){
-    $('.' + image_type + ' .radio_image').addClass('inactive');
+    var old_element = $('.' + image_type + ' .radio_image.active')[0];
+    if(!!old_element) {
+      var old_el_img = $(old_element).children('img')[0];
+      $(old_element).animate({transform: 'translateY(0px) scale(1)'});
+      $(old_el_img).attr('src', $(old_el_img).attr("src").replace("\.png", "_gray\.png"));
+      $(old_element).removeClass('active');
+    }
     var translation = '5px';
     if(image_type == 'sp_radio_images') {
       translation = '10px';
     }
+    var img = $(element).children('img')[0];
+    if($(img).attr("src").indexOf('_gray') > 0) {
+      $(img).attr("src", $(img).attr("src").replace("_gray\.png", "\.png"));
+    }
     $(element).animate({transform: 'translateY(-' + translation + ') scale(1.3)'});
-    $(element).removeClass('inactive');
-    $('.radio_image.inactive').animate({transform: 'translateY(0px) scale(1)'});
+    $(element).addClass('active');
+  },
+  preselect_radio_images: function(story_points, type, project) {
+    var sp_div = $('div.sp_' + story_points.replace('.', '_'));
+    if(sp_div.size() <= 0) {
+      sp_div = $('div.sp_unknown');
+    }
+    SUBMARINE.animate_radio_image(sp_div[0], 'sp_radio_images');
+    var type_div = $('div.' + type.toLowerCase());
+    if(type_div.size() > 0) {
+      SUBMARINE.animate_radio_image(type_div[0], 'type_radio_images');
+    }
+    var project_div = $('div.' + project.toLowerCase());
+    if(project_div.size() > 0) {
+      SUBMARINE.animate_radio_image(project_div[0], 'project_radio_images');
+    }
   },
   messages: {}
 }
