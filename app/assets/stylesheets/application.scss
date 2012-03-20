@@ -9,10 +9,23 @@
 $strip-line: 1px solid #ddd;
 
 #flashnotice {
-  color: #009D91;
+  color: #339A97;
   border: 1px solid #009D91;
+  border-radius: 2px 2px 2px 2px;
+  background: -webkit-linear-gradient(#DDD 0%, #F2F1F0);
+  background: -moz-linear-gradient(#DDD 0%, #F2F1F0);
+  background: -o-linear-gradient(#DDD 0%, #F2F1F0);
+  background: linear-gradient(#DDD 0%, #F2F1F0);
   min-width: 100px;
   width: 450px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  text-align: center;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 10.5pt;
 }
 
 html {
