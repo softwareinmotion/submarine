@@ -50,15 +50,27 @@ ul.list_header {
   
   li#story_points_sum {
     float: right;
-    padding: 7px 5px;
-    background: url("sp_sum.png") no-repeat center;
-    margin-top: 6px;
-    margin-right: 88px;
-    font-size: 11pt;
-    color: white;
-    width: 30px;
-    text-align: center;
-    vertical-align: middle;
+    margin-right: 83px;
+    margin-top: -5px;
+    span {
+      height: 22px;
+      background: url("sp_sum.png") no-repeat center;
+      font-size: 11pt;
+      color: white;
+      width: 30px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    img#half_story_point_small {
+      padding-top: 8px;
+      margin-right: -22px;
+    }
+
+    img#half_story_point {
+      margin-right: 5px;
+      margin-top: 2px;
+    }
   }
 }
 
