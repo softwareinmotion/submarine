@@ -1,7 +1,11 @@
 <ul class="list_header">
   <% if is_sprint %>
     <li>Sprint Backlog</li>
-    <li id="story_points_sum"></li>
+    <li id="story_points_sum">
+      <span></span>
+      <%= image_tag "sp_sum_0.5.png", :id => "half_story_point" %>
+      <%= image_tag "sp_0.5.png", :id => "half_story_point_small" %>
+    </li>
   <% else %>
     <li>Backlog</li>
     <li id="btn_in_header">
