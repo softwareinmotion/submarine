@@ -34,6 +34,7 @@ html {
   background: -o-linear-gradient(#DDD 0%,#F2F1F0 300px);
   background: linear-gradient(#DDD 0%,#F2F1F0 300px);
   margin: 0;
+  height: 100%;
 }
 
 body {
@@ -67,6 +68,10 @@ footer {
   padding: 15px 0;
   clear: both;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 a {
