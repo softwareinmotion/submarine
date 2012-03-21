@@ -55,15 +55,28 @@ SUBMARINE = {
     $(this).find('div.controls').fadeOut(80);
   },
   showStoryPointsSum: function(){
-    var sum = 0;
+    var sum = 0.0;
     var elements = $('ul#sprint_backlog_list > li');
+    $('#half_story_point_small').hide();
+    $('#half_story_point').hide();
+    $('#story_points_sum > span').show();
     $.each(elements, function(i, element) {
-      value = parseInt($(element).attr('data-story_points'), 10);
+      value = parseFloat($(element).attr('data-story_points'), 10);
       if(!!value) {
         sum += value;
       }
     });
-    $('#story_points_sum').html(sum);
+    if(Math.floor(sum + 0.5) != sum) {
+      if(sum >= 1) {
+        $('#story_points_sum > span').html(Math.floor(sum));
+        $('#half_story_point_small').show();
+      } else {
+        $('#half_story_point').show();
+        $('#story_points_sum > span').hide();
+      }
+    } else {
+      $('#story_points_sum > span').html(Math.floor(sum));
+    }
   },
   check_sp_radio_image: function(){
     SUBMARINE.animate_radio_image(this, 'sp_radio_images');
