@@ -101,7 +101,7 @@ SUBMARINE = {
     if(!!old_element) {
       var old_el_img = $(old_element).children('img')[0];
       $(old_element).animate({transform: 'translateY(0px) scale(1)'});
-      $(old_el_img).attr('src', $(old_el_img).attr("src").replace("\.png", "_gray\.png"));
+      $(old_el_img).attr('src', $(old_el_img).attr("data-img_light"));
       $(old_element).removeClass('active');
     }
     var translation = '5px';
@@ -109,8 +109,8 @@ SUBMARINE = {
       translation = '10px';
     }
     var img = $(element).children('img')[0];
-    if($(img).attr("src").indexOf('_gray') > 0) {
-      $(img).attr("src", $(img).attr("src").replace("_gray\.png", "\.png"));
+    if($(img).attr("src").indexOf('_light') > 0) {
+      $(img).attr("src", $(img).attr("data-img_heavy"));
     }
     $(element).animate({transform: 'translateY(-' + translation + ') scale(1.3)'});
     $(element).addClass('active');
