@@ -3,8 +3,8 @@
     <li>Sprint Backlog</li>
     <li id="story_points_sum">
       <span></span>
-      <%= image_tag "sp_sum_0.5.png", :id => "half_story_point" %>
-      <%= image_tag "sp_0.5.png", :id => "half_story_point_small" %>
+      <%= image_tag "sp_sum_0.5_heavy.png", :id => "half_story_point" %>
+      <%= image_tag "sp_0.5_heavy.png", :id => "half_story_point_small" %>
     </li>
   <% else %>
     <li>Backlog</li>
@@ -19,11 +19,11 @@
   <% list_items.each do |issue| %>
 	<li data-id="<%= issue.id %>" id="#<%= issue.id %>" data-story_points="<%= issue.formatted_story_points %>">
     <div class="issue_line">
-      <div class="project_logo"><%= image_tag("logo_#{issue.project.name.downcase}.png") if issue.project %></div>
+      <div class="project_logo"><%= image_tag("logo_#{issue.project.name.downcase}_heavy.png") if issue.project %></div>
       <div class="issue_name"><%= issue.name %></div>
       <div class="issue_id">#<%= issue.id %></div>
-      <div class="issue_type"><%= image_tag("#{issue.type.downcase}.png") %></div>
-      <div class="issue_story_points"><%= image_tag("sp_#{issue.formatted_story_points}.png", :size => "22x22") if issue.story_points %>&nbsp;</div>
+      <div class="issue_type"><%= image_tag("#{issue.type.downcase}_heavy.png") %></div>
+      <div class="issue_story_points"><%= image_tag("sp_#{issue.formatted_story_points}_heavy.png", :size => "22x22") if issue.story_points %>&nbsp;</div>
       &nbsp;
     </div>
     <div class="issue_line">
