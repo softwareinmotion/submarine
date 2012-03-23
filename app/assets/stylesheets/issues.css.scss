@@ -73,6 +73,17 @@ ul.list_header {
       margin-top: 2px;
     }
   }
+  
+  li#show_finish_issues {
+    float: right;
+    margin-right: -132px;
+    margin-top: -5px;
+    
+    img {
+      padding-top: 5px;
+      width: 24px;
+    }
+  }
 }
 
 ul.connectedSortable { 
