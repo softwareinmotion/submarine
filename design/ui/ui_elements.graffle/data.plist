@@ -247,7 +247,7 @@
 			<key>ShapeImageRect</key>
 			<string>{{2, 2}, {22, 22}}</string>
 			<key>ShapeName</key>
-			<string>pdfImport-5649.1</string>
+			<string>pdfImport-5644.1</string>
 			<key>ShouldExport</key>
 			<string>YES</string>
 			<key>StrokePath</key>
@@ -258,49 +258,53 @@
 						<key>element</key>
 						<string>MOVETO</string>
 						<key>point</key>
-						<string>{0.346154, 0.375}</string>
+						<string>{0.26923001, 0.307693}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.26923001, 0.328848}</string>
+						<key>control2</key>
+						<string>{0.25192299, 0.346154}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0.230768, 0.346154}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.20961601, 0.346154}</string>
+						<key>control2</key>
+						<string>{0.192307, 0.328848}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0.192307, 0.307693}</string>
 					</dict>
 					<dict>
 						<key>element</key>
 						<string>LINETO</string>
 						<key>point</key>
-						<string>{-0.346154, 0.375}</string>
+						<string>{0.192307, -0.262615}</string>
 					</dict>
 					<dict>
+						<key>control1</key>
+						<string>{0.192307, -0.28369099}</string>
+						<key>control2</key>
+						<string>{0.20961601, -0.30107701}</string>
 						<key>element</key>
-						<string>LINETO</string>
+						<string>CURVETO</string>
 						<key>point</key>
-						<string>{-0.346154, -0.375}</string>
+						<string>{0.230768, -0.30107701}</string>
 					</dict>
 					<dict>
+						<key>control1</key>
+						<string>{0.25192299, -0.30107701}</string>
+						<key>control2</key>
+						<string>{0.26923001, -0.28369099}</string>
 						<key>element</key>
-						<string>LINETO</string>
+						<string>CURVETO</string>
 						<key>point</key>
-						<string>{0.083538398, -0.375}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{0.115385, -0.34906399}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{0.115385, -0.1875}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{0.31430799, -0.1875}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{0.346154, -0.16156401}</string>
+						<string>{0.26923001, -0.262615}</string>
 					</dict>
 					<dict>
 						<key>element</key>
@@ -310,13 +314,309 @@
 						<key>element</key>
 						<string>MOVETO</string>
 						<key>point</key>
-						<string>{0.147231, -0.5}</string>
+						<string>{0.0384617, 0.307693}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.0384617, 0.328848}</string>
+						<key>control2</key>
+						<string>{0.0211525, 0.346154}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0, 0.346154}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.0211544, 0.346154}</string>
+						<key>control2</key>
+						<string>{-0.0384617, 0.328848}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.0384617, 0.307693}</string>
 					</dict>
 					<dict>
 						<key>element</key>
 						<string>LINETO</string>
 						<key>point</key>
-						<string>{-0.5, -0.5}</string>
+						<string>{-0.0384617, -0.262615}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.0384617, -0.28369099}</string>
+						<key>control2</key>
+						<string>{-0.0211544, -0.30107701}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0, -0.30107701}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.0211525, -0.30107701}</string>
+						<key>control2</key>
+						<string>{0.0384617, -0.28369099}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0.0384617, -0.262615}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>CLOSE</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>MOVETO</string>
+						<key>point</key>
+						<string>{-0.19230799, 0.307693}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.19230799, 0.328848}</string>
+						<key>control2</key>
+						<string>{-0.20961601, 0.346154}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.23077001, 0.346154}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.25192299, 0.346154}</string>
+						<key>control2</key>
+						<string>{-0.269232, 0.328848}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.269232, 0.307693}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{-0.269232, -0.262615}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.269232, -0.28369099}</string>
+						<key>control2</key>
+						<string>{-0.25192299, -0.30107701}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.23077001, -0.30107701}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.20961601, -0.30107701}</string>
+						<key>control2</key>
+						<string>{-0.19230799, -0.28369099}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.19230799, -0.262615}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>CLOSE</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>MOVETO</string>
+						<key>point</key>
+						<string>{0.5, -0.46153799}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.5, -0.482694}</string>
+						<key>control2</key>
+						<string>{0.48269099, -0.5}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0.46153799, -0.5}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{-0.46153799, -0.5}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.48269299, -0.5}</string>
+						<key>control2</key>
+						<string>{-0.5, -0.482694}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.5, -0.46153799}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{-0.5, -0.384615}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.5, -0.36346}</string>
+						<key>control2</key>
+						<string>{-0.48269299, -0.346154}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.46153799, -0.346154}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.440386, -0.346154}</string>
+						<key>control2</key>
+						<string>{-0.42307699, -0.328848}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.42307699, -0.30769199}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{-0.42307699, 0.461539}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{-0.42307699, 0.48269501}</string>
+						<key>control2</key>
+						<string>{-0.40576899, 0.5}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{-0.384615, 0.5}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.384615, 0.5}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.40576699, 0.5}</string>
+						<key>control2</key>
+						<string>{0.42307699, 0.48269501}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0.42307699, 0.461539}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.42307699, -0.30769199}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.42307699, -0.328848}</string>
+						<key>control2</key>
+						<string>{0.440384, -0.346154}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0.46153799, -0.346154}</string>
+					</dict>
+					<dict>
+						<key>control1</key>
+						<string>{0.48269099, -0.346154}</string>
+						<key>control2</key>
+						<string>{0.5, -0.36346}</string>
+						<key>element</key>
+						<string>CURVETO</string>
+						<key>point</key>
+						<string>{0.5, -0.384615}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>CLOSE</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>MOVETO</string>
+						<key>point</key>
+						<string>{0.5, -0.46153799}</string>
+					</dict>
+				</array>
+			</dict>
+			<key>TextBounds</key>
+			<string>{{0, 0}, {1, 1}}</string>
+		</dict>
+		<dict>
+			<key>InspectorGroup</key>
+			<real>-1</real>
+			<key>ShapeImageRect</key>
+			<string>{{2, 2}, {22, 22}}</string>
+			<key>ShapeName</key>
+			<string>pdfImport-5617.1</string>
+			<key>ShouldExport</key>
+			<string>YES</string>
+			<key>StrokePath</key>
+			<dict>
+				<key>elements</key>
+				<array>
+					<dict>
+						<key>element</key>
+						<string>MOVETO</string>
+						<key>point</key>
+						<string>{-0.31818199, 0.34615499}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{-0.31818199, -0.34615299}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.045454498, -0.34615299}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.045454498, -0.115384}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.31818199, -0.115384}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.31818199, 0.34615499}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>CLOSE</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>MOVETO</string>
+						<key>point</key>
+						<string>{0.151182, -0.49999899}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{-0.5, -0.49999899}</string>
 					</dict>
 					<dict>
 						<key>element</key>
@@ -334,7 +634,7 @@
 						<key>element</key>
 						<string>LINETO</string>
 						<key>point</key>
-						<string>{0.5, -0.213375}</string>
+						<string>{0.5, -0.18269201}</string>
 					</dict>
 					<dict>
 						<key>element</key>
@@ -344,7 +644,7 @@
 						<key>element</key>
 						<string>MOVETO</string>
 						<key>point</key>
-						<string>{0.147231, -0.5}</string>
+						<string>{0.151182, -0.49999899}</string>
 					</dict>
 				</array>
 			</dict>
@@ -667,7 +967,7 @@
 			<key>ShapeImageRect</key>
 			<string>{{2, 2}, {22, 22}}</string>
 			<key>ShapeName</key>
-			<string>pdfImport-5644.1</string>
+			<string>pdfImport-5649.1</string>
 			<key>ShouldExport</key>
 			<string>YES</string>
 			<key>StrokePath</key>
@@ -678,53 +978,49 @@
 						<key>element</key>
 						<string>MOVETO</string>
 						<key>point</key>
-						<string>{0.26923001, 0.307693}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{0.26923001, 0.328848}</string>
-						<key>control2</key>
-						<string>{0.25192299, 0.346154}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{0.230768, 0.346154}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{0.20961601, 0.346154}</string>
-						<key>control2</key>
-						<string>{0.192307, 0.328848}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{0.192307, 0.307693}</string>
+						<string>{0.346154, 0.375}</string>
 					</dict>
 					<dict>
 						<key>element</key>
 						<string>LINETO</string>
 						<key>point</key>
-						<string>{0.192307, -0.262615}</string>
+						<string>{-0.346154, 0.375}</string>
 					</dict>
 					<dict>
-						<key>control1</key>
-						<string>{0.192307, -0.28369099}</string>
-						<key>control2</key>
-						<string>{0.20961601, -0.30107701}</string>
 						<key>element</key>
-						<string>CURVETO</string>
+						<string>LINETO</string>
 						<key>point</key>
-						<string>{0.230768, -0.30107701}</string>
+						<string>{-0.346154, -0.375}</string>
 					</dict>
 					<dict>
-						<key>control1</key>
-						<string>{0.25192299, -0.30107701}</string>
-						<key>control2</key>
-						<string>{0.26923001, -0.28369099}</string>
 						<key>element</key>
-						<string>CURVETO</string>
+						<string>LINETO</string>
 						<key>point</key>
-						<string>{0.26923001, -0.262615}</string>
+						<string>{0.083538398, -0.375}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.115385, -0.34906399}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.115385, -0.1875}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.31430799, -0.1875}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.346154, -0.16156401}</string>
 					</dict>
 					<dict>
 						<key>element</key>
@@ -734,53 +1030,31 @@
 						<key>element</key>
 						<string>MOVETO</string>
 						<key>point</key>
-						<string>{0.0384617, 0.307693}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{0.0384617, 0.328848}</string>
-						<key>control2</key>
-						<string>{0.0211525, 0.346154}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{0, 0.346154}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.0211544, 0.346154}</string>
-						<key>control2</key>
-						<string>{-0.0384617, 0.328848}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.0384617, 0.307693}</string>
+						<string>{0.147231, -0.5}</string>
 					</dict>
 					<dict>
 						<key>element</key>
 						<string>LINETO</string>
 						<key>point</key>
-						<string>{-0.0384617, -0.262615}</string>
+						<string>{-0.5, -0.5}</string>
 					</dict>
 					<dict>
-						<key>control1</key>
-						<string>{-0.0384617, -0.28369099}</string>
-						<key>control2</key>
-						<string>{-0.0211544, -0.30107701}</string>
 						<key>element</key>
-						<string>CURVETO</string>
+						<string>LINETO</string>
 						<key>point</key>
-						<string>{0, -0.30107701}</string>
+						<string>{-0.5, 0.5}</string>
 					</dict>
 					<dict>
-						<key>control1</key>
-						<string>{0.0211525, -0.30107701}</string>
-						<key>control2</key>
-						<string>{0.0384617, -0.28369099}</string>
 						<key>element</key>
-						<string>CURVETO</string>
+						<string>LINETO</string>
 						<key>point</key>
-						<string>{0.0384617, -0.262615}</string>
+						<string>{0.5, 0.5}</string>
+					</dict>
+					<dict>
+						<key>element</key>
+						<string>LINETO</string>
+						<key>point</key>
+						<string>{0.5, -0.213375}</string>
 					</dict>
 					<dict>
 						<key>element</key>
@@ -790,183 +1064,7 @@
 						<key>element</key>
 						<string>MOVETO</string>
 						<key>point</key>
-						<string>{-0.19230799, 0.307693}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.19230799, 0.328848}</string>
-						<key>control2</key>
-						<string>{-0.20961601, 0.346154}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.23077001, 0.346154}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.25192299, 0.346154}</string>
-						<key>control2</key>
-						<string>{-0.269232, 0.328848}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.269232, 0.307693}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{-0.269232, -0.262615}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.269232, -0.28369099}</string>
-						<key>control2</key>
-						<string>{-0.25192299, -0.30107701}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.23077001, -0.30107701}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.20961601, -0.30107701}</string>
-						<key>control2</key>
-						<string>{-0.19230799, -0.28369099}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.19230799, -0.262615}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>CLOSE</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>MOVETO</string>
-						<key>point</key>
-						<string>{0.5, -0.46153799}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{0.5, -0.482694}</string>
-						<key>control2</key>
-						<string>{0.48269099, -0.5}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{0.46153799, -0.5}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{-0.46153799, -0.5}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.48269299, -0.5}</string>
-						<key>control2</key>
-						<string>{-0.5, -0.482694}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.5, -0.46153799}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{-0.5, -0.384615}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.5, -0.36346}</string>
-						<key>control2</key>
-						<string>{-0.48269299, -0.346154}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.46153799, -0.346154}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.440386, -0.346154}</string>
-						<key>control2</key>
-						<string>{-0.42307699, -0.328848}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.42307699, -0.30769199}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{-0.42307699, 0.461539}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{-0.42307699, 0.48269501}</string>
-						<key>control2</key>
-						<string>{-0.40576899, 0.5}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{-0.384615, 0.5}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{0.384615, 0.5}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{0.40576699, 0.5}</string>
-						<key>control2</key>
-						<string>{0.42307699, 0.48269501}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{0.42307699, 0.461539}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>LINETO</string>
-						<key>point</key>
-						<string>{0.42307699, -0.30769199}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{0.42307699, -0.328848}</string>
-						<key>control2</key>
-						<string>{0.440384, -0.346154}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{0.46153799, -0.346154}</string>
-					</dict>
-					<dict>
-						<key>control1</key>
-						<string>{0.48269099, -0.346154}</string>
-						<key>control2</key>
-						<string>{0.5, -0.36346}</string>
-						<key>element</key>
-						<string>CURVETO</string>
-						<key>point</key>
-						<string>{0.5, -0.384615}</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>CLOSE</string>
-					</dict>
-					<dict>
-						<key>element</key>
-						<string>MOVETO</string>
-						<key>point</key>
-						<string>{0.5, -0.46153799}</string>
+						<string>{0.147231, -0.5}</string>
 					</dict>
 				</array>
 			</dict>
@@ -978,6 +1076,121 @@
 	<integer>8</integer>
 	<key>GraphicsList</key>
 	<array>
+		<dict>
+			<key>Class</key>
+			<string>Group</string>
+			<key>Graphics</key>
+			<array>
+				<dict>
+					<key>Bounds</key>
+					<string>{{331.95569, 36.987068}, {18.07143, 19.500002}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>873</integer>
+					<key>Shape</key>
+					<string>pdfImport-5617.1</string>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<string>0</string>
+								<key>g</key>
+								<string>0</string>
+								<key>r</key>
+								<string>0</string>
+							</dict>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{327.02722, 41.487068}, {18.07143, 19.500002}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>874</integer>
+					<key>Shape</key>
+					<string>Bezier</string>
+					<key>ShapeData</key>
+					<dict>
+						<key>UnitPoints</key>
+						<array>
+							<string>{0.5, 0.5}</string>
+							<string>{0.5, 0.5}</string>
+							<string>{-0.5, 0.5}</string>
+							<string>{-0.5, 0.5}</string>
+							<string>{-0.5, 0.5}</string>
+							<string>{-0.5, -0.5}</string>
+							<string>{-0.5, -0.5}</string>
+							<string>{-0.5, -0.5}</string>
+							<string>{-0.136364, -0.5}</string>
+							<string>{-0.136364, -0.5}</string>
+							<string>{-0.136364, -0.5}</string>
+							<string>{-0.136364, -0.346154}</string>
+							<string>{-0.136364, -0.346154}</string>
+							<string>{-0.136364, -0.346154}</string>
+							<string>{-0.31818199, -0.346154}</string>
+							<string>{-0.31818199, -0.346154}</string>
+							<string>{-0.31818199, -0.346154}</string>
+							<string>{-0.31818199, 0.34615299}</string>
+							<string>{-0.31818199, 0.34615299}</string>
+							<string>{-0.31818199, 0.34615299}</string>
+							<string>{0.31818199, 0.34615299}</string>
+							<string>{0.31818199, 0.34615299}</string>
+							<string>{0.31818199, 0.34615299}</string>
+							<string>{0.31818199, 0.26923001}</string>
+							<string>{0.31818199, 0.26923001}</string>
+							<string>{0.31818199, 0.26923001}</string>
+							<string>{0.5, 0.26923001}</string>
+							<string>{0.5, 0.26923001}</string>
+							<string>{0.5, 0.26923001}</string>
+							<string>{0.5, 0.5}</string>
+						</array>
+					</dict>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<string>0</string>
+								<key>g</key>
+								<string>0</string>
+								<key>r</key>
+								<string>0</string>
+							</dict>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+			</array>
+			<key>ID</key>
+			<integer>872</integer>
+		</dict>
 		<dict>
 			<key>Class</key>
 			<string>Group</string>
@@ -9043,7 +9256,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-03-23 14:02:32 +0000</string>
+	<string>2012-03-26 10:10:41 +0000</string>
 	<key>Modifier</key>
 	<string>Sabrina Lang</string>
 	<key>NotesVisible</key>
@@ -9074,7 +9287,7 @@
 		<key>NSPaperName</key>
 		<array>
 			<string>string</string>
-			<string>BF66E6AC-DFDA-469A-91F0-9A7D2302EC08</string>
+			<string>519A5A42-6C2E-48A8-A371-E3DCE8E7E18E</string>
 		</array>
 		<key>NSPaperSize</key>
 		<array>
@@ -9138,7 +9351,7 @@
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{-23, 0.5}, {605, 420}}</string>
+		<string>{{-23, 0}, {605, 420}}</string>
 		<key>Zoom</key>
 		<real>2</real>
 		<key>ZoomValues</key>
