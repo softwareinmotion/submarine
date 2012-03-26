@@ -6,6 +6,9 @@
       <%= image_tag "sp_sum_0.5_heavy.png", :id => "half_story_point" %>
       <%= image_tag "sp_0.5_heavy.png", :id => "half_story_point_small" %>
     </li>
+    <li id="show_finish_issues">
+      <%= image_tag "show_finished_issues.png" %> 
+    </li>
   <% else %>
     <li>Backlog</li>
     <li id="btn_in_header">
@@ -33,8 +36,12 @@
           <%= link_to edit_issue_path(issue), :title => t('issue.edit') do %>
           <%= image_tag("edit.png") %>
           <% end %>
-          <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
-          <%= image_tag("delete.png") %>
+          <% if !is_sprint %>
+            <%= link_to issue, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
+            <%= image_tag("delete.png") %>
+            <% end %>
+          <% else %>
+            <%= image_tag("finish_issue.png") %>
           <% end %>
       </div>
       </div>
