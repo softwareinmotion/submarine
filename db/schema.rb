@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120222133427) do
+ActiveRecord::Schema.define(:version => 20120326055526) do
 
   create_table "issues", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20120222133427) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "sprint_flag"
+    t.boolean  "finished",       :default => false
   end
 
   create_table "projects", :force => true do |t|
