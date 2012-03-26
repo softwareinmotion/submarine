@@ -249,4 +249,16 @@ describe Issue do
       backlog_issue_array.should == []
     end
   end
+  
+  describe '#finish' do
+    it 'should finish the only one element in the list' do 
+      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+    end
+    
+  end
+  
+  describe '#activate' do
+    it 'should' do
+    end
+  end
 end
