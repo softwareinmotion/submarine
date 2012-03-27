@@ -19,10 +19,10 @@ namespace :deploy do
     run "cd #{deploy_to}/current && nohup bundle exec thin -C thin/production_config.yml -R thin/config.ru start" 
   end
   task :stop, :roles => [:web, :app] do 
-    run "cd #{deploy_to}/current && nohup bundle exec thin -C thin/production_config.yml -R thin/config.ru stop"
+    run "cd #{deploy_to}/current && nohup bundle exec thin -C thin/production_config.yml"
   end
-#  task :restart, :roles => [:web, :app], :except => { :no_release => true } do
-#    deploy.stop
-#    deploy.start
-#  end
+  task :restart, :roles => [:web, :app], :except => { :no_release => true } do
+    deploy.stop
+    deploy.start
+  end
 end

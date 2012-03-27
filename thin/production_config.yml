@@ -5,7 +5,7 @@
     user: administrator
     group: administrator
     port: 3001
-    pid: /var/lib/submarine/current/tmp/thin.pid
+    pid: /var/lib/submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/submarine/current/config.ru
     log: /var/lib/submarine/current/log/thin.log
     max_conns: 1024
