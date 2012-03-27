@@ -29,14 +29,14 @@ gem 'jquery-rails'
 # Deploy with Capistrano
 gem 'capistrano'
 
-# To use debugger
-gem 'ruby-debug-base19x', '0.11.30.pre10'
-gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'factory_girl'
 
+  # To use debugger
+  gem 'ruby-debug-base19x', '0.11.30.pre10'
+  gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'awesome_print'
   gem 'pry'
   # Pretty printed test output
