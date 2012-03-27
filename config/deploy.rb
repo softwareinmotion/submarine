@@ -1,4 +1,4 @@
-ssh_options[:user] = "administrator"
+ssh_options[:user] = "railsprod"
 set :rails_env, 'production'
 set :application, "submarine"
 set :deploy_to, "/var/lib/submarine"
@@ -10,9 +10,9 @@ set :scm, :git
 set :repository,  "ssh://entadmin@192.168.202.4/home/Projects/submarine.git"
 
 
-role :web, "ent"                          # Your HTTP server, Apache/etc
-role :app, "ent"                          # This may be the same as your `Web` server
-role :db,  "ent", :primary => true # This is where Rails migrations will run
+role :web, "submarine"                          # Your HTTP server, Apache/etc
+role :app, "submarine"                          # This may be the same as your `Web` server
+role :db,  "submarine", :primary => true # This is where Rails migrations will run
 
 namespace :deploy do
   task :start, :roles => [:web, :app] do 
