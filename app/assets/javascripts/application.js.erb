@@ -23,6 +23,17 @@ SUBMARINE = {
     } else {
       list_element = $(event.target).parents('li'); 
     }
+    
+    var controls = list_element.find('.controls_container');
+    var finish_button = list_element.find('a.finish_button');
+    if (list_element.parents('ul#sprint_backlog_list').size() > 0) {
+      finish_button.removeClass("finish");
+      controls.addClass('sprint_controls');
+    } else {
+      finish_button.addClass("finish");
+      controls.removeClass('sprint_controls');
+    }
+    
     moved_issue_id = list_element.attr("data-id");
     var data = { moved_issue_id: moved_issue_id, backlog_list: [], sprint_backlog_list: [] };
     data.predecessor_id = $(list_element).prev() && $(list_element).prev().attr("data-id");

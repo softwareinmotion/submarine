@@ -2,6 +2,8 @@ de:
   save: 'Speichern'
   cancel: 'Abbrechen'
   errors_occured: 'Folgende Fehler sind aufgetreten'
+  finished_issues: 'Abgeschlossene Einträge'
+  backlog: 'Backlog'
   activerecord:
     attributes:
       issue:
@@ -18,3 +20,5 @@ de:
     new: 'Eintrag erstellen'
     edit: 'Eintrag bearbeiten'
     delete: 'Eintrag löschen' 
+    finish: 'Eintrag abschließen'
+    activate: 'Eintrag reaktivieren'
