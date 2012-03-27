@@ -251,14 +251,111 @@ describe Issue do
   end
   
   describe '#finish' do
-    it 'should finish the only one element in the list' do 
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+    it 'should finish the only one element in the list' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: true, project: project
+
+      issue.finish
+
+      issue.finished.should be_true
+      issue.sprint_flag.should be_false
     end
-    
+
+    it 'should finish the only unfinished element if one finished exists' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: true, project: project
+      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', finished: true, sprint_flag: true, project: project
+
+      issue1.finish
+
+      issue1.finished.should be_true
+    end
+
+    it 'should finish one of two unfinished elements' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: true, project: project
+      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', finished: false, sprint_flag: true, project: project
+
+      issue1.finish
+
+      issue1.finished.should be_true
+    end
+
+    it 'should finish a finished element' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: true, project: project
+
+      issue.finish
+
+      issue.finished.should be_true
+      issue.sprint_flag.should be_false
+    end
   end
   
   describe '#activate' do
-    it 'should' do
+    it 'should activate the only finished element' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
+
+      issue.activate
+
+      issue.finished.should be_false
+      issue.sprint_flag.should be_false
+    end
+
+    it 'should activate the only finished element if one unfinished in the backlog exists' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: false, sprint_flag: false, project: project
+
+      issue1.activate
+
+      issue1.finished.should be_false
+      issue1.sprint_flag.should be_false
+    end
+
+    it 'should activate one of two finished elements' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: true, sprint_flag: false, project: project
+
+      issue1.activate
+
+      issue1.finished.should be_false
+      issue1.sprint_flag.should be_false
+    end
+
+    it 'should activate the only finished element if one unfinished in the sprint backlog exists' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: false, sprint_flag: true, project: project
+
+      issue1.activate
+
+      issue1.finished.should be_false
+      issue1.sprint_flag.should be_false
+    end
+
+    it 'should activate the only finished element if one unfinished exists in the backlog and one in the sprint backlog' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: false, sprint_flag: false, project: project
+      issue3 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', finished: false, sprint_flag: true, project: project
+
+      issue1.activate
+
+      issue1.finished.should be_false
+      issue1.sprint_flag.should be_false
+    end
+
+    it 'should activate an unfinished element' do
+      project = Factory.create :project, name: 'Projekt1'
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: false, project: project
+
+      issue.activate
+
+      issue.finished.should be_false
+      issue.sprint_flag.should be_false
     end
   end
 end
