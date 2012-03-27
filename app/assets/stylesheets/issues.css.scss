@@ -161,15 +161,20 @@ ul.connectedSortable {
 
         div.controls {
           position: absolute;
-          width: 50px;
+          width: 70px;
           z-index: 3;
           display: none;
+          
+          a.finish {
+            display: none;
+          }
+        }
+        
+        &.sprint_controls {
+          width: 55px;
         }
       }      
     }
-  }
-  
-  form {
   }
 }
 
