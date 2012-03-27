@@ -44,6 +44,10 @@ module Submarine
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    config.assets.paths << Rails.root.join("vendor", "assets", "javascripts")
+    config.assets.paths << Rails.root.join("app", "assets", "javascripts")
+    config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
+    # add Javascript assets for all controller specific js files and css files
+    config.assets.precompile += (Dir["#{Rails.root}/app/assets/javascripts/*.*"].map {|f| f.match (/\w+\.js/)})
+    config.assets.precompile += (Dir["#{Rails.root}/app/assets/stylesheets/*.*"].map {|f| f.match (/\w+\.css/)})
   end
 end
