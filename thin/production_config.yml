@@ -3,7 +3,7 @@
     chdir: /var/lib/submarine/current
     address: submarine
     user: railsprod
-    group: users
+    group: rvm
     port: 3001
     pid: /var/lib/submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/submarine/current/config.ru
