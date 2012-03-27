@@ -4,7 +4,7 @@
     address: submarine
     user: railsprod
     group: users
-    port: 3000
+    port: 3001
     pid: /var/lib/submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/submarine/current/config.ru
     log: /var/lib/submarine/current/log/thin.log
