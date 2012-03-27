@@ -1,0 +1,12 @@
+<section id="finished_issues_section">
+  
+  <article class="log" id="finished_issues">
+	  <%= render :partial => "list", :locals => {:list_type => 'finished_issues', :list_items => @finished_issues} %>
+  </article>
+
+</section>
+
+<script>
+	$("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
+	$("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
+</script>
