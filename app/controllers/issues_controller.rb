@@ -1,23 +1,7 @@
 class IssuesController < ApplicationController
   def index
-   backlog_issue = Issue.in_backlog.find_by_predecessor_id(nil)
-    @backlog_issues = []
-    if backlog_issue
-    @backlog_issues << backlog_issue
-      while backlog_issue.descendant do
-        backlog_issue = backlog_issue.descendant
-        @backlog_issues << backlog_issue
-      end
-    end
-    sprint_issue = Issue.in_sprint.find_by_predecessor_id(nil)
-    @sprint_issues = []
-    if sprint_issue
-    @sprint_issues << sprint_issue
-      while sprint_issue.descendant do
-        sprint_issue = sprint_issue.descendant
-        @sprint_issues << sprint_issue
-      end
-    end 
+    @backlog_issues = sorted_list Issue.first.in_backlog[0]
+    @sprint_issues = sorted_list Issue.first.in_sprint[0]
   end
 
   def new
@@ -106,27 +90,46 @@ class IssuesController < ApplicationController
   # "backlog_list" => [[0] "4",[1] "1",[2] "2"],
   # "sprint_backlog_list" => [[0] "3"]}
   def change_list
-   moved_issue = Issue.find params[:moved_issue_id]
-   backlog_list = params[:backlog_list]
-   sprint_backlog_list = params[:sprint_backlog_list]
-   if backlog_list == nil 
-    backlog_list = Array.new   
-   end
-   if sprint_backlog_list 
-    if sprint_backlog_list.include?(moved_issue.id)
-      moved_issue.sprint_flag = true;
-      moved_issue.save
+    moved_issue = Issue.find params[:moved_issue_id]
+    backlog_list = params[:backlog_list]
+    sprint_backlog_list = params[:sprint_backlog_list]
+    if backlog_list == nil 
+      backlog_list = Array.new   
+    end
+    if sprint_backlog_list 
+      if sprint_backlog_list.include?(moved_issue.id)
+        moved_issue.sprint_flag = true;
+        moved_issue.save
+      else
+        moved_issue.sprint_flag = false;
+        moved_issue.save
+      end 
     else
-      moved_issue.sprint_flag = false;
-      moved_issue.save
-    end 
-   else
-    sprint_backlog_list = Array.new
-   end
-   moved_issue.reload.update_lists backlog_list, sprint_backlog_list
-   render :nothing => true
+      sprint_backlog_list = Array.new
+    end
+    moved_issue.reload.update_lists backlog_list, sprint_backlog_list
+    render :nothing => true
+  end
+  
+  def finish_issue
+    issue = Issue.find(params[:id])
+    issue.finish
+    @backlog_issues = sorted_list Issue.first.in_backlog[0]
+    @sprint_issues = sorted_list Issue.first.in_sprint[0]
+    render :index
   end
 
+  def finished_issues_list 
+    @finished_issues = sorted_list Issue.first.finished[0]
+  end
+  
+  def activate_issue
+    issue = Issue.find(params[:id])
+    issue.activate
+    @finished_issues = sorted_list Issue.first.finished[0]
+    render :finished_issues_list
+  end
+  
   private
 
   def prepare_form
@@ -138,5 +141,17 @@ class IssuesController < ApplicationController
       name
     end
     @story_points = ['unknown', 0, 0.5, 1, 2, 3, 5, 8, 13, 20]
+  end
+  
+  def sorted_list element
+    issues = []
+    if element
+    issues << element
+      while element.descendant do
+        element = element.descendant
+        issues << element
+      end
+    end
+    issues
   end
 end
