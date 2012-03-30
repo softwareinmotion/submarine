@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Submarine</title>
-  <%= stylesheet_link_tag "application" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "navigation" %>
+  <%= javascript_include_tag "navigation" %>
   <%= csrf_meta_tags %>
 </head>
 
@@ -13,10 +13,6 @@
   <%= link_to index_path do %>
     <%= image_tag "logo.png", :id => "logo" %>
   <% end %>
-
-  <span class="back"><%= link_to "Hauptseite", index_path %></span>
-
-  <h1> Demo </h1>
 </header>
 
 <% flash.each do |name, msg| %>

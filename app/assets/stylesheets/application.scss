@@ -58,6 +58,18 @@ header {
     padding-left: 10px;
     padding-top: 10px;
   }
+
+  span.back {
+    display: block;
+    float: right;
+    margin-top: 62px;
+    margin-right: 10px;
+  }
+
+  h1 {
+    margin: -52px auto 0;
+    width: 100px;
+  }
 }
 
 #main {
@@ -80,6 +92,10 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
+
+  img {
+    height: 14px;
+  }
 }
 
 a {
@@ -94,7 +110,7 @@ h1 > a, h1 > a:visited {
   color: #1144AA;
 }
 
-span {
+li > span {
   padding: 5px;
   display: block;
   float: left;
