@@ -1,0 +1,91 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+*/
+
+$strip-line: 1px solid #ddd;
+
+html {
+  background: -webkit-linear-gradient(#DDD 0%,#F2F1F0 300px);
+  background: -moz-linear-gradient(#DDD 0%,#F2F1F0 300px);
+  background: -o-linear-gradient(#DDD 0%,#F2F1F0 300px);
+  background: linear-gradient(#DDD 0%,#F2F1F0 300px);
+
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 10pt;
+
+  h1 {
+    font-size: 14pt;
+  }
+
+  h2 {
+    font-size: 12pt;
+  }
+
+  section {
+    margin: 0 auto;
+    width: 800px;
+    background-color: white;
+    height: 500px;
+
+    article {
+      width: 350px;
+      float: left;
+      padding: 10px 20px;
+    }
+
+    #left_article {
+      margin-right: 20px;
+    }
+  }
+}
+
+header {
+  height: 83px;
+  background: white;
+  border-bottom: $strip-line;
+  margin-bottom: 45px;
+  
+  img#logo {
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+}
+
+footer {
+  background: white;
+  border-top: $strip-line;
+  padding: 15px 0;
+  clear: both;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  img {
+    height: 14px;
+  }
+}
+
+a {
+  text-decoration: none;
+
+  &:visited {
+    color: #00665E;
+  }
+}
+
+h1 > a, h1 > a:visited {
+  color: #1144AA;
+}
