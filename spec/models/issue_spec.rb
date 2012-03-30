@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Issue do
   describe '#close_gap' do
     it 'should delete an issue and close the gap if the first issue of the list is deleted' do 
-      issue1 = Factory.create :issue, type: "Task"
-      issue2 = Factory.create :issue, type: "Task", predecessor_id: issue1.id
-      issue3 = Factory.create :issue, type: "Task", predecessor_id: issue2.id
+      issue1 = FactoryGirl.create :issue, type: "Task"
+      issue2 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue1.id
+      issue3 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue2.id
       
       issue1.reload.destroy
       
@@ -15,9 +15,9 @@ describe Issue do
     end
 
     it 'should delete an issue and close the gap if the last issue of the list is deleted' do 
-      issue1 = Factory.create :issue, type: "Task"
-      issue2 = Factory.create :issue, type: "Task", predecessor_id: issue1.id
-      issue3 = Factory.create :issue, type: "Task", predecessor_id: issue2.id
+      issue1 = FactoryGirl.create :issue, type: "Task"
+      issue2 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue1.id
+      issue3 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue2.id
       
       issue3.reload.destroy
       
@@ -27,9 +27,9 @@ describe Issue do
     end
 
     it 'should delete an issue and close the gap if an issue from the middle of the list is deleted' do 
-      issue1 = Factory.create :issue, type: "Task"
-      issue2 = Factory.create :issue, type: "Task", predecessor_id: issue1.id
-      issue3 = Factory.create :issue, type: "Task", predecessor_id: issue2.id
+      issue1 = FactoryGirl.create :issue, type: "Task"
+      issue2 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue1.id
+      issue3 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue2.id
       
       issue2.reload.destroy
       
@@ -41,9 +41,9 @@ describe Issue do
   
   describe '#update_lists' do
     it 'should move the third element to the second position within the backlog list' do 
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
 
       backlog_issue_array = [issue1.id, issue3.id, issue2.id]
       
@@ -55,9 +55,9 @@ describe Issue do
     end
     
     it 'should move the second element to the first position within the backlog list' do
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
      
       backlog_issue_array = [issue2.id, issue1.id, issue3.id]
       
@@ -69,9 +69,9 @@ describe Issue do
     end
     
     it 'should move the first element to the last position within the backlog list' do
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
      
       backlog_issue_array = [issue2.id, issue3.id, issue1.id]
       
@@ -83,9 +83,9 @@ describe Issue do
     end
     
     it 'should move the third element to the first position within the sprint backlog list' do 
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
 
       sprint_backlog_issue_array = [issue3.id, issue1.id, issue2.id]
       
@@ -97,9 +97,9 @@ describe Issue do
     end
     
     it 'should move the third element to the first position and change the second position with the third position within the sprint backlog list' do
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
      
       sprint_backlog_issue_array = [issue3.id, issue2.id, issue1.id]
       
@@ -111,12 +111,12 @@ describe Issue do
     end
     
     it 'should move the third element of the backlog list to the second position of the sprint backlog list' do
-      issue5 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue4 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue5 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue4 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
       
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
       
       # should move issue3 to the sprint backlog list
       issue3.sprint_flag = "true"
@@ -137,12 +137,12 @@ describe Issue do
     end
     
     it 'should move the last element of the sprint backlog list to the first position of the backlog list' do
-      issue5 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue4 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue5 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue4 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
       
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
       
       # should move issue5 to the backlog list
       issue5.sprint_flag = "false"
@@ -164,12 +164,12 @@ describe Issue do
     
     it 'should move the last element of the sprint backlog list to the second position of the backlog list and than the first' +
        'element of the sprint backlog list to the 4th position of the backlog list' do
-      issue5 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue4 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue5 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue4 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
       
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
       
       # should move issue5 on the second poition of the backlog list 
       issue5.sprint_flag = "false"
@@ -209,11 +209,11 @@ describe Issue do
     
     it 'should move the last element of the backlog list to the second position of the sprint backlog list and than the first' +
        'element of the backlog list to the last position of the sprint backlog list' do
-      issue4 = Factory.create :issue, type: "Task", sprint_flag: "true"
-      issue3 = Factory.create :issue, type: "Task", sprint_flag: "true"
+      issue4 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
+      issue3 = FactoryGirl.create :issue, type: "Task", sprint_flag: "true"
       
-      issue2 = Factory.create :issue, type: "Task", sprint_flag: "false"
-      issue1 = Factory.create :issue, type: "Task", sprint_flag: "false"
+      issue2 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
+      issue1 = FactoryGirl.create :issue, type: "Task", sprint_flag: "false"
       
       # should move issue2 on the second position of the sprint backlog list
       issue2.sprint_flag = "true"
@@ -252,7 +252,7 @@ describe Issue do
   
   describe '#finish' do
     it 'should finish the only one element in the list' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: true, project: project
 
       issue.finish
@@ -262,7 +262,7 @@ describe Issue do
     end
 
     it 'should finish the only unfinished element if one finished exists' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: true, project: project
       issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', finished: true, sprint_flag: true, project: project
 
@@ -272,7 +272,7 @@ describe Issue do
     end
 
     it 'should finish one of two unfinished elements' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: true, project: project
       issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', finished: false, sprint_flag: true, project: project
 
@@ -282,7 +282,7 @@ describe Issue do
     end
 
     it 'should finish a finished element' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: true, project: project
 
       issue.finish
@@ -294,7 +294,7 @@ describe Issue do
   
   describe '#activate' do
     it 'should activate the only finished element' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
 
       issue.activate
@@ -304,7 +304,7 @@ describe Issue do
     end
 
     it 'should activate the only finished element if one unfinished in the backlog exists' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
       issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: false, sprint_flag: false, project: project
 
@@ -315,7 +315,7 @@ describe Issue do
     end
 
     it 'should activate one of two finished elements' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
       issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: true, sprint_flag: false, project: project
 
@@ -326,7 +326,7 @@ describe Issue do
     end
 
     it 'should activate the only finished element if one unfinished in the sprint backlog exists' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
       issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: false, sprint_flag: true, project: project
 
@@ -337,7 +337,7 @@ describe Issue do
     end
 
     it 'should activate the only finished element if one unfinished exists in the backlog and one in the sprint backlog' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: true, sprint_flag: false, project: project
       issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', finished: false, sprint_flag: false, project: project
       issue3 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', finished: false, sprint_flag: true, project: project
@@ -349,7 +349,7 @@ describe Issue do
     end
 
     it 'should activate an unfinished element' do
-      project = Factory.create :project, name: 'Projekt1'
+      project = FactoryGirl.create :project, name: 'Projekt1'
       issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', finished: false, sprint_flag: false, project: project
 
       issue.activate
