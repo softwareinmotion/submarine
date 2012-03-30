@@ -1,5 +1,5 @@
 Submarine::Application.routes.draw do
-  get '/' => 'issues#index'
+  root :to => 'navigation#index', :as => 'index'
   post 'change_list' => 'issues#change_list', :as => 'change_list'
   post 'finish_issue/:id' => 'issues#finish_issue', :as => 'finish_issue'
   post 'activate_issue/:id' => 'issues#activate_issue', :as => 'activate_issue'
