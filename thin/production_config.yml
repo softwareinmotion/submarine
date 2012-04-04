@@ -1,9 +1,9 @@
 ---
     environment: production
     chdir: /var/lib/submarine/current
-    address: ent
-    user: administrator
-    group: administrator
+    address: submarine
+    user: railsprod
+    group: rvm
     port: 3001
     pid: /var/lib/submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/submarine/current/config.ru
