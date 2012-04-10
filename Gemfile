@@ -9,6 +9,7 @@ gem 'sqlite3'
 gem 'thin'
 gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
 gem 'linecache19', :git => 'https://github.com/mark-moseley/linecache.git' 
+gem 'ruby_flipper'
 
 # Gems used only for assets and not required
 # in production environments by default.
