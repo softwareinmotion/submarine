@@ -12,7 +12,7 @@ set :repository,  "ssh://entadmin@192.168.202.4/home/Projects/#{application}.git
 set :rails_env, 'production'
 set :use_sudo, false
 set :rake,      "bundle exec rake"
-
+set :deploy_to, "/var/lib/#{application}"
 
 
 namespace :deploy do
