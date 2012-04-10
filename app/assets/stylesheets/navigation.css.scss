@@ -8,11 +8,12 @@
 $strip-line: 1px solid #ddd;
 
 html {
-  background: -webkit-linear-gradient(#DDD 0%,#F2F1F0 300px);
-  background: -moz-linear-gradient(#DDD 0%,#F2F1F0 300px);
-  background: -o-linear-gradient(#DDD 0%,#F2F1F0 300px);
-  background: linear-gradient(#DDD 0%,#F2F1F0 300px);
-
+  background: -webkit-linear-gradient(#DDD,#F2F1F0);
+  background: -moz-linear-gradient(#DDD, #F2F1F0) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(#DDD,#F2F1F0);
+  background: linear-gradient(#DDD,#F2F1F0) repeat scroll 0 0 transparent;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   margin: 0;
   height: 100%;
 }
