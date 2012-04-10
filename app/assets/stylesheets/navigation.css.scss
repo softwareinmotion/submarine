@@ -36,7 +36,7 @@ body {
     margin: 0 auto;
     width: 800px;
     background-color: white;
-    height: 500px;
+    height: 800px;
 
     article {
       width: 350px;
@@ -46,6 +46,10 @@ body {
 
     #left_article {
       margin-right: 20px;
+    }
+
+    span {
+      clear: both;
     }
   }
 }
