@@ -1,6 +1,7 @@
 Submarine::Application.routes.draw do
   if feature_active? :persist_present_demo
     root :to => 'navigation#index', :as => 'index'
+    get 'contact_page' => 'navigation#contact_page', :as => 'contact_page'
   else
     root :to => 'issues#index', :as => 'index'
   end
