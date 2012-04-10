@@ -145,6 +145,7 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
+    ruby_flipper (0.0.3)
     sass (3.1.15)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -192,6 +193,7 @@ DEPENDENCIES
   rspec-rails (~> 2.6)
   ruby-debug-base19x (= 0.11.30.pre10)
   ruby-debug19
+  ruby_flipper
   sass-rails (~> 3.2.3)
   sqlite3
   therubyracer
