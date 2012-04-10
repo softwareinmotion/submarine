@@ -14,9 +14,10 @@
     <%= image_tag "logo.png", :id => "logo" %>
   <% end %>
 
-  <span class="back"><%= link_to "Hauptseite", index_path %></span>
-
-  <h1> Demo </h1>
+  <% feature_active? :persist_present_demo do %>
+    <span class="back"><%= link_to "Hauptseite", index_path %></span>
+    <h1> Demo </h1>
+  <% end %>
 </header>
 
 <% flash.each do |name, msg| %>

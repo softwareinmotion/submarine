@@ -9,6 +9,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+RubyFlipper.load "#{Rails.root}/config/features.rb"
+
 module Submarine
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
