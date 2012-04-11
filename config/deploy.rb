@@ -15,7 +15,7 @@ set :deploy_to, "/var/lib/#{application}"
 
 namespace :deploy do
   task :start, :roles => [:web, :app] do 
-    run "PRODUCT_VARIANT=#{product_variant} && cd #{deploy_to}/current && nohup bundle exec thin -C thin/#{domain}_config.yml -R thin/config.ru start" 
+    run "cd #{deploy_to}/current && PRODUCT_VARIANT=#{product_variant} nohup bundle exec thin -C thin/#{domain}_config.yml -R thin/config.ru start" 
   end
   task :stop, :roles => [:web, :app] do 
     run "cd #{deploy_to}/current && bundle exec thin -C thin/#{domain}_config.yml stop"
