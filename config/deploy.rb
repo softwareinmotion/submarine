@@ -13,10 +13,9 @@ set :use_sudo, false
 set :rake,      "bundle exec rake"
 set :deploy_to, "/var/lib/#{application}"
 
-
 namespace :deploy do
   task :start, :roles => [:web, :app] do 
-    run "cd #{deploy_to}/current && nohup bundle exec thin -C thin/#{domain}_config.yml -R thin/config.ru start" 
+    run "cd #{deploy_to}/current && nohup bundle exec PRODUCT_VARIANT=#{product_variant} thin -C thin/#{domain}_config.yml -R thin/config.ru start" 
   end
   task :stop, :roles => [:web, :app] do 
     run "cd #{deploy_to}/current && bundle exec thin -C thin/#{domain}_config.yml stop"
