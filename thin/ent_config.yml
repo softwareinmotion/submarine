@@ -1,5 +1,5 @@
 ---
-    environment: production
+    environment: production-ent
     chdir: /var/lib/submarine/current
     address: ent
     user: administrator
