@@ -15,13 +15,13 @@ set :deploy_to, "/var/lib/#{application}"
 
 
 namespace :deploy do
-  task :start, :roles => [:web, :app] do 
+  task :start, :roles => [:web, :app, :db] do 
     run "cd #{deploy_to}/current && nohup bundle exec thin -C thin/#{domain}_config.yml -R thin/config.ru start" 
   end
-  task :stop, :roles => [:web, :app] do 
+  task :stop, :roles => [:web, :app, :db] do 
     run "cd #{deploy_to}/current && bundle exec thin -C thin/#{domain}_config.yml stop"
   end
-  task :restart, :roles => [:web, :app], :except => { :no_release => true } do
+  task :restart, :roles => [:web, :app, :db], :except => { :no_release => true } do
     deploy.stop
     deploy.start
   end
