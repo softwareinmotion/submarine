@@ -28,6 +28,17 @@ test:
   pool: 5
   timeout: 5000
 
+production-ent:
+  adapter: postgresql
+  encoding: utf8
+  database: submarine-test
+  host: ent
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
 production:
   adapter: postgresql
   encoding: utf8
