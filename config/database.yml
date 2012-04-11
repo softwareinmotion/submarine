@@ -34,7 +34,7 @@ production-ent:
   database: submarine-test
   host: ent
   port: 5432
-  username: SubAdmin
+  username: postgres
   password: Pass2Swim!
   pool: 5
   timeout: 5000
