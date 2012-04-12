@@ -48,7 +48,11 @@ body {
     article {
       width: 350px;
       float: left;
-      padding: 10px 20px;
+      padding: 0 20px 10px;
+
+      p {
+        margin-top: 0;
+      }
     }
 
     #left_article {
@@ -119,6 +123,12 @@ footer {
 
   img {
     height: 14px;
+  }
+
+  span:last-of-type {
+    display: block;
+    float: right;
+    margin-right: 1.5em;
   }
 }
 
