@@ -26,7 +26,7 @@
   <%= f.label :story_points %>
   <div>
     <% @story_points.each do |number| %>
-      <div class="radio_image sp_<%= number %>" data-sp-value="<%= number %>">
+      <div class="radio_image sp_<%= number.to_s.gsub(".", "_") %>" data-sp-value="<%= number %>">
         <img src="<%= image_path "sp_#{number}_light.png" %>"
              data-img_heavy="<%= image_path "sp_#{number}_heavy.png" %>"
              data-img_light="<%= image_path "sp_#{number}_light.png" %>">
