@@ -35,26 +35,28 @@ body {
   font-size: 13pt;
 
   h1 {
-    font-size: 11pt;
-    margin-left: 20px;
+    font-size: 12pt;
     padding-top: 15px;
+    background-image: url(<%= asset_path "strich-submarine.gif" %>);
+    padding-bottom: 30px;
+    background-repeat: no-repeat;
   }
 
   h2 {
-    font-size: 12pt;
+    font-size: 11pt;
+    margin-left: 20px;
+    padding-top: 15px;
+    background-image: url(<%= asset_path "strich-submarine.gif" %>);
+    padding-bottom: 30px;
+    background-repeat: no-repeat;
+
   }
 
   section {
     margin: 0 auto;
     width: 800px;
     background-color: white;
-    height: 900px;
-    -moz-border-radius:10px; /* Firefox */
-    -webkit-border-radius:10px; /* Safari, Chrome */
-    -khtml-border-radius:10px; /* Konqueror */
-    border-radius:10px; /* CSS3 */
-
-    &.contact_data {
+       &.contact_data {
       height: auto;
     }
 
@@ -158,11 +160,11 @@ div#post_it {
   color: #000;
   width:200px; 
 
-  -moz-transform: rotate(-7deg);
-  -webkit-transform: rotate(-7deg);
-  -o-transform: rotate(-7deg);
-  -ms-transform: rotate(-7deg);
-  transform: rotate(-7deg);
+  -moz-transform: rotate(-5deg);
+  -webkit-transform: rotate(-5deg);
+  -o-transform: rotate(-5deg);
+  -ms-transform: rotate(-5deg);
+  transform: rotate(-5deg);
 
   box-shadow: 0px 4px 6px #333;
   -moz-box-shadow: 0px 4px 6px #333;
@@ -175,11 +177,11 @@ div#post_it_left {
   width:200px; 
   margin-top: 30px;
 
-  -moz-transform: rotate(7deg);
-  -webkit-transform: rotate(7deg);
-  -o-transform: rotate(7deg);
-  -ms-transform: rotate(7deg);
-  transform: rotate(7deg);
+  -moz-transform: rotate(5deg);
+  -webkit-transform: rotate(5deg);
+  -o-transform: rotate(5deg);
+  -ms-transform: rotate(5deg);
+  transform: rotate(5deg);
 
   box-shadow: 0px 4px 6px #333;
   -moz-box-shadow: 0px 4px 6px #333;
@@ -219,16 +221,5 @@ a.button {
 div.fancybox-thumb {
   padding: 10px;
   background-color: #fff;
-  border: solid 1px #000;
 
-}
-section#intro {
- div{
-   img{
-    width: 400px;
-    height: 300px;
-    margin: 10px;
-    border: solid 2px #000;
-   }
- } 
 }
