@@ -125,7 +125,7 @@ footer {
     height: 14px;
   }
 
-  span:last-of-type {
+  span:nth-child(2) {
     display: block;
     float: right;
     margin-right: 1.5em;
