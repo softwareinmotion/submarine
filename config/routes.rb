@@ -1,7 +1,9 @@
 Submarine::Application.routes.draw do
+  resources :questions
+
   if feature_active? :persist_present_demo
     root :to => 'navigation#index', :as => 'index'
-    get 'contact_page' => 'navigation#contact_page', :as => 'contact_page'
+    get 'contact_page' => 'questions#new', :as => 'contact_page'
   else
     root :to => 'issues#index', :as => 'index'
   end
@@ -14,4 +16,5 @@ Submarine::Application.routes.draw do
   resources :bugs, :controller => 'issues'
   resources :tasks, :controller => 'issues'
   resources :user_stories, :controller => 'issues'
+
 end

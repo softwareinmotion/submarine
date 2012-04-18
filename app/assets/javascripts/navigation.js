@@ -8,5 +8,4 @@
 //= require jquery_validate
 //= require jquery.tablednd
 //= require jquery.transform2d
-//= require fancybox
 //= require_self
