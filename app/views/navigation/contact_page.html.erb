@@ -2,6 +2,15 @@
 <section class="contact_data">
   <article id="contact_data">
     <h2>Noch Fragen? Her damit!</h2>
+    <% form_for @question do |q| %>
+      <%= q.label :betreff %>
+      <%= q.text_field :betreff %>
+      <%= q.label :question %>
+      <%= q.text_field :question %>
+      <%= q.label :email %>
+      <%= q.text_field :email %>
+      <%= q.submit %>
+    <% end %>
       <p>
         <label>Betreff</label> <input> 
       </p>
