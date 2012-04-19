@@ -3,7 +3,7 @@
     chdir: /var/lib/submarine/current
     address: swim-ext003.swim.dmz
     user: railsprod
-    group: user
+    group: railsprod
     port: 3000
     pid: /var/lib/submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/submarine/current/config.ru
