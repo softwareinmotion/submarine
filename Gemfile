@@ -8,7 +8,6 @@ gem 'rails', '3.2.2'
 gem 'sqlite3'
 gem 'thin'
 gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
-gem 'linecache19', :git => 'https://github.com/mark-moseley/linecache.git' 
 gem 'ruby_flipper'
 
 # Gems used only for assets and not required
@@ -39,6 +38,7 @@ group :test, :development do
   gem 'factory_girl'
 
   # To use debugger
+  gem 'linecache19', :git => 'https://github.com/mark-moseley/linecache.git' 
   gem 'ruby-debug-base19x', '0.11.30.pre10'
   gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'awesome_print'
