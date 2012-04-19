@@ -32,7 +32,7 @@ production-ext:
   adapter: postgresql
   encoding: utf8
   database: submarine
-  host: swim-ext003.swim.dmz
+  host: localhost 
   port: 5432
   username: SubAdmin
   password: Pass2Swim!
