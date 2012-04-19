@@ -1,0 +1,21 @@
+<META name="keywords" content="scrum, backlog, sprint, user stories, tool, contact">
+<section class="contact_data">
+  <article id="contact_data">
+    
+    <h2>Noch Fragen? Her damit!</h2>
+    <%= form_for @question do |q| %>
+      <%= q.label :betreff %>
+      <%= q.text_field :betreff %><br>
+      <%= q.label :question %>
+      <%= q.text_area :question %><br>
+      <%= q.label :name %>
+      <%= q.text_field :name %><br>      
+      <%= q.label :email %>
+      <%= q.email_field :email %><br>
+      <%= q.submit 'Absenden', :class => 'question_submit' %>
+       <%= link_to "Zurück zur Hauptseite", index_url%>
+    <% end %>
+           <p class='question_counter'><%= @question_count %></p>
+    </article>
+  <span>&nbsp;</span>
+</section>
