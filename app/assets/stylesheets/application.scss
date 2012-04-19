@@ -9,6 +9,7 @@
  * the SASS import mechanism is used. */
 @import "issues.css.scss";
 
+
 $strip-line: 1px solid #ddd;
 
 #flashnotice {
@@ -87,7 +88,7 @@ header {
 footer {
   background: white;
   border-top: $strip-line;
-  padding: 15px 0;
+  padding: 6px 0;
   clear: both;
   text-align: center;
   position: fixed;
@@ -96,7 +97,7 @@ footer {
   width: 100%;
 
   img {
-    height: 14px;
+    height: 20px;
   }
 
   span:nth-child(2) {
@@ -108,10 +109,7 @@ footer {
 
 a {
   text-decoration: none;
-
-  &:visited {
     color: #00665E;
-  }
 }
 
 h1 > a, h1 > a:visited {
@@ -176,3 +174,36 @@ li > span {
     }
   }
 }
+section {
+    #contact_data {
+      margin: 10px;
+      width: 100%;
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        width: 150px;
+        text-align: right;
+        float: left;
+        margin-right: 10px;
+      }
+
+      input {
+        width: 300px;
+
+        &[type=button] {
+          width: auto;
+          margin-left: 160px;
+        }
+      }
+
+      textarea {
+        height: 200px;
+        width: 300px;
+      }
+    }
+  }

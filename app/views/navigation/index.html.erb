@@ -1,34 +1,51 @@
 <META name="keywords" content="scrum, backlog, sprint, user stories, tool">
 <META name="description" content="submarine ist ein Scrum-Tool für Backlogs. Es unterstützt Sie bei der Planung ihrer Sprints.">
 <section>
-  <h1>submarine - Ein Scrum-Tool für Backlogs</h1>
+<div  style="postion: relative">
+    <div id="ilike">
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com/scrumbacklog&amp;layout=button_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=80" allowTransparency="true"></iframe>
+    </div>
+    <%= image_tag "rahmen01.gif" %>
+  </div>
+  <div style="position: relative">
+      <h2>submarine - Ein Scrum-Tool für Backlogs</h2>
+  <div id="post_it" style="top: -50px; right: -225px;  z-index: 2; position: absolute; ">
+    <h3>Was kann submarine alles?</h3>
+    <ul id="feature_list">
+      <li>Aufgaben mehrerer Projekte in einem Backlog</li>
+      <li>Bearbeitung von Tasks, User Stories und Bugs</li>
+      <li>Priorisieren von Aufgaben</li>
+      <li>Verschieben der Aufgaben in den aktuellen Sprint</li>
+      <li>Abschließen und Archivieren von Aufgaben des aktuellen Sprints</li>
+      <li>Reaktivieren abgeschlossener Aufgaben</li>
+      <li>Automatische Summenberechnung</li>
+    </ul>
+    </div>
+  <div>
   <article id="left_article">
     <p>
     Sie denken sich jetzt vielleicht: "Noch ein Scrum-Tool? Ist das wirklich notwendig?" Wir sagen: "Ja!". submarine ist nicht einfach ein Scrum-Tool, sondern ein Werkzeug, das vor allem bei der Sprint-Planung unterstützt. Dafür bietet submarine ein priorisiertes Backlog sowie eines für den aktuellen Sprint. Nicht mehr, aber auch nicht weniger.
     </p>
-
-    <h2>Wieso sollte ich submarine benutzen?</h2>
+                  <a class="fancybox-thumb" href="<%= image_path "backlog.png" %>" rel="lightbox" title="">
+        <%= image_tag "th_backlog.png" %>      
+      </a>
+      <h1>Wieso sollte ich submarine benutzen?</h1>
     <p>
       Sie haben schon das ein oder andere Scrum-Tool verwendet? Die vielen Funktionen machen es zu unübersichtlich? Oder haben Sie bei einem reinen Software-Tool des Öfteren vergessen den Status einzelner Aufgaben aktuell zu halten?
     </p>
-    <p>
-      submarine ist anders. Es unterstützt die Verwendung eines physischen Scrum-Boards für den aktuellen Sprint einerseits und bietet ein übersichtliches virtuelles Backlog andererseits. Dadurch kann das Sprint Planning Meeting quasi überall durchgeführt werden. Im Sprint Review können außerdem alle bearbeiteten Aufgaben direkt als abgeschlossen markiert werden.
-    </p>
-
-    <h2>Was kann submarine alles?</h2>
-    submarine wird ständig weiterentwickelt und ist noch lange nicht fertig. Aktuell werden die folgenden Features unterstützt:
-    <ul id="feature_list">
-      <li>Aufgaben mehrerer Projekte in einem Backlog</li>
-      <li>Eintragen, Bearbeiten und Löschen von Tasks, User Stories und Bugs mit Name, Beschreibung, Story Points und Projekt</li>
-      <li>Priorisieren von Aufgaben aus Backlog und aktuellem Sprint</li>
-      <li>Verschieben der Aufgaben in den aktuellen Sprint</li>
-      <li>Abschließen und Archivieren von Aufgaben des aktuellen Sprints</li>
-      <li>Reaktivieren abgeschlossener Aufgaben</li>
-      <li>Automatische Berechnung der Summe aller Story Points im aktuellen Sprint</li>
-    </ul>
+    <div class="fancybox-thumb">
+        <a class="fancybox-thumb"  href="<%= image_path "sprint_backlog.png" %>" rel="lightbox" title="Ziehen sie aus ihrem Backlog die benötigten Einträge in ihre Sprintbacklog Liste.">
+        <%= image_tag "th_sprint_backlog.png" %>      
+      </a>
+    </div>
   </article>
   <article id="right_article">
-  <iframe width="360" height="260" src="http://www.youtube.com/embed/JbBnw3_2x4o" frameborder="0" allowfullscreen></iframe>
+  <p>
+      submarine ist anders. Es unterstützt die Verwendung eines physischen Scrum-Boards für den aktuellen Sprint einerseits und bietet ein übersichtliches virtuelles Backlog andererseits. Dadurch kann das Sprint Planning Meeting quasi überall durchgeführt werden. Im Sprint Review können außerdem alle bearbeiteten Aufgaben direkt als abgeschlossen markiert werden.
+      </p>
+              <a class="fancybox-thumb" href="<%= image_path "new_backlog_entry.png" %>" rel="lightbox" title="Legen sie neue Backlogeinträge und priorisieren diese in derBacklog- oder Sprintbacklogliste.">
+        <%= image_tag "th_new_backlog_entry.png" %>      
+      </a>
   <p>
   Falls wir Sie neugierig gemacht haben sollten, dann können Sie submarine gleich online ausprobieren. Sie brauchen sich dafür nirgends anzumelden und nichts zu installieren. Die Demo ist kostenlos - eine für alle Internetbenutzer öffentlich zugängliche Version von submarine.
   </p>
@@ -42,3 +59,25 @@
   </article>
   <span>&nbsp;</span>
 </section>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".fancybox-thumb").fancybox({
+		prevEffect	: 'none',
+		nextEffect	: 'none',
+		helpers	: {
+			title	: {
+			  type: 'outside'
+			},
+			overlay	: {
+				opacity : 0.8,
+				css : {
+					'background-color' : '#000'
+				}
+			},
+			thumbs	: {
+				width	: 50,
+				height	: 50
+			}
+		}
+	});  });
+</script>
