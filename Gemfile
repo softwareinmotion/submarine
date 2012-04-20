@@ -38,9 +38,8 @@ group :test, :development do
   gem 'factory_girl'
 
   # To use debugger
-  gem 'linecache19', :git => 'https://github.com/mark-moseley/linecache.git' 
-  gem 'ruby-debug-base19x', '0.11.30.pre10'
-  gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'ruby-debug19', "~> 0.11.6"
+
   gem 'awesome_print'
   gem 'pry'
   # Pretty printed test output
