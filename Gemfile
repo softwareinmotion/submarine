@@ -36,12 +36,9 @@ gem 'capistrano-ext'
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'factory_girl'
-
-  # To use debugger
-  gem 'ruby-debug19', "~> 0.11.6"
+  gem 'debugger'
 
   gem 'awesome_print'
-  gem 'pry'
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
   
