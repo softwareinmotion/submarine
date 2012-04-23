@@ -1,7 +1,10 @@
 class Issue < ActiveRecord::Base
   belongs_to :project
   belongs_to :predecessor, :class_name => 'Issue', :foreign_key => :predecessor_id
-  belongs_to :backlog
+  feature_active? :temp_lock_lists do
+    belongs_to :backlog
+  end
+
   # next item in the list
   has_one :descendant, :class_name => 'Issue', :foreign_key => :predecessor_id
   
