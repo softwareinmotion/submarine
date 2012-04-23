@@ -6,3 +6,5 @@ condition :presentation do
 end
 
 feature :persist_present_demo, :presentation
+
+feature :temp_lock_lists, :presentation
