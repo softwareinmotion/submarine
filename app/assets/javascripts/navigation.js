@@ -8,4 +8,5 @@
 //= require jquery_validate
 //= require jquery.tablednd
 //= require jquery.transform2d
+//= require lightbox
 //= require_self
