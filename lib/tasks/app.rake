@@ -1,3 +1,5 @@
+require "fileutils"
+
 namespace :submarine do
   task :ensure_development_environment => :environment do
     if Rails.env.production?
@@ -28,5 +30,37 @@ namespace :submarine do
 
     # finished items
     UserStory.create name: 'User Stories anlegen', description: 'Als Product Owner kann ich User Stories in das Backlog eintragen.', project: prj_submarine, story_points: 3, sprint_flag: false, finished: true
+  end
+
+  desc "Includes feature dependent migration files in db:migrate task"
+  task :feature_migrate => %w[submarine:cp_feature_migrations db:migrate submarine:rm_feature_migrations]
+
+  desc "Copies feature dependent migration files to the db/migrate directory"
+  task :cp_feature_migrations do
+    src_path = "#{Rails.root}/db/feature_migrate/"
+    Dir.foreach(src_path) do |file_name|
+      if file_name =~ /.+\.rb$/
+        FileUtils.copy (src_path + file_name), "#{Rails.root}/db/migrate"
+        puts "Copied #{file_name} to db/migrate"
+      end
+    end
+  end
+
+  desc "Removes feature dependent migration files from the db/migrate directory"
+  task :rm_feature_migrations do
+    migrate_path = "#{Rails.root}/db/migrate/"
+    feature_migrate_path = "#{Rails.root}/db/feature_migrate/"
+
+    Dir.foreach(feature_migrate_path) do |file_name|
+      if file_name =~ /.+\.rb$/
+        FileUtils.rm(migrate_path + file_name)
+        puts "Removed #{file_name} from db/migrate"
+      end
+    end
+  end
+
+  task :populate_dev => %w[submarine:ensure_development_environment submarine:populate_simple_data]
+  task :populate_simple_data => :environment do
+
   end
 end

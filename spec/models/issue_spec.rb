@@ -245,7 +245,11 @@ describe Issue do
       issue2.reload.predecessor_id.should == issue3.id
       issue3.reload.predecessor_id.should be_nil
       
-      backlog_issue_array = Issue.in_backlog
+      if feature_active? :temp_lock_lists
+        backlog_issue_array = Backlog.backlog
+      else
+        backlog_issue_array = Issue.in_backlog
+      end      
       backlog_issue_array.should == []
     end
   end

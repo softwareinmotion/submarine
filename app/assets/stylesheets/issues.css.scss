@@ -16,17 +16,12 @@ $article_default_width: 600px;
   padding: 0; 
   float: left; 
   margin-right: 10px; 
-  background: white;
 }
 
 @mixin ul_header {
   height: 43px;
   border-radius: 2px 2px;
   border: $default_border;
-  background: -webkit-linear-gradient(#F2F1F0 0%,#DDD 30px);
-  background: -moz-linear-gradient(#F2F1F0 0%,#DDD 30px);
-  background: -o-linear-gradient(#F2F1F0 0%,#DDD 30px);
-  background: linear-gradient(#F2F1F0 0%,#DDD 30px);
   font-size: 14pt;
 }
 
@@ -86,9 +81,32 @@ ul.list_header {
   }
 }
 
+.unlocked_list_header{
+  color: black;
+  background: -webkit-linear-gradient(#F2F1F0 0%,#DDD 30px);
+  background: -moz-linear-gradient(#F2F1F0 0%,#DDD 30px);
+  background: -o-linear-gradient(#F2F1F0 0%,#DDD 30px);
+}
+ 
+.locked_list_header {
+  color: white;
+  background: -webkit-linear-gradient(#009CA3 0%, #1F767A 30px);
+  background: -moz-linear-gradient(#009CA3 0%,#1F767A 30px);
+  background: -o-linear-gradient(#009CA3 0%,#1F767A 30px);
+  background: linear-gradient(#009CA3 0%,#1F767A 30px);
+}
+
+.locked_html {
+  background: -webkit-linear-gradient(#DDD 0%, #5ECCD1 300px);
+  background: -moz-linear-gradient(#DDD 0%, #5ECCD1 300px);
+  background: -o-linear-gradient(#DDD 0%, #5ECCD1 300px);
+  background: linear-gradient(#DDD 0%, #5ECCD1 300px);
+}
+
 ul.connectedSortable { 
   @include ul_base;
   
+  background: white;
   min-height: 150px;
   border-left: $default_border;
   border-right: $default_border;
@@ -186,6 +204,7 @@ ul.connectedSortable {
   
   ul.form_header {
     @include ul_header;
+    background: linear-gradient(#F2F1F0 0%,#DDD 30px);
     list-style-type: none; 
     margin-bottom: 30px;
     padding: 0;

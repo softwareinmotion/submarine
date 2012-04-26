@@ -2,6 +2,13 @@
 <META name="description" content="Sie wollen ein virtuelles Backlog, das mehrere Projekte unterstützt? Dann probieren Sie es mit submarine. Eine kostenlose Online-Demo steht Ihnen hier zur Verfügung.">
 <section id="main">
 
+<% feature_active? :temp_lock_lists do %>
+  <%= form_tag lock_lists_path, :method => :post, :remote => true do %>
+    <%= hidden_field_tag "lock_lists", true %>
+    <%= submit_tag "Bearbeiten", :id => "lock_btn" %>
+  <% end %>
+<% end %>
+
 <article class="log" id="backlog">
 	<%= render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>
 </article>

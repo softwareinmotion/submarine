@@ -1,7 +1,12 @@
 class IssuesController < ApplicationController
   def index
-    @backlog_issues = sorted_list Issue.first.in_backlog[0]
-    @sprint_issues = sorted_list Issue.first.in_sprint[0]
+    if feature_active? :temp_lock_lists
+      @backlog_issues = sorted_list Backlog.backlog.issues.first_in_list.first
+      @sprint_issues = sorted_list Backlog.sprint_backlog.issues.first_in_list.first
+    else
+      @backlog_issues = sorted_list Issue.first.in_backlog[0]
+      @sprint_issues = sorted_list Issue.first.in_sprint[0]
+    end      
   end
 
   def new
@@ -36,7 +41,11 @@ class IssuesController < ApplicationController
       end
     end
 
-    old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
+    if feature_active? :temp_lock_lists
+      old_first_issue = Backlog.backlog.issues.where(predecessor_id: nil).first
+    else
+      old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
+    end      
     @issue.predecessor_id = nil
     @issue.sprint_flag = false
 
@@ -114,7 +123,11 @@ class IssuesController < ApplicationController
   def finish_issue
     issue = Issue.find(params[:id])
     issue.finish
-    @backlog_issues = sorted_list Issue.first.in_backlog[0]
+    if feature_active? :temp_lock_lists
+      @backlog_issues = sorted_list Backlog.backlog.issues
+    else
+      @backlog_issues = sorted_list Issue.first.in_backlog[0]
+    end    
     @sprint_issues = sorted_list Issue.first.in_sprint[0]
     render :index
   end
@@ -129,7 +142,25 @@ class IssuesController < ApplicationController
     @finished_issues = sorted_list Issue.first.finished[0]
     render :finished_issues_list
   end
-  
+
+  def lock_lists
+    @lists_locked = false
+
+    Backlog.transaction do
+      backlog        = Backlog.backlog.lock(true)
+      sprint_backlog = Backlog.sprint_backlog.lock(true)
+      unless backlog.locked or sprint_backlog.locked
+        sprint_backlog.locked = true
+        backlog.locked        = true
+        backlog.session_id        = session[:session_id]
+        sprint_backlog.session_id = session[:session_id]
+        backlog.save!
+        sprint_backlog.save!
+        @lists_locked = true
+      end
+    end
+  end
+ 
   private
 
   def prepare_form

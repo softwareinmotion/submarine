@@ -12,10 +12,17 @@ class Issue < ActiveRecord::Base
 
   before_destroy :close_gap
 
-  scope :in_backlog, where("(issues.sprint_flag is null or issues.sprint_flag = ?) and finished = ?", false, false)
+  unless feature_active? :temp_lock_lists
+    scope :in_backlog, where("(issues.sprint_flag is null or issues.sprint_flag = ?) and finished = ?", false, false)    
+  end
   scope :in_sprint, where("issues.sprint_flag = ? and finished = ?", true, false)
   scope :finished, where("issues.finished = ?", true)
-  scope :first, where("predecessor_id is null")
+
+  if feature_active? :temp_lock_lists
+    scope :first_in_list, where(predecessor_id: nil)
+  else
+    scope :first, where("predecessor_id is null")
+  end 
 
   def self.children_type_names
     ['UserStory', 'Task', 'Bug']
@@ -67,8 +74,18 @@ class Issue < ActiveRecord::Base
   def activate
     self.close_gap
     self.reload
-    if Issue.in_backlog.size > 0
-      first = Issue.first.in_backlog[0]
+    if feature_active? :temp_lock_lists
+      backlog_size = Backlog.backlog.size
+    else
+      backlog_size = Issue.in_backlog.size
+    end
+
+    if backlog_size > 0
+      if feature_active? :temp_lock_lists
+        first = Backlog.backlog.first
+      else
+        first = Issue.first.in_backlog[0]
+      end        
       first.predecessor_id = self.id
       first.save
     end
