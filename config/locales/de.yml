@@ -22,3 +22,6 @@ de:
     delete: 'Eintrag löschen' 
     finish: 'Eintrag abschließen'
     activate: 'Eintrag reaktivieren'
+  backlog:
+    errors:
+      could_not_lock: 'Die Listen konnten nicht für die Bearbeitung gesperrt werden.'
