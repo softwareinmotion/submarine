@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html>
+<% if @lists_locked_by_current_user %>
+  <html class="locked_html">
+<% else %>
+  <html>
+<% end %>
+
 <head>
   <title>Submarine</title>
   <%= stylesheet_link_tag "application" %>

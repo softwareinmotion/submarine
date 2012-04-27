@@ -3,6 +3,12 @@ class IssuesController < ApplicationController
     if feature_active? :temp_lock_lists
       @backlog_issues = sorted_list Backlog.backlog.first_issue
       @sprint_issues = sorted_list Backlog.sprint_backlog.first_issue
+
+      session_id = session[:session_id]
+      [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
+        @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
+        @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
+      end
     else
       @backlog_issues = sorted_list Issue.first.in_backlog[0]
       @sprint_issues = sorted_list Issue.first.in_sprint[0]
@@ -113,8 +119,8 @@ class IssuesController < ApplicationController
         Backlog.backlog.issues << moved_issue
       end
       moved_issue.save!
-      Backlog.backlog.update backlog_list
-      Backlog.sprint_backlog.update sprint_backlog_list
+      Backlog.backlog.update_with_list backlog_list
+      Backlog.sprint_backlog.update_with_list sprint_backlog_list
     else
       if backlog_list == nil 
         backlog_list = Array.new   
@@ -150,34 +156,58 @@ class IssuesController < ApplicationController
   end
 
   def finished_issues_list 
-    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+    if feature_active? :temp_lock_lists
+      @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+    else
+      @finished_issues = sorted_list Issue.first.finished[0]
+    end 
   end
   
   def activate_issue
     issue = Issue.find(params[:id])
     issue.activate
-    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+    if feature_active? :temp_lock_lists
+      @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+    else
+      @finished_issues = sorted_list Issue.first.finished[0]
+    end    
     render :finished_issues_list
   end
 
-  def lock_lists
-    @lists_locked = false
+  def toggle_list_locks
+    session_id = session[:session_id]
+
+    # variable shows if this method shall lock or unlock lists
+    lock_mode = true
 
     Backlog.transaction do
-      backlog        = Backlog.backlog.lock(true)
-      sprint_backlog = Backlog.sprint_backlog.lock(true)
-      unless backlog.locked or sprint_backlog.locked
-        sprint_backlog.locked = true
-        backlog.locked        = true
-        backlog.session_id        = session[:session_id]
-        sprint_backlog.session_id = session[:session_id]
+      # lock backlogs for this action with activerecord techniques
+      backlog = Backlog.backlog_with_lock
+      sprint_backlog = Backlog.sprint_backlog_with_lock
+
+      # unlock backlogs if they are locked by the current user
+      [backlog, sprint_backlog].each do |bl|
+        if bl.locked_by_session? session_id
+          bl.unlock
+          bl.save!
+          lock_mode = false
+        elsif bl.locked_by_another_session? session_id
+          @lists_locked_by_another_user = true
+          lock_mode = false
+        end
+      end
+
+      if lock_mode
+        # lock backlogs for the duration of several actions through lock flags in the DB table 
+        sprint_backlog.lock_for_session session_id
+        backlog.lock_for_session session_id
         backlog.save!
         sprint_backlog.save!
-        @lists_locked = true
+        @lists_locked_by_current_user = true
       end
     end
   end
- 
+
   private
 
   def prepare_form
