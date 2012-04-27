@@ -1,8 +1,8 @@
 class IssuesController < ApplicationController
   def index
     if feature_active? :temp_lock_lists
-      @backlog_issues = sorted_list Backlog.backlog.issues.first_in_list.first
-      @sprint_issues = sorted_list Backlog.sprint_backlog.issues.first_in_list.first
+      @backlog_issues = sorted_list Backlog.backlog.first_issue
+      @sprint_issues = sorted_list Backlog.sprint_backlog.first_issue
     else
       @backlog_issues = sorted_list Issue.first.in_backlog[0]
       @sprint_issues = sorted_list Issue.first.in_sprint[0]
@@ -41,13 +41,16 @@ class IssuesController < ApplicationController
       end
     end
 
-    if feature_active? :temp_lock_lists
-      old_first_issue = Backlog.backlog.issues.where(predecessor_id: nil).first
-    else
-      old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
-    end      
-    @issue.predecessor_id = nil
-    @issue.sprint_flag = false
+    if @issue
+      if feature_active? :temp_lock_lists
+        old_first_issue = Backlog.backlog.first_issue
+        Backlog.backlog.issues << @issue
+      else
+        old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
+        @issue.sprint_flag = false
+      end      
+      @issue.predecessor_id = nil
+    end
 
     if @issue && @issue.save
       if old_first_issue
@@ -102,44 +105,58 @@ class IssuesController < ApplicationController
     moved_issue = Issue.find params[:moved_issue_id]
     backlog_list = params[:backlog_list]
     sprint_backlog_list = params[:sprint_backlog_list]
-    if backlog_list == nil 
-      backlog_list = Array.new   
-    end
-    if sprint_backlog_list 
-      if sprint_backlog_list.include?(moved_issue.id)
-        moved_issue.sprint_flag = true;
-        moved_issue.save
+
+    if feature_active? :temp_lock_lists
+      if sprint_backlog_list and sprint_backlog_list.include?(moved_issue.id)
+        Backlog.sprint_backlog.issues << moved_issue
       else
-        moved_issue.sprint_flag = false;
-        moved_issue.save
-      end 
+        Backlog.backlog.issues << moved_issue
+      end
+      moved_issue.save!
+      Backlog.backlog.update backlog_list
+      Backlog.sprint_backlog.update sprint_backlog_list
     else
-      sprint_backlog_list = Array.new
-    end
-    moved_issue.reload.update_lists backlog_list, sprint_backlog_list
+      if backlog_list == nil 
+        backlog_list = Array.new   
+      end
+      if sprint_backlog_list 
+        if sprint_backlog_list.include?(moved_issue.id)
+          moved_issue.sprint_flag = true;
+          moved_issue.save
+        else
+          moved_issue.sprint_flag = false;
+          moved_issue.save
+        end 
+      else
+        sprint_backlog_list = Array.new
+      end
+      moved_issue.reload.update_lists backlog_list, sprint_backlog_list
+    end    
+
     render :nothing => true
   end
-  
+
   def finish_issue
     issue = Issue.find(params[:id])
     issue.finish
     if feature_active? :temp_lock_lists
-      @backlog_issues = sorted_list Backlog.backlog.issues
+      @backlog_issues = sorted_list Backlog.backlog.first_issue
+      @sprint_issues  = sorted_list Backlog.sprint_backlog.first_issue
     else
       @backlog_issues = sorted_list Issue.first.in_backlog[0]
+      @sprint_issues  = sorted_list Issue.first.in_sprint[0]
     end    
-    @sprint_issues = sorted_list Issue.first.in_sprint[0]
     render :index
   end
 
   def finished_issues_list 
-    @finished_issues = sorted_list Issue.first.finished[0]
+    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
   end
   
   def activate_issue
     issue = Issue.find(params[:id])
     issue.activate
-    @finished_issues = sorted_list Issue.first.finished[0]
+    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
     render :finished_issues_list
   end
 

@@ -12,4 +12,19 @@ class Backlog < ActiveRecord::Base
   def self.finished_backlog
     Backlog.where(name: 'finished_backlog').first
   end
+
+  def first_issue
+    self.issues.first_in_list.first
+  end
+
+  def update list
+    if list.length > 0
+      list.each_with_index do |id, i|
+        Issue.find(id).update_attributes!(:predecessor_id => (i == 0 ? nil : list[i-1]), :backlog => self)
+      end
+      first_backlog_issue = Issue.find_by_id list.first
+      first_backlog_issue.predecessor_id = nil
+      first_backlog_issue.save
+    end 
+  end
 end
