@@ -7,4 +7,4 @@ end
 
 feature :persist_present_demo, :presentation
 
-feature :temp_lock_lists, :presentation, :condition => false
+feature :temp_lock_lists, :condition => false
