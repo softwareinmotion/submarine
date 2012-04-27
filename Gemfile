@@ -37,6 +37,8 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'factory_girl'
   gem 'debugger'
+  gem 'spork'
+  gem 'watchr'
 
   gem 'awesome_print'
   # Pretty printed test output
