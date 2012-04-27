@@ -1,8 +1,0 @@
-<% if @lists_locked %>
-  $('#lock_btn').val('Bearbeiten beenden');
-  $('html').addClass('locked_html');
-  $('.list_header').removeClass('unlocked_list_header').addClass('locked_list_header');
-<% else %>
-  $('header').after("<div id=\"flash_could_not_lock\"><%= escape_javascript(I18n.t 'backlog.errors.could_not_lock') %></div>");
-<% end %>
-
