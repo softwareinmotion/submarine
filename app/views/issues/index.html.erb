@@ -3,18 +3,25 @@
 <section id="main">
 
 <% feature_active? :temp_lock_lists do %>
-  <%= form_tag lock_lists_path, :method => :post, :remote => true do %>
+  <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
     <%= hidden_field_tag "lock_lists", true %>
-    <%= submit_tag "Bearbeiten", :id => "lock_btn" %>
+    <% if @lists_locked_by_current_user %>
+      <%= submit_tag (I18n.t("backlog.finish_editing")), :id => "lock_btn" %>
+    <% else %>
+      <%= submit_tag (I18n.t("backlog.edit")), :id => "lock_btn" %>
+    <% end %>
+    <% if @lists_locked_by_another_user %>
+      <span id="lock_hint"><%= I18n.t "backlog.locked_by_another_user_hint" %></span>
+    <% end %>
   <% end %>
 <% end %>
 
 <article class="log" id="backlog">
-	<%= render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>
+<%= render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>
 </article>
 
 <article class="log" id="sprint">
-	<%= render :partial => "list", :locals => {:list_type => 'sprint_backlog', :list_items => @sprint_issues} %>
+<%= render :partial => "list", :locals => {:list_type => 'sprint_backlog', :list_items => @sprint_issues} %>
 </article>
 
 </section>

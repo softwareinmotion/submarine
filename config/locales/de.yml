@@ -23,5 +23,8 @@ de:
     finish: 'Eintrag abschließen'
     activate: 'Eintrag reaktivieren'
   backlog:
+    edit: 'Bearbeiten'
+    finish_editing: 'Bearbeiten beenden'
+    locked_by_another_user_hint: 'Aktuell in Bearbeitung durch jemand anderen'
     errors:
-      could_not_lock: 'Die Listen konnten nicht für die Bearbeitung gesperrt werden.'
+      locked_by_another_user: 'Die Listen konnten nicht gesperrt werden, weil jemand anderes sie bearbeitet.'

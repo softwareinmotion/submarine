@@ -5,8 +5,16 @@ class Backlog < ActiveRecord::Base
     Backlog.where(name: 'backlog').first
   end
 
+  def self.backlog_with_lock
+    Backlog.where(name: 'backlog').lock(true).first
+  end
+
   def self.sprint_backlog
     Backlog.where(name: 'sprint_backlog').first
+  end
+
+  def self.sprint_backlog_with_lock
+    Backlog.where(name: 'sprint_backlog').lock(true).first
   end
 
   def self.finished_backlog
@@ -17,7 +25,7 @@ class Backlog < ActiveRecord::Base
     self.issues.first_in_list.first
   end
 
-  def update list
+  def update_with_list list
     if list.length > 0
       list.each_with_index do |id, i|
         Issue.find(id).update_attributes!(:predecessor_id => (i == 0 ? nil : list[i-1]), :backlog => self)
@@ -26,5 +34,23 @@ class Backlog < ActiveRecord::Base
       first_backlog_issue.predecessor_id = nil
       first_backlog_issue.save
     end 
+  end
+
+  def locked_by_session? session_id
+    self.locked and self.locked_session_id == session_id
+  end
+
+  def locked_by_another_session? session_id
+    self.locked and not self.locked_session_id == session_id
+  end
+
+  def lock_for_session session_id
+    self.locked = true
+    self.locked_session_id = session_id
+  end
+
+  def unlock
+    self.locked = false
+    self.locked_session_id = nil
   end
 end

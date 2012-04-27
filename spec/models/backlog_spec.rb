@@ -16,7 +16,7 @@ feature_active? :temp_lock_lists do
 
         backlog_issue_array = [issue1.id, issue3.id, issue2.id]
 
-        @sprint_backlog.update backlog_issue_array
+        @sprint_backlog.update_with_list backlog_issue_array
 
         issue2.reload.predecessor_id.should == issue3.id
         issue3.reload.predecessor_id.should == issue1.id
@@ -30,7 +30,7 @@ feature_active? :temp_lock_lists do
 
         backlog_issue_array = [issue2.id, issue1.id, issue3.id]
 
-        @sprint_backlog.update backlog_issue_array
+        @sprint_backlog.update_with_list backlog_issue_array
 
         issue3.reload.predecessor_id.should == issue1.id
         issue1.reload.predecessor_id.should == issue2.id
@@ -44,7 +44,7 @@ feature_active? :temp_lock_lists do
 
         backlog_issue_array = [issue2.id, issue3.id, issue1.id]
 
-        @sprint_backlog.update backlog_issue_array
+        @sprint_backlog.update_with_list backlog_issue_array
 
         issue1.reload.predecessor_id.should == issue3.id
         issue3.reload.predecessor_id.should == issue2.id
@@ -58,7 +58,7 @@ feature_active? :temp_lock_lists do
 
         sprint_backlog_issue_array = [issue3.id, issue1.id, issue2.id]
 
-        @sprint_backlog.update sprint_backlog_issue_array
+        @sprint_backlog.update_with_list sprint_backlog_issue_array
 
         issue2.reload.predecessor_id.should == issue1.id
         issue1.reload.predecessor_id.should == issue3.id
@@ -72,7 +72,7 @@ feature_active? :temp_lock_lists do
 
         sprint_backlog_issue_array = [issue3.id, issue2.id, issue1.id]
 
-        @sprint_backlog.update sprint_backlog_issue_array
+        @sprint_backlog.update_with_list sprint_backlog_issue_array
 
         issue1.reload.predecessor_id.should == issue2.id
         issue2.reload.predecessor_id.should == issue3.id
@@ -95,8 +95,8 @@ feature_active? :temp_lock_lists do
         sprint_backlog_issue_array = [issue4.id, issue3.id, issue5.id]
         backlog_issue_array = [issue1.id, issue2.id]
 
-        @sprint_backlog.update sprint_backlog_issue_array
-        @backlog.update backlog_issue_array
+        @sprint_backlog.update_with_list sprint_backlog_issue_array
+        @backlog.update_with_list backlog_issue_array
 
         issue2.reload.predecessor_id.should == issue1.id
         issue1.reload.predecessor_id.should be_nil
@@ -122,8 +122,8 @@ feature_active? :temp_lock_lists do
         sprint_backlog_issue_array = [issue4.id]
         backlog_issue_array = [issue5.id, issue1.id, issue2.id, issue3.id]
 
-        @sprint_backlog.update sprint_backlog_issue_array
-        @backlog.update backlog_issue_array
+        @sprint_backlog.update_with_list sprint_backlog_issue_array
+        @backlog.update_with_list backlog_issue_array
 
         issue3.reload.predecessor_id.should == issue2.id
         issue2.reload.predecessor_id.should == issue1.id
@@ -150,8 +150,8 @@ feature_active? :temp_lock_lists do
         sprint_backlog_issue_array = [issue4.id]
         backlog_issue_array = [issue1.id, issue5.id, issue2.id, issue3.id]
 
-        @sprint_backlog.update sprint_backlog_issue_array
-        @backlog.update backlog_issue_array
+        @sprint_backlog.update_with_list sprint_backlog_issue_array
+        @backlog.update_with_list backlog_issue_array
 
         issue3.reload.predecessor_id.should == issue2.id
         issue2.reload.predecessor_id.should == issue5.id
@@ -167,7 +167,7 @@ feature_active? :temp_lock_lists do
 
         backlog_issue_array = [issue1.id, issue5.id, issue2.id, issue4.id, issue3.id]
 
-        @backlog.update backlog_issue_array
+        @backlog.update_with_list backlog_issue_array
 
         issue3.reload.predecessor_id.should == issue4.id
         issue4.reload.predecessor_id.should == issue2.id
@@ -194,8 +194,8 @@ feature_active? :temp_lock_lists do
         sprint_backlog_issue_array = [issue3.id, issue2.id, issue4.id]
         backlog_issue_array = [issue1.id]
 
-        @sprint_backlog.update sprint_backlog_issue_array
-        @backlog.update backlog_issue_array
+        @sprint_backlog.update_with_list sprint_backlog_issue_array
+        @backlog.update_with_list backlog_issue_array
 
         issue1.reload.predecessor_id.should be_nil
 
@@ -210,7 +210,7 @@ feature_active? :temp_lock_lists do
 
         sprint_backlog_issue_array = [issue3.id, issue2.id, issue4.id, issue1.id]
 
-        @sprint_backlog.update sprint_backlog_issue_array
+        @sprint_backlog.update_with_list sprint_backlog_issue_array
 
         issue1.reload.predecessor_id.should == issue4.id
         issue4.reload.predecessor_id.should == issue2.id

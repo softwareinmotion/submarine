@@ -1,4 +1,4 @@
-<ul class="list_header unlocked_list_header">
+<ul class="list_header <%= @lists_locked_by_current_user ? "locked_list_header" : "unlocked_list_header" %>">
   <% case list_type %>
   <% when 'sprint_backlog' %>
     <li>Sprint Backlog</li>
