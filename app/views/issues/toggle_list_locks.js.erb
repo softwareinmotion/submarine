@@ -1,12 +1,12 @@
 <% if @lists_locked_by_current_user %>
   $('#lock_btn').val('<%= I18n.t("backlog.finish_editing") %>');
-  $('html').addClass('locked_html');
-  $('.list_header').removeClass('unlocked_list_header').addClass('locked_list_header');
+  SUBMARINE.lock.start_timeout();
 <% elsif @lists_locked_by_another_user %>
+  SUBMARINE.lock.disable_lock_bindings();
   $('header').after("<div id=\"flash_could_not_lock\"><%= escape_javascript(I18n.t 'backlog.errors.locked_by_another_user') %></div>");
 <% else %>
+  SUBMARINE.lock.disable_lock_bindings();
   $('#lock_btn').val('<%= I18n.t("backlog.edit") %>');
-  $('html').removeClass('locked_html');
-  $('.list_header').removeClass('locked_list_header').addClass('unlocked_list_header');
+  SUBMARINE.lock.stop_timeout();
 <% end %>
 

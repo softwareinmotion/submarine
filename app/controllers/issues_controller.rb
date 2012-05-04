@@ -1,14 +1,10 @@
 class IssuesController < ApplicationController
+  before_filter :check_locks
+
   def index
     if feature_active? :temp_lock_lists
       @backlog_issues = sorted_list Backlog.backlog.first_issue
       @sprint_issues = sorted_list Backlog.sprint_backlog.first_issue
-
-      session_id = session[:session_id]
-      [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
-        @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
-        @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
-      end
     else
       @backlog_issues = sorted_list Issue.first.in_backlog[0]
       @sprint_issues = sorted_list Issue.first.in_sprint[0]
@@ -21,8 +17,12 @@ class IssuesController < ApplicationController
   end
 
   def edit
-    @issue = Issue.find(params[:id])
-    prepare_form
+    if @lists_locked_by_current_user
+      @issue = Issue.find(params[:id])
+      prepare_form
+    else
+      redirect_to issues_path, notice: I18n.t("backlog.errors.lists_not_locked")
+    end
   end
 
   def create
@@ -71,33 +71,41 @@ class IssuesController < ApplicationController
   end
 
   def update
-    types = Issue.children_type_names
-    @issue = nil
-    
-    types.each do |t|
-      @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
-      if params[@type]
-        @issue = Issue.find(params[:id])
-        new_type = params[@type].delete :type
-        @issue[:type] = new_type
-        break
+    if @lists_locked_by_current_user
+      types = Issue.children_type_names
+      @issue = nil
+
+      types.each do |t|
+        @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
+        if params[@type]
+          @issue = Issue.find(params[:id])
+          new_type = params[@type].delete :type
+          @issue[:type] = new_type
+          break
+        end
       end
-    end
 
-    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
+      params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
 
-    if @issue && @issue.update_attributes(params[@type])
-      redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+      if @issue && @issue.update_attributes(params[@type])
+        redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+      else
+        prepare_form
+        render action: "edit"
+      end
     else
-      prepare_form
-      render action: "edit"
+      redirect_to issues_path, notice: I18n.t("backlog.errors.lists_not_locked")
     end
   end
 
   def destroy
-    @issue = Issue.find(params[:id])
-    @issue.destroy
-    redirect_to issues_url
+    if @lists_locked_by_current_user
+      @issue = Issue.find(params[:id])
+      @issue.destroy
+      redirect_to issues_url
+    else
+      redirect_to issues_path, notice: I18n.t("backlog.errors.lists_not_locked")
+    end
   end
 
   # moves backlog_item from one backlog to the other backlog
@@ -108,51 +116,57 @@ class IssuesController < ApplicationController
   # "backlog_list" => [[0] "4",[1] "1",[2] "2"],
   # "sprint_backlog_list" => [[0] "3"]}
   def change_list
-    moved_issue = Issue.find params[:moved_issue_id]
-    backlog_list = params[:backlog_list]
-    sprint_backlog_list = params[:sprint_backlog_list]
+    if @lists_locked_by_current_user
+      moved_issue = Issue.find params[:moved_issue_id]
+      backlog_list = params[:backlog_list]
+      sprint_backlog_list = params[:sprint_backlog_list]
 
-    if feature_active? :temp_lock_lists
-      if sprint_backlog_list and sprint_backlog_list.include?(moved_issue.id)
-        Backlog.sprint_backlog.issues << moved_issue
-      else
-        Backlog.backlog.issues << moved_issue
-      end
-      moved_issue.save!
-      Backlog.backlog.update_with_list backlog_list
-      Backlog.sprint_backlog.update_with_list sprint_backlog_list
-    else
-      if backlog_list == nil 
-        backlog_list = Array.new   
-      end
-      if sprint_backlog_list 
-        if sprint_backlog_list.include?(moved_issue.id)
-          moved_issue.sprint_flag = true;
-          moved_issue.save
+      if feature_active? :temp_lock_lists
+        if sprint_backlog_list and sprint_backlog_list.include?(moved_issue.id)
+          Backlog.sprint_backlog.issues << moved_issue
         else
-          moved_issue.sprint_flag = false;
-          moved_issue.save
-        end 
+          Backlog.backlog.issues << moved_issue
+        end
+        moved_issue.save!
+        Backlog.backlog.update_with_list backlog_list
+        Backlog.sprint_backlog.update_with_list sprint_backlog_list
       else
-        sprint_backlog_list = Array.new
-      end
-      moved_issue.reload.update_lists backlog_list, sprint_backlog_list
-    end    
+        if backlog_list == nil 
+          backlog_list = Array.new   
+        end
+        if sprint_backlog_list 
+          if sprint_backlog_list.include?(moved_issue.id)
+            moved_issue.sprint_flag = true;
+            moved_issue.save
+          else
+            moved_issue.sprint_flag = false;
+            moved_issue.save
+          end 
+        else
+          sprint_backlog_list = Array.new
+        end
+        moved_issue.reload.update_lists backlog_list, sprint_backlog_list
+      end    
 
-    render :nothing => true
+      render :nothing => true
+    end
   end
 
   def finish_issue
-    issue = Issue.find(params[:id])
-    issue.finish
-    if feature_active? :temp_lock_lists
-      @backlog_issues = sorted_list Backlog.backlog.first_issue
-      @sprint_issues  = sorted_list Backlog.sprint_backlog.first_issue
+    if @lists_locked_by_current_user
+      issue = Issue.find(params[:id])
+      issue.finish
+      if feature_active? :temp_lock_lists
+        @backlog_issues = sorted_list Backlog.backlog.first_issue
+        @sprint_issues  = sorted_list Backlog.sprint_backlog.first_issue
+      else
+        @backlog_issues = sorted_list Issue.first.in_backlog[0]
+        @sprint_issues  = sorted_list Issue.first.in_sprint[0]
+      end    
+      render :index
     else
-      @backlog_issues = sorted_list Issue.first.in_backlog[0]
-      @sprint_issues  = sorted_list Issue.first.in_sprint[0]
-    end    
-    render :index
+      redirect_to issues_path, notice: I18n.t("backlog.errors.lists_not_locked")
+    end
   end
 
   def finished_issues_list 
@@ -162,7 +176,7 @@ class IssuesController < ApplicationController
       @finished_issues = sorted_list Issue.first.finished[0]
     end 
   end
-  
+
   def activate_issue
     issue = Issue.find(params[:id])
     issue.activate
@@ -176,6 +190,8 @@ class IssuesController < ApplicationController
 
   def toggle_list_locks
     session_id = session[:session_id]
+    @lists_locked_by_another_user = false
+    @lists_locked_by_current_user = false
 
     # variable shows if this method shall lock or unlock lists
     lock_mode = true
@@ -231,5 +247,17 @@ class IssuesController < ApplicationController
       end
     end
     issues
+  end
+
+  def check_locks
+    if feature_active? :temp_lock_lists
+      session_id = session[:session_id]
+      [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
+        @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
+        @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
+      end
+    else
+      @lists_locked_by_current_user = true
+    end
   end
 end

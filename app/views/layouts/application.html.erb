@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<% if @lists_locked_by_current_user %>
+<% if feature_active?(:temp_lock_lists) and @lists_locked_by_current_user %>
   <html class="locked_html">
 <% else %>
   <html>
