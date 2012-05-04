@@ -14,7 +14,80 @@
 //= require_self
 
 SUBMARINE = {
+  /*** lock_timer (abbreviation: lt) ***/
+  lock: {
+    timer_id: null,
+    start_time: null,
+    max_time: 15000,
+    extend_timeout: false,
+    start_timeout: function(){
+      SUBMARINE.lock.set_start_time_to_now();
+      SUBMARINE.lock.timer_id = setInterval(SUBMARINE.lock.check_timeout, 1000);
+
+      SUBMARINE.lock.update_timeout_view(0);
+      $('html').addClass('locked_html');
+      $('.list_header').removeClass('unlocked_list_header').addClass('locked_list_header');
+      // enable UI bindings related to the locked mode
+      SUBMARINE.lock.enable_lock_bindings();
+    },
+    set_start_time_to_now: function(){
+      SUBMARINE.lock.start_time = new Date().getTime();
+      $.cookie('SUBMARINE.lock.start_time', SUBMARINE.lock.start_time);
+    },
+    revive_timeout: function(){
+      SUBMARINE.lock.start_time = $.cookie('SUBMARINE.lock.start_time');
+      if (SUBMARINE.lock.check_timeout()) {
+        SUBMARINE.lock.timer_id = setInterval(SUBMARINE.lock.check_timeout, 1000);
+      }
+    },
+    stop_timeout: function(){
+      clearInterval(SUBMARINE.lock.timer_id);
+
+      $("#lock_timeout").empty();
+      $('html').removeClass('locked_html');
+      $('.list_header').removeClass('locked_list_header').addClass('unlocked_list_header');
+      $('#lock_btn').val('<%= I18n.t("backlog.edit") %>');
+    },
+    check_timeout: function(){
+      var result = false;
+      var elapsed = new Date().getTime() - SUBMARINE.lock.start_time;
+
+      if(SUBMARINE.lock.extend_timeout) {
+        SUBMARINE.lock.extend_timeout = false;
+        SUBMARINE.lock.set_start_time_to_now();
+        SUBMARINE.lock.update_timeout_view(0);
+        result = true;
+      } else if(elapsed <= SUBMARINE.lock.max_time) {
+        SUBMARINE.lock.update_timeout_view(elapsed);
+        result = true;
+      } else {
+        SUBMARINE.lock.stop_timeout();
+        result = false;
+      }
+      return result;
+    },
+    update_timeout_view: function(elapsed) {
+      var time_left = Math.round(Math.floor(SUBMARINE.lock.max_time - elapsed) / 1000);
+      $("#lock_timeout").html("Timeout: -" + time_left);
+    },
+    enable_lock_bindings: function() {
+      // enable UI bindings related to the locked mode
+      $("#sprint_backlog_list, #backlog_list").sortable({
+        connectWith: ".connectedSortable",
+      start: function(event,ui){
+        $(ui.item).addClass("dragging");
+      },
+      stop: SUBMARINE.changeListHandler,
+      }).disableSelection();
+      $("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
+    },
+    disable_lock_bindings: function() {
+      $("#sprint_backlog_list, #backlog_list").sortable("option", "disabled", true);
+    },
+  },
+  /*** list drag'n drop handling ***/
   changeListHandler: function(event,ui){
+    SUBMARINE.lock.extend_timeout = true;
     $(ui.item).removeClass("dragging");
     var moved_issue_id;
     var list_element;
@@ -23,7 +96,7 @@ SUBMARINE = {
     } else {
       list_element = $(event.target).parents('li'); 
     }
-    
+
     var controls = list_element.find('.controls_container');
     var finish_button = list_element.find('a.finish_button');
     if (list_element.parents('ul#sprint_backlog_list').size() > 0) {
@@ -33,7 +106,7 @@ SUBMARINE = {
       finish_button.addClass("finish");
       controls.removeClass('sprint_controls');
     }
-    
+
     moved_issue_id = list_element.attr("data-id");
     var data = { moved_issue_id: moved_issue_id, backlog_list: [], sprint_backlog_list: [] };
     data.predecessor_id = $(list_element).prev() && $(list_element).prev().attr("data-id");
@@ -44,19 +117,19 @@ SUBMARINE = {
       data.sprint_backlog_list.push($(li).attr("data-id")); 
     });
     $.ajax({
-          type: 'POST',
-          url: SUBMARINE.changeListURL,
-          data: data,
-          error: function(){window.alert(SUBMARINE.messages.save_failed)}});
+      type: 'POST',
+      url: SUBMARINE.changeListURL,
+      data: data,
+      error: function(){window.alert(SUBMARINE.messages.save_failed)}});
     SUBMARINE.showStoryPointsSum();
   },
   toggleDescription: function(event){
     if($(this).hasClass("short")){
       $(this).removeClass("short");
-	  $(this).parent().css('height', $(this).height());
+      $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");
-	  $(this).parent().css('height', $(this).height());	  
+      $(this).parent().css('height', $(this).height());	  
     }
   },
   showControls: function(event){

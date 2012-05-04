@@ -10,6 +10,7 @@
     <% else %>
       <%= submit_tag (I18n.t("backlog.edit")), :id => "lock_btn" %>
     <% end %>
+    <span id="lock_timeout"></span>
     <% if @lists_locked_by_another_user %>
       <span id="lock_hint"><%= I18n.t "backlog.locked_by_another_user_hint" %></span>
     <% end %>
@@ -26,20 +27,32 @@
 
 </section>
 
+<%= javascript_include_tag "jquery.cookie.js" %>
 <script>
-$(function() {
-	$("#sprint_backlog_list, #backlog_list").sortable({
-		connectWith: ".connectedSortable",
-		start: function(event,ui){
-			$(ui.item).addClass("dragging");
-		},
-		stop: SUBMARINE.changeListHandler,
-	}).disableSelection();
-	SUBMARINE.showStoryPointsSum();
-	$("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
-	$("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
-});
-SUBMARINE.changeListURL = "<%= change_list_path %>";
-SUBMARINE.messages.save_failed = '<%= t 'issue.save_failed' %>';
+  $(function() {
+    <% if feature_active? :temp_lock_lists %>
+      <% if @lists_locked_by_current_user %>
+        SUBMARINE.lock.revive_timeout();
+        SUBMARINE.lock.enable_lock_bindings();
+      <% else %>
+        $("#sprint_backlog_list, #backlog_list").disableSelection();
+      <% end %>
+      SUBMARINE.showStoryPointsSum();
+      $("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
+    <% else %>
+      $("#sprint_backlog_list, #backlog_list").sortable({
+        connectWith: ".connectedSortable",
+        start: function(event,ui){
+          $(ui.item).addClass("dragging");
+        },
+        stop: SUBMARINE.changeListHandler,
+      }).disableSelection();
+      SUBMARINE.showStoryPointsSum();
+      $("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
+      $("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
+    <% end %>
+  });
+  SUBMARINE.changeListURL = "<%= change_list_path %>";
+  SUBMARINE.messages.save_failed = '<%= t 'issue.save_failed' %>';
 </script>
 
