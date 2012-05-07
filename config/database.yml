@@ -60,3 +60,14 @@ production:
   password: Pass2Swim!
   pool: 5
   timeout: 5000
+
+production-transformers:
+  adapter: postgresql
+  encoding: utf8
+  database: transformers.submarine
+  host: submarine
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
