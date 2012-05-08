@@ -75,15 +75,16 @@ SUBMARINE = {
       // enable UI bindings related to the locked mode
       $("#sprint_backlog_list, #backlog_list").sortable({
         connectWith: ".connectedSortable",
-      start: function(event,ui){
-        $(ui.item).addClass("dragging");
-      },
-      stop: SUBMARINE.changeListHandler,
-      }).disableSelection();
+        start: function(event,ui){$(ui.item).addClass("dragging");},
+        stop: SUBMARINE.changeListHandler,
+        disabled: false}).disableSelection();
       $("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
     },
     disable_lock_bindings: function() {
       $("#sprint_backlog_list, #backlog_list").sortable("option", "disabled", true);
+      var list_elems = $("ul.connectedSortable > li");
+      list_elems.unbind('mouseenter', SUBMARINE.showControls);
+      list_elems.unbind('mouseleave', SUBMARINE.hideControls);
     },
   },
   /*** list drag'n drop handling ***/
