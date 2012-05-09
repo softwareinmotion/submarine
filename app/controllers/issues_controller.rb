@@ -50,7 +50,11 @@ class IssuesController < ApplicationController
     if @issue
       if feature_active? :temp_lock_lists
         old_first_issue = Backlog.backlog.first_issue
-        Backlog.backlog.issues << @issue
+        if @lists_locked_by_current_user
+          Backlog.backlog.issues << @issue
+        else
+          Backlog.new_issues.issues << @issue
+        end
       else
         old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
         @issue.sprint_flag = false
@@ -223,7 +227,6 @@ class IssuesController < ApplicationController
   end
 
   def extend_lock_time
-    check_locks
     if @lists_locked_by_current_user
       [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
         bl.save!
