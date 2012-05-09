@@ -4,16 +4,19 @@
 
 <% feature_active? :temp_lock_lists do %>
   <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
-    <%= hidden_field_tag "lock_lists", true %>
     <% if @lists_locked_by_current_user %>
-      <%= submit_tag (I18n.t("backlog.finish_editing")), :id => "lock_btn" %>
+      <%= submit_tag I18n.t("backlog.finish_editing"), :id => "lock_btn" %>
     <% else %>
-      <%= submit_tag (I18n.t("backlog.edit")), :id => "lock_btn" %>
+      <%= submit_tag I18n.t("backlog.edit"), :id => "lock_btn" %>
     <% end %>
     <span id="lock_timeout"></span>
     <% if @lists_locked_by_another_user %>
       <span id="lock_hint"><%= I18n.t "backlog.locked_by_another_user_hint" %></span>
     <% end %>
+  <% end %>
+
+  <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
+    <%= submit_tag I18n.t("backlog.extend_lock_time"), :id => 'extend_btn', :class => 'hidden'%>
   <% end %>
 <% end %>
 
