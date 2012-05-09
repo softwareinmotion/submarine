@@ -26,6 +26,7 @@ de:
     edit: 'Bearbeiten'
     finish_editing: 'Bearbeiten beenden'
     locked_by_another_user_hint: 'Aktuell in Bearbeitung durch jemand anderen'
+    extend_lock_time: 'Bearbeitung verlängern'
     errors:
       locked_by_another_user: 'Die Listen konnten nicht gesperrt werden, weil jemand anderes sie bearbeitet.'
       lists_not_locked: 'Sie müssen auf "Bearbeiten" klicken, um die Listen bearbeiten zu können.'

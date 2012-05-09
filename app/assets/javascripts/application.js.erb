@@ -15,13 +15,12 @@
 //= require_self
 
 SUBMARINE = {
-  /*** lock_timer (abbreviation: lt) ***/
   lock: {
     timer_id: null,
     start_time: null,
-    max_time: 15000,
-    extend_timeout: false,
-    start_timeout: function(){
+    max_time: <%= Configurable.max_lock_time * 1000 %>,
+    start_timeout: function(max_time){
+      SUBMARINE.lock.max_time = max_time;
       SUBMARINE.lock.set_start_time_to_now();
       SUBMARINE.lock.timer_id = setInterval(SUBMARINE.lock.check_timeout, 1000);
 
@@ -30,15 +29,19 @@ SUBMARINE = {
       $('.list_header').removeClass('unlocked_list_header').addClass('locked_list_header');
       // enable UI bindings related to the locked mode
       SUBMARINE.lock.enable_lock_bindings();
+      // show the extend button
+      $('#extend_btn').removeClass('hidden').addClass('visible');
     },
     set_start_time_to_now: function(){
       SUBMARINE.lock.start_time = new Date().getTime();
       $.cookie('SUBMARINE.lock.start_time', SUBMARINE.lock.start_time);
     },
+    // revive a timeout after a page refresh or load
     revive_timeout: function(){
       SUBMARINE.lock.start_time = $.cookie('SUBMARINE.lock.start_time');
       if (SUBMARINE.lock.check_timeout()) {
         SUBMARINE.lock.timer_id = setInterval(SUBMARINE.lock.check_timeout, 1000);
+        $('#extend_btn').removeClass('hidden').addClass('visible');
       }
     },
     stop_timeout: function(){
@@ -48,17 +51,16 @@ SUBMARINE = {
       $('html').removeClass('locked_html');
       $('.list_header').removeClass('locked_list_header').addClass('unlocked_list_header');
       $('#lock_btn').val('<%= I18n.t("backlog.edit") %>');
+      $('#extend_btn').removeClass('visible').addClass('hidden');
+    },
+    extend_lock_time: function(){
+        SUBMARINE.lock.set_start_time_to_now();
+        SUBMARINE.lock.update_timeout_view(0);
     },
     check_timeout: function(){
       var result = false;
       var elapsed = new Date().getTime() - SUBMARINE.lock.start_time;
-
-      if(SUBMARINE.lock.extend_timeout) {
-        SUBMARINE.lock.extend_timeout = false;
-        SUBMARINE.lock.set_start_time_to_now();
-        SUBMARINE.lock.update_timeout_view(0);
-        result = true;
-      } else if(elapsed <= SUBMARINE.lock.max_time) {
+      if(elapsed <= SUBMARINE.lock.max_time) {
         SUBMARINE.lock.update_timeout_view(elapsed);
         result = true;
       } else {
@@ -89,7 +91,9 @@ SUBMARINE = {
   },
   /*** list drag'n drop handling ***/
   changeListHandler: function(event,ui){
-    SUBMARINE.lock.extend_timeout = true;
+    <% feature_active? :temp_lock_lists do %>
+      SUBMARINE.lock.extend_lock_time();
+    <% end %>
     $(ui.item).removeClass("dragging");
     var moved_issue_id;
     var list_element;

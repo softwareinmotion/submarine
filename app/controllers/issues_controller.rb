@@ -203,11 +203,12 @@ class IssuesController < ApplicationController
 
       # unlock backlogs if they are locked by the current user
       [backlog, sprint_backlog].each do |bl|
-        if bl.locked_by_session? session_id
+        elapsed = (Time.zone.now - bl.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
+        if bl.locked_by_session?(session_id)
           bl.unlock
           bl.save!
           lock_mode = false
-        elsif bl.locked_by_another_session? session_id
+        elsif bl.locked_by_another_session? session_id and not elapsed
           @lists_locked_by_another_user = true
           lock_mode = false
         end
@@ -220,6 +221,15 @@ class IssuesController < ApplicationController
         backlog.save!
         sprint_backlog.save!
         @lists_locked_by_current_user = true
+      end
+    end
+  end
+
+  def extend_lock_time
+    check_locks
+    if @lists_locked_by_current_user
+      [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
+        bl.save!
       end
     end
   end
