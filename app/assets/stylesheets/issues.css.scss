@@ -103,6 +103,14 @@ ul.list_header {
   background: linear-gradient(#DDD 0%, #5ECCD1 300px);
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
 ul.connectedSortable { 
   @include ul_base;
   
