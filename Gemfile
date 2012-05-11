@@ -38,8 +38,6 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'factory_girl'
   gem 'debugger'
-  gem 'pry'
-  gem 'pry-nav'
   gem 'spork'
   gem 'watchr'
 
