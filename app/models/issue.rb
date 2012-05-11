@@ -87,33 +87,41 @@ class Issue < ActiveRecord::Base
   end
 
   def activate
-    self.close_gap
-    self.reload
     if feature_active? :temp_lock_lists
-      backlog_size = Backlog.backlog.issues.count
+      self.push_to_backlog Backlog.new_issues
     else
-      backlog_size = Issue.in_backlog.size
-    end
+      self.close_gap
+      self.reload
 
-    if backlog_size > 0
-      if feature_active? :temp_lock_lists
-        first = Backlog.backlog.first_issue
-      else
+      if Issue.in_backlog.size > 0
         first = Issue.first.in_backlog[0]
-      end        
-      first.predecessor_id = self.id
-      first.save
-    end
-
-    self.predecessor_id = nil
-    if feature_active? :temp_lock_lists
-      Backlog.backlog.issues << self
-    else
+        first.predecessor_id = id
+        first.save!
+      end
+      self.predecessor_id = nil
       self.sprint_flag = false
       self.finished = false
-    end
 
-    self.save!
+      self.save!
+    end        
+  end
+
+  def push_to_backlog backlog
+    close_gap
+    reload
+
+    unless backlog.issues.empty?
+      backlog.first_issue.update_attributes predecessor_id: id
+    end
+    backlog.issues << self
+  end
+
+  def finished?
+    backlog == Backlog.finished_backlog
+  end
+
+  def in_sprint?
+    backlog == Backlog.sprint_backlog
   end
 
   def close_gap
@@ -123,13 +131,5 @@ class Issue < ActiveRecord::Base
       descendant.save!
     end
     self.predecessor_id = nil
-  end
-
-  def finished?
-    backlog == Backlog.finished_backlog
-  end
-
-  def in_sprint?
-    backlog == Backlog.sprint_backlog
   end
 end
