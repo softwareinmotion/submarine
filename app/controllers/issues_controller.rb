@@ -3,7 +3,12 @@ class IssuesController < ApplicationController
 
   def index
     if feature_active? :temp_lock_lists
-      @backlog_issues = sorted_list Backlog.backlog.first_issue
+      # if lists are locked show newly created issues only to other users
+      if @lists_locked_by_current_user
+        @backlog_issues = sorted_list(Backlog.backlog.first_issue)
+      else
+        @backlog_issues = sorted_list(Backlog.new_issues.first_issue) + sorted_list(Backlog.backlog.first_issue)
+      end
       @sprint_issues = sorted_list Backlog.sprint_backlog.first_issue
     else
       @backlog_issues = sorted_list Issue.first.in_backlog[0]
@@ -49,10 +54,11 @@ class IssuesController < ApplicationController
 
     if @issue
       if feature_active? :temp_lock_lists
-        old_first_issue = Backlog.backlog.first_issue
         if @lists_locked_by_current_user
+          old_first_issue = Backlog.backlog.first_issue
           Backlog.backlog.issues << @issue
         else
+          old_first_issue = Backlog.new_issues.first_issue
           Backlog.new_issues.issues << @issue
         end
       else
@@ -65,7 +71,7 @@ class IssuesController < ApplicationController
     if @issue && @issue.save
       if old_first_issue
         old_first_issue.predecessor_id = @issue.id
-        old_first_issue.save
+        old_first_issue.save!
       end
       redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
     else
@@ -207,15 +213,11 @@ class IssuesController < ApplicationController
 
       # unlock backlogs
       [backlog, sprint_backlog].each do |bl|
-        now = Time.zone.now
-        elapsed_with_delay = (now - bl.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
-        elapsed = (now - bl.updated_at) > Configurable.max_lock_time
-
-        if bl.locked_by_session?(session_id) and not elapsed
-          bl.unlock
-          bl.changed? ? bl.save! : bl.touch
-        elsif bl.locked_by_another_session? session_id and not elapsed_with_delay
+        if bl.locked_by_another_session? session_id
           @lists_locked_by_another_user = true
+        elsif bl.locked_by_session? session_id
+          bl.unlock
+          bl.save!
         else
           # lock backlogs for the duration of several actions through lock flags in the DB table 
           bl.lock_for_session session_id
@@ -262,12 +264,29 @@ class IssuesController < ApplicationController
   def check_locks
     if feature_active? :temp_lock_lists
       session_id = session[:session_id]
+      now = Time.zone.now
+
       [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
-        @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
-        @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
+        elapsed_with_delay = (now - bl.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
+        if bl.locked && elapsed_with_delay
+          bl.unlock
+          bl.save!
+        else
+          @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
+          @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
+        end
       end
+      clip_new_issues
     else
       @lists_locked_by_current_user = true
+    end
+  end
+
+  # Clip new issues to the backlog list
+  def clip_new_issues
+    unless Backlog.backlog.locked or Backlog.new_issues.issues.empty?
+      Backlog.backlog.first_issue.update_attributes(predecessor_id: Backlog.new_issues.last_issue.id)
+      Backlog.backlog.issues << Backlog.new_issues.issues
     end
   end
 end

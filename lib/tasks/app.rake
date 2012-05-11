@@ -32,6 +32,31 @@ namespace :submarine do
     UserStory.create name: 'User Stories anlegen', description: 'Als Product Owner kann ich User Stories in das Backlog eintragen.', project: prj_submarine, story_points: 3, sprint_flag: false, finished: true
   end
 
+  desc "populate example data for development purposes"
+  task :populate_dev => :environment do
+    ### create projects and tasks
+    proj_n_backlogs = [["Sonstiges", Backlog.finished_backlog], ["submarine", Backlog.sprint_backlog], ["Fancy", Backlog.backlog]]
+
+    proj_n_backlogs.each do |pair|
+      proj = Project.create name: pair[0]
+      last_task = nil
+
+      # create issues for a project
+      'a'.upto('d') do |iss_letter|
+        task = Task.new(name: "Task_#{iss_letter}_#{pair[0]}", description: "do something for Task_#{iss_letter}_#{pair[0]}", project: proj, story_points: 1)
+        task.predecessor = last_task if last_task
+        last_task = task
+        pair[1].issues << task
+      end
+
+      proj
+    end
+
+    ### overwrite configuration
+    Configurable.create name: "max_lock_time", value: 8
+    Configurable.create name: "max_lock_time_delay", value: 1
+  end
+
   desc "Includes feature dependent migration files in db:migrate task"
   task :feature_migrate => %w[submarine:cp_feature_migrations db:migrate submarine:rm_feature_migrations]
 
