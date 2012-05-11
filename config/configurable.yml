@@ -39,5 +39,5 @@ max_lock_time:
 
 max_lock_time_delay:
   name: Max. delay of backlog locking time in seconds
-  default: 5
+  default: 2
   type: integer

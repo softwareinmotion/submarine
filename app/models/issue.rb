@@ -14,6 +14,7 @@ class Issue < ActiveRecord::Base
 
   if feature_active? :temp_lock_lists
     scope :first_in_list, where(predecessor_id: nil)
+    scope :last_in_list, lambda { find_by_sql("select * from issues a where not exists (select * from issues b where b.predecessor_id = a.id)") }
   else
     scope :in_backlog, where("(issues.sprint_flag is null or issues.sprint_flag = ?) and finished = ?", false, false)    
     scope :in_sprint, where("issues.sprint_flag = ? and finished = ?", true, false)
