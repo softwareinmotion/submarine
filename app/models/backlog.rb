@@ -29,6 +29,10 @@ class Backlog < ActiveRecord::Base
     self.issues.first_in_list.first
   end
 
+  def last_issue
+    self.issues.last_in_list.first
+  end
+
   def update_with_list list
     if list.length > 0
       list.each_with_index do |id, i|
