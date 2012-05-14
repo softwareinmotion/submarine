@@ -17,13 +17,9 @@
   <% end %>
 <% end %>
 
-<article class="log" id="backlog">
 <%= render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>
-</article>
 
-<article class="log" id="sprint">
 <%= render :partial => "list", :locals => {:list_type => 'sprint_backlog', :list_items => @sprint_issues} %>
-</article>
 
 </section>
 
