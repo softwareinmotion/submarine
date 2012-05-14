@@ -53,6 +53,7 @@ SUBMARINE = {
     stop_timeout: function(){
       clearInterval(SUBMARINE.lock.timer_id);
 
+      SUBMARINE.lock.disable_lock_bindings();
       $("#lock_timeout").empty();
       $('html').removeClass('locked_html');
       $('.list_header').removeClass('locked_list_header').addClass('unlocked_list_header');
@@ -98,7 +99,16 @@ SUBMARINE = {
       var list_elems = $("ul.connectedSortable > li");
       list_elems.unbind('mouseenter', SUBMARINE.showControls);
       list_elems.unbind('mouseleave', SUBMARINE.hideControls);
+      $('.controls').hide();
     },
+  },
+
+  show_notice: function(notice) {
+    if($('#flashnotice').size() > 0) {
+      $('#flashnotice').replaceWith('<div id="flashnotice">' + notice + '<div>');
+    } else {
+      $('header').after('<div id="flashnotice">' + notice + '<div>');
+    }
   },
 
   /*** list drag'n drop handling ***/
