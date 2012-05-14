@@ -7,4 +7,6 @@ end
 
 feature :persist_present_demo, :presentation
 
-feature :temp_lock_lists, :condition => false
+condition :temp_lock_lists do
+  (ENV['PRODUCT_VARIANT'] == 'lock_lists')
+end
