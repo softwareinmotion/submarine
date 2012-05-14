@@ -79,6 +79,11 @@ header {
 #main {
   width: 1240px;
   margin: 0 auto;
+
+  .issue_form {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 #finished_issues_section {
