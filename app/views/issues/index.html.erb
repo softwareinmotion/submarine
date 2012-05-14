@@ -10,9 +10,6 @@
       <%= submit_tag I18n.t("backlog.edit"), :id => "lock_btn" %>
     <% end %>
     <span id="lock_timeout"></span>
-    <% if @lists_locked_by_another_user %>
-      <span id="lock_hint"><%= I18n.t "backlog.locked_by_another_user_hint" %></span>
-    <% end %>
   <% end %>
 
   <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>

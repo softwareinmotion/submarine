@@ -126,6 +126,10 @@ class IssuesController < ApplicationController
   # "backlog_list" => [[0] "4",[1] "1",[2] "2"],
   # "sprint_backlog_list" => [[0] "3"]}
   def change_list
+    feature_active? :temp_lock_lists do
+      extend_lock_time_in_db
+    end
+
     if @lists_locked_by_current_user
       moved_issue = Issue.find params[:moved_issue_id]
       backlog_list = params[:backlog_list]
@@ -157,9 +161,9 @@ class IssuesController < ApplicationController
         end
         moved_issue.reload.update_lists backlog_list, sprint_backlog_list
       end    
-
-      render :nothing => true
     end
+
+    render :nothing => true
   end
 
   def finish_issue
@@ -229,11 +233,7 @@ class IssuesController < ApplicationController
   end
 
   def extend_lock_time
-    if @lists_locked_by_current_user
-      [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
-        bl.save!
-      end
-    end
+    extend_lock_time_in_db
   end
 
   private
@@ -248,11 +248,11 @@ class IssuesController < ApplicationController
     end
     @story_points = ['unknown', 0, 0.5, 1, 2, 3, 5, 8, 13, 20]
   end
-  
+
   def sorted_list element
     issues = []
     if element
-    issues << element
+      issues << element
       while element.descendant do
         element = element.descendant
         issues << element
@@ -266,17 +266,23 @@ class IssuesController < ApplicationController
       session_id = session[:session_id]
       now = Time.zone.now
 
-      [Backlog.backlog, Backlog.sprint_backlog].each do |bl|
-        elapsed_with_delay = (now - bl.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
-        if bl.locked && elapsed_with_delay
-          bl.unlock
-          bl.save!
-        else
-          @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
-          @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
+      Backlog.transaction do
+        # lock backlogs for this action with activerecord techniques
+        backlog = Backlog.backlog_with_lock
+        sprint_backlog = Backlog.sprint_backlog_with_lock
+
+        [backlog, sprint_backlog].each do |bl|
+          elapsed_with_delay = (now - bl.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
+          if bl.locked && elapsed_with_delay
+            bl.unlock
+            bl.save!
+          else
+            @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
+            @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
+          end
         end
+        clip_new_issues
       end
-      clip_new_issues
     else
       @lists_locked_by_current_user = true
     end
@@ -287,6 +293,20 @@ class IssuesController < ApplicationController
     unless Backlog.backlog.locked or Backlog.new_issues.issues.empty?
       Backlog.backlog.first_issue.update_attributes(predecessor_id: Backlog.new_issues.last_issue.id)
       Backlog.backlog.issues << Backlog.new_issues.issues
+    end
+  end
+
+  def extend_lock_time_in_db
+    if @lists_locked_by_current_user
+      Backlog.transaction do
+        # lock backlogs for this action with activerecord techniques
+        backlog = Backlog.backlog_with_lock
+        sprint_backlog = Backlog.sprint_backlog_with_lock
+
+        [backlog, sprint_backlog].each do |bl|
+          bl.touch
+        end
+      end
     end
   end
 end
