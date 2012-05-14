@@ -1,12 +1,25 @@
 <% if @lists_locked_by_current_user %>
-  $('#lock_btn').val('<%= I18n.t("backlog.finish_editing") %>');
-  SUBMARINE.lock.start_timeout(<%= Configurable.max_lock_time * 1000 %>);
+
+    $(function() {
+      <%# refresh list content %>
+      $('#backlog').replaceWith('<%= escape_javascript render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>');
+      $('#sprint_backlog').replaceWith('<%= escape_javascript render :partial => "list", :locals => {:list_type => 'sprint_backlog', :list_items => @sprint_issues} %>');
+      SUBMARINE.showStoryPointsSum();
+
+      <%# activate locking in UI %>
+      $('#lock_btn').val('<%= I18n.t("backlog.finish_editing") %>');
+      SUBMARINE.lock.start_timeout(<%= Configurable.max_lock_time * 1000 %>);
+    });
+
 <% elsif @lists_locked_by_another_user %>
+
   SUBMARINE.lock.disable_lock_bindings();
   SUBMARINE.show_notice("<%= escape_javascript(I18n.t 'backlog.errors.locked_by_another_user') %>");
+
 <% else %>
+
   SUBMARINE.lock.disable_lock_bindings();
   $('#lock_btn').val('<%= I18n.t("backlog.edit") %>');
   SUBMARINE.lock.stop_timeout();
-<% end %>
 
+<% end %>

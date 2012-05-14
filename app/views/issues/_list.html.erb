@@ -1,37 +1,45 @@
+<article class="log" id="<%= list_type %>">
+
 <% if feature_active? :temp_lock_lists %>
-  <ul class="list_header <%= @lists_locked_by_current_user ? "locked_list_header" : "unlocked_list_header" %>">
-  <% else %>
-    <ul class="list_header unlocked_list_header">
-    <% end %>
-    <% case list_type %>
-    <% when 'sprint_backlog' %>
-      <li>Sprint Backlog</li>
-      <li id="story_points_sum">
-      <span></span>
-      <%= image_tag "sp_sum_0.5_heavy.png", :id => "half_story_point" %>
-      <%= image_tag "sp_0.5_heavy.png", :id => "half_story_point_small" %>
-      </li>
-      <li id="show_finish_issues">
-      <%= link_to finished_issues_path, :title => t('finished_issues') do %>
-        <%= image_tag "show_finished_issues.png" %>
-      <% end %>
-      </li>
-    <% when 'backlog' %>
-      <li>Backlog</li>
-      <li id="btn_in_header">
-      <%= link_to new_issue_path, :title => t('issue.new') do %>
-        <%= image_tag("new.png") %>
-      <% end %>
-      </li>
-    <% when 'finished_issues' %>
-      <li><%= t 'finished_issues' %></li>
-      <li id="btn_in_header">
-      <%= link_to issues_path, :title => t('backlog') do %>
-        <%= image_tag("show_backlogs.png") %>
-      <% end %>
-      </li>
-    <% end %>
+
+    <ul class="list_header <%= @lists_locked_by_current_user ? "locked_list_header" : "unlocked_list_header" %>">
+
+<% else %>
+
+  <ul class="list_header unlocked_list_header">
+
+<% end %>
+
+<% case list_type %>
+<% when 'sprint_backlog' %>
+  <li>Sprint Backlog</li>
+  <li id="story_points_sum">
+  <span></span>
+  <%= image_tag "sp_sum_0.5_heavy.png", :id => "half_story_point" %>
+  <%= image_tag "sp_0.5_heavy.png", :id => "half_story_point_small" %>
+  </li>
+  <li id="show_finish_issues">
+  <%= link_to finished_issues_path, :title => t('finished_issues') do %>
+    <%= image_tag "show_finished_issues.png" %>
+  <% end %>
+  </li>
+<% when 'backlog' %>
+  <li>Backlog</li>
+  <li id="btn_in_header">
+  <%= link_to new_issue_path, :title => t('issue.new') do %>
+    <%= image_tag("new.png") %>
+  <% end %>
+  </li>
+<% when 'finished_issues' %>
+  <li><%= t 'finished_issues' %></li>
+  <li id="btn_in_header">
+  <%= link_to issues_path, :title => t('backlog') do %>
+    <%= image_tag("show_backlogs.png") %>
+  <% end %>
+  </li>
+<% end %>
   </ul>
+
   <ul id="<%= list_type %>_list" class="connectedSortable">
     <% list_items.each do |issue| %>
       <li data-id="<%= issue.id %>" id="#<%= issue.id %>" data-story_points="<%= issue.formatted_story_points %>">
@@ -67,5 +75,8 @@
         &nbsp;
       </div>
       </li>
+
     <% end %>
+
   </ul>
+</article>
