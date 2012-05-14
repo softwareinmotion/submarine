@@ -13,6 +13,8 @@ de:
         story_points: 'Story Points'
         type: 'Typ'
         project_id: 'Produkt'
+      question:
+        question: 'Frage'
     errors:
       messages:
         blank: 'Das Feld darf nicht leer sein.'
