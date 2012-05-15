@@ -18,7 +18,7 @@ namespace :deploy do
     run "cd #{deploy_to}/current && PRODUCT_VARIANT=#{product_variant} nohup bundle exec thin -C thin/#{stage}_config.yml -R thin/config.ru start" 
   end
   task :stop, :roles => [:web, :app] do 
-    run "cd #{deploy_to}/current && bundle exec thin -C thin/#{domain}_config.yml stop"
+    run "cd #{deploy_to}/current && bundle exec thin -C thin/#{stage}_config.yml stop"
   end
   task :restart, :roles => [:web, :app], :except => { :no_release => true } do
     deploy.stop
