@@ -14,7 +14,6 @@ class CreateBacklogs < ActiveRecord::Migration
     backlog          = Backlog.create! name: "backlog", locked: false
     sprint_backlog   = Backlog.create! name: "sprint_backlog", locked: false
     finished_backlog = Backlog.create! name: "finished_backlog", locked: false
-    new_issues = Backlog.create! name: "new_issues", locked: false
 
     Issue.all.each do |issue|
       if issue.finished
