@@ -1,9 +1,10 @@
+$('#backlog').replaceWith('<%= escape_javascript render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>');
+$('#sprint_backlog').replaceWith('<%= escape_javascript render :partial => "list", :locals => {:list_type => 'sprint_backlog', :list_items => @sprint_issues} %>');
+
 <% if @lists_locked_by_current_user %>
 
     $(function() {
       <%# refresh list content %>
-      $('#backlog').replaceWith('<%= escape_javascript render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>');
-      $('#sprint_backlog').replaceWith('<%= escape_javascript render :partial => "list", :locals => {:list_type => 'sprint_backlog', :list_items => @sprint_issues} %>');
       SUBMARINE.showStoryPointsSum();
 
       <%# activate locking in UI %>
