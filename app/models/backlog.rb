@@ -5,16 +5,8 @@ class Backlog < ActiveRecord::Base
     Backlog.where(name: 'backlog').first
   end
 
-  def self.backlog_with_lock
-    Backlog.where(name: 'backlog').lock(true).first
-  end
-
   def self.sprint_backlog
     Backlog.where(name: 'sprint_backlog').first
-  end
-
-  def self.sprint_backlog_with_lock
-    Backlog.where(name: 'sprint_backlog').lock(true).first
   end
 
   def self.finished_backlog
