@@ -56,8 +56,9 @@ header {
   background: white;
   border-bottom: $strip-line;
   margin-bottom: 45px;
-  min-width: 1240px;
-  
+  width: 100%;
+  position: fixed;
+  top: 0;
   img#logo {
     padding-left: 10px;
     padding-top: 10px;
@@ -71,14 +72,14 @@ header {
   }
 
   h1 {
-    margin: -52px auto 0;
+    margin: -90px auto 0;
     width: 100px;
   }
 }
 
 #main {
   width: 1240px;
-  margin: 0 auto;
+  margin: 150px auto auto auto;
 
   .issue_form {
     margin-left: auto;
@@ -213,3 +214,33 @@ section {
       }
     }
   }
+  
+#locking_form {
+  vertical-align: bottom;
+  text-align: center;
+
+  /*background: -webkit-linear-gradient(#FFF 60%,#F5F5F5 100%);
+  background: -moz-linear-gradient(#FFF 60%,#FAFAFA 100%);
+  background: -o-linear-gradient(#FFF 60%,#FAFAFA 100%);*/
+  padding: 0;
+  $box_width: 500px;
+  position: fixed;
+  top: 65px;
+  margin-left: -($box_width / 2);
+  left: 50%;
+  right: auto;
+  width: $box_width;
+  
+  button {
+    font-size: 10pt;
+    padding: 4px;
+    
+    img {
+     vertical-align: middle; 
+    }
+    
+    span {
+      vertical-align: middle;
+    }
+  }
+}
