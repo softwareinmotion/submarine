@@ -296,7 +296,7 @@ class IssuesController < ApplicationController
   # Clip new issues to the backlog list
   def clip_new_issues
     unless Backlog.backlog.locked or Backlog.new_issues.issues.empty?
-      Backlog.backlog.first_issue.update_attributes(predecessor_id: Backlog.new_issues.last_issue.id)
+      Backlog.backlog.first_issue.update_attributes(predecessor_id: Backlog.new_issues.last_issue.id) if Backlog.backlog.first_issue
       Backlog.backlog.issues << Backlog.new_issues.issues
     end
   end
