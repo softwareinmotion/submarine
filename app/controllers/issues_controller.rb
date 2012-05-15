@@ -226,14 +226,8 @@ class IssuesController < ApplicationController
       end
     end
 
-<<<<<<< HEAD
-      @backlog_issues = sorted_list(Backlog.new_issues.first_issue) + sorted_list(Backlog.backlog.first_issue)
-=======
-    if @lists_locked_by_current_user
-      @backlog_issues = sorted_list backlog.first_issue
->>>>>>> d02ed147126e2f8a5dea98ecff47cc57bdf8a723
-      @sprint_issues = sorted_list sprint_backlog.first_issue
-    end
+    @backlog_issues = sorted_list(Backlog.new_issues.first_issue) + sorted_list(Backlog.backlog.first_issue)
+    @sprint_issues = sorted_list sprint_backlog.first_issue
   end
 
   def extend_lock_time
