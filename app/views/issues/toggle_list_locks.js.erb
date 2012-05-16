@@ -10,7 +10,9 @@ SUBMARINE.hide_notice();
       SUBMARINE.showStoryPointsSum();
 
       <%# activate locking in UI %>
-      $('#lock_btn').val('<%= I18n.t("backlog.finish_editing") %>');
+      $("#lock_btn").empty();
+      $('#lock_btn').append('<%= image_tag "edit_doc.png" %>');
+      $('#lock_btn').append('<%= content_tag :span, I18n.t("backlog.finish_editing") %>');
       SUBMARINE.lock.start_timeout(<%= Configurable.max_lock_time * 1000 %>);
     });
 
@@ -22,7 +24,9 @@ SUBMARINE.hide_notice();
 <% else %>
 
   SUBMARINE.lock.disable_lock_bindings();
-  $('#lock_btn').val('<%= I18n.t("backlog.edit") %>');
+  $("#lock_btn").empty();
+  $('#lock_btn').append('<%= image_tag "edit_doc.png" %>');
+  $('#lock_btn').append('<%= content_tag :span, I18n.t("backlog.edit") %>');
   SUBMARINE.lock.stop_timeout();
 
 <% end %>

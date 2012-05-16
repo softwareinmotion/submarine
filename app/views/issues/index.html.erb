@@ -1,21 +1,37 @@
 <META name="keywords" content="scrum, backlog, sprint, user stories, tool">
 <META name="description" content="Sie wollen ein virtuelles Backlog, das mehrere Projekte unterstützt? Dann probieren Sie es mit submarine. Eine kostenlose Online-Demo steht Ihnen hier zur Verfügung.">
-<section id="main">
-
+  
 <% feature_active? :temp_lock_lists do %>
-  <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
-    <% if @lists_locked_by_current_user %>
-      <%= submit_tag I18n.t("backlog.finish_editing"), :id => "lock_btn" %>
-    <% else %>
-      <%= submit_tag I18n.t("backlog.edit"), :id => "lock_btn" %>
-    <% end %>
-    <span id="lock_timeout"></span>
-  <% end %>
+  <% content_for :menu do %>
+    <div id="locking_form">
+      <div id="center">
+        <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
+          <% if @lists_locked_by_current_user %>
+            <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
+              <%= image_tag "edit_doc.png" %>
+              <%= content_tag :span, I18n.t("backlog.finish_editing") %>
+            <% end %>
+          <% else %>
+            <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
+              <%= image_tag "edit_doc.png" %>
+              <%= content_tag :span, I18n.t("backlog.edit") %>
+            <% end %>
+          <% end %>
+        <% end %>
 
-  <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
-    <%= submit_tag I18n.t("backlog.extend_lock_time"), :id => 'extend_btn', :class => 'hidden'%>
+        <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
+          <% content_tag :button, :type => :submit, :id => 'extend_btn', :class => 'hidden'do %>
+            <%= image_tag "clock.png" %>
+            <%= content_tag :span, I18n.t("backlog.extend_lock_time") %>
+            (<span id="lock_timeout"></span>)
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 <% end %>
+  
+<section id="main">
 
 <%= render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>
 

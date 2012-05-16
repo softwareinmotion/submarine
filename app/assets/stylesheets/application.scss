@@ -11,6 +11,7 @@
 
 
 $strip-line: 1px solid #ddd;
+$width: 1240px;
 
 #flashnotice {
   color: #339A97;
@@ -52,33 +53,56 @@ body {
 }
 
 header {
-  height: 83px;
   background: white;
   border-bottom: $strip-line;
-  margin-bottom: 45px;
-  min-width: 1240px;
+  width: 100%;
+  position: fixed;
+  top: 0;
   
-  img#logo {
+  #menu-left {
+    float: left; 
+    width: 100px;
+  }
+  
+  #menu-center {
+    text-align: center;
+    h1 {
+      margin-top: 30px;
+    }
+  }
+  
+  #menu-right {
+    float: right; 
+    width: 100px;
+  }
+
+  a img#logo {
+    position: relative;
+    float: left;
     padding-left: 10px;
     padding-top: 10px;
+    z-index: 100000;
+    overflow: visible;
   }
 
   span.back {
-    display: block;
-    float: right;
+    float: left;
     margin-top: 62px;
-    margin-right: 10px;
+    margin-left: 10px;
   }
 
   h1 {
-    margin: -52px auto 0;
+    display: inline-block;
+    margin-top: -20px;
+    margin-left: auto;
+    margin-right: auto;
     width: 100px;
   }
 }
 
 #main {
-  width: 1240px;
-  margin: 0 auto;
+  width: $width;
+  margin: 150px auto auto auto;
 
   .issue_form {
     margin-left: auto;
@@ -213,3 +237,41 @@ section {
       }
     }
   }
+  
+#locking_form {
+  padding-top:3px;
+  padding-bottom: 3px;
+  vertical-align: middle;
+  
+  #center {
+    width: $width;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 14px;
+  }
+  
+  width: 100%;
+  background: #c4c4c4;
+  border-bottom: solid 1px #9c9c9c;
+  border-top: solid 1px #9c9c9c;
+  position: fixed;
+  top: 84px;
+  
+  
+  form {
+    float: right;
+  }
+  
+  button {
+    font-size: 10pt;
+    padding: 4px;
+    
+    img {
+     vertical-align: middle; 
+    }
+    
+    span {
+      vertical-align: middle;
+    }
+  }
+}
