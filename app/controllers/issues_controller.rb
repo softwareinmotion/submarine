@@ -209,32 +209,25 @@ class IssuesController < ApplicationController
 
     # variable shows if this method shall lock or unlock lists
     lock_mode = true
+    sprint_backlog = Backlog.sprint_backlog
+    backlog = Backlog.backlog
 
-    Backlog.transaction do
-      # lock backlogs for this action with activerecord techniques
-      backlog = Backlog.backlog_with_lock
-      sprint_backlog = Backlog.sprint_backlog_with_lock
-
-      # unlock backlogs
-      [backlog, sprint_backlog].each do |bl|
-        if bl.locked_by_another_session? session_id
-          @lists_locked_by_another_user = true
-        elsif bl.locked_by_session? session_id
-          bl.unlock
-          bl.save!
-        else
-          # lock backlogs for the duration of several actions through lock flags in the DB table 
-          bl.lock_for_session session_id
-          @lists_locked_by_current_user = true
-          bl.changed? ? bl.save! : bl.touch
-        end
-      end
-
-      if @lists_locked_by_current_user
-        @backlog_issues = sorted_list backlog.first_issue
-        @sprint_issues = sorted_list sprint_backlog.first_issue
+    backlog.with_lock do
+      if backlog.locked_by_another_session? session_id
+        @lists_locked_by_another_user = true
+      elsif backlog.locked_by_session? session_id
+        backlog.unlock
+        backlog.save!
+      else
+        # lock backlogs for the duration of several actions through lock flags in the DB table 
+        backlog.lock_for_session session_id
+        @lists_locked_by_current_user = true
+        backlog.changed? ? backlog.save! : backlog.touch
       end
     end
+
+    @backlog_issues = sorted_list(Backlog.new_issues.first_issue) + sorted_list(Backlog.backlog.first_issue)
+    @sprint_issues = sorted_list sprint_backlog.first_issue
   end
 
   def extend_lock_time
@@ -271,23 +264,21 @@ class IssuesController < ApplicationController
       session_id = session[:session_id]
       now = Time.zone.now
 
-      Backlog.transaction do
-        # lock backlogs for this action with activerecord techniques
-        backlog = Backlog.backlog_with_lock
-        sprint_backlog = Backlog.sprint_backlog_with_lock
+      sprint_backlog = Backlog.sprint_backlog
+      backlog = Backlog.backlog
 
-        [backlog, sprint_backlog].each do |bl|
-          elapsed_with_delay = (now - bl.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
-          if bl.locked && elapsed_with_delay
-            bl.unlock
-            bl.save!
-          else
-            @lists_locked_by_current_user |= bl.locked_by_session?(session_id)
-            @lists_locked_by_another_user |= bl.locked_by_another_session?(session_id)
-          end
+      backlog.with_lock do
+        elapsed_with_delay = (now - backlog.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
+        if backlog.locked && elapsed_with_delay
+          backlog.unlock
+          backlog.save!
+        else
+          @lists_locked_by_current_user |= backlog.locked_by_session?(session_id)
+          @lists_locked_by_another_user |= backlog.locked_by_another_session?(session_id)
         end
-        clip_new_issues
       end
+
+      clip_new_issues
     else
       @lists_locked_by_current_user = true
     end
@@ -303,14 +294,9 @@ class IssuesController < ApplicationController
 
   def extend_lock_time_in_db
     if @lists_locked_by_current_user
-      Backlog.transaction do
-        # lock backlogs for this action with activerecord techniques
-        backlog = Backlog.backlog_with_lock
-        sprint_backlog = Backlog.sprint_backlog_with_lock
-
-        [backlog, sprint_backlog].each do |bl|
-          bl.touch
-        end
+      backlog = Backlog.backlog
+      backlog.with_lock do
+        backlog.touch
       end
     end
   end
