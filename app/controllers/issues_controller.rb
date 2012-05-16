@@ -234,6 +234,12 @@ class IssuesController < ApplicationController
     extend_lock_time_in_db
   end
 
+  def timeout_elapsed
+    respond_to do |format|
+      format.json render :partial => "issues/timeout_elapsed.json"
+    end
+  end
+
   private
 
   def prepare_form
