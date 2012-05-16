@@ -57,7 +57,9 @@ SUBMARINE = {
       $("#lock_timeout").empty();
       $('html').removeClass('locked_html');
       $('.list_header').removeClass('locked_list_header').addClass('unlocked_list_header');
-      $('#lock_btn').val('<%= I18n.t("backlog.edit") %>');
+      $("#lock_btn").empty();
+      $('#lock_btn').append('<%= image_tag "edit_doc.png" %>');
+      $('#lock_btn').append('<%= content_tag :span, I18n.t("backlog.edit") %>');
       $('#extend_btn').removeClass('visible').addClass('hidden');
     },
 
@@ -89,7 +91,7 @@ SUBMARINE = {
 
     update_timeout_view: function(elapsed) {
       var time_left = Math.round(Math.floor(SUBMARINE.lock.max_lock_time - elapsed) / 1000);
-      $("#lock_timeout").html("Timeout: -" + time_left);
+      $("#lock_timeout").html(time_left + " sec");
     },
 
     enable_lock_bindings: function() {
