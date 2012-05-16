@@ -1,5 +1,5 @@
 class IssuesController < ApplicationController
-  before_filter :check_locks
+  before_filter :check_locks, :except => :timeout_elapsed
 
   def index
     if feature_active? :temp_lock_lists
@@ -235,6 +235,13 @@ class IssuesController < ApplicationController
   end
 
   def timeout_elapsed
+    backlog = Backlog.backlog
+    backlog.with_lock do
+      backlog.unlock
+      backlog.save!
+      @lists_locked_by_current_user = false
+    end
+
     @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
     @sprint_issues = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
     
