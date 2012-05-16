@@ -113,6 +113,10 @@ SUBMARINE = {
     }
   },
 
+  hide_notice: function() {
+    $('#flashnotice').remove();
+  },
+
   /*** list drag'n drop handling ***/
   changeListHandler: function(event,ui){
     <% feature_active? :temp_lock_lists do %>
