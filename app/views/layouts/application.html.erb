@@ -16,13 +16,26 @@
 <body>
 
 <header>
-  <%= link_to index_path do %>
-    <%= image_tag "logo.png", :id => "logo" %>
-  <% end %>
-
+  <div>
+    <div id="menu-left">
+      <% feature_active? :persist_present_demo do %>
+        <span class="back"><%= link_to "Hauptseite", index_path %></span>
+      <% end %>
+    </div>
+    <div id="menu-right">
+      <%= link_to index_path do %>
+        <%= image_tag "logo.png", :id => "logo" %>
+      <% end %>
+    </div>
+    <div id="menu-center">
+      <% feature_active? :persist_present_demo do %>
+        <h1>Demo</h1>
+      <% end %>
+    </div>
+  </div>
+  
   <% feature_active? :persist_present_demo do %>
-    <span class="back"><%= link_to "Hauptseite", index_path %></span>
-    <h1> Demo </h1>
+    <%= yield :menu %>
   <% end %>
 </header>
 
