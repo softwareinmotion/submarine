@@ -2,27 +2,33 @@
 <META name="description" content="Sie wollen ein virtuelles Backlog, das mehrere Projekte unterstützt? Dann probieren Sie es mit submarine. Eine kostenlose Online-Demo steht Ihnen hier zur Verfügung.">
   
 <% feature_active? :temp_lock_lists do %>
-  <div id="locking_form">
-    <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
-      <% if @lists_locked_by_current_user %>
-        <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
-          <%= image_tag "edit_doc.png" %>
-          <%= content_tag I18n.t("backlog.finish_editing") %>
+  <% content_for :menu do %>
+    <div id="locking_form">
+      <div id="center">
+        <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
+          <% if @lists_locked_by_current_user %>
+            <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
+              <%= image_tag "edit_doc.png" %>
+              <%= content_tag :span, I18n.t("backlog.finish_editing") %>
+            <% end %>
+          <% else %>
+            <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
+              <%= image_tag "edit_doc.png" %>
+              <%= content_tag :span, I18n.t("backlog.edit") %>
+            <% end %>
+          <% end %>
         <% end %>
-      <% else %>
-        <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
-          <%= image_tag "edit_doc.png" %>
-          <%= content_tag :span, I18n.t("backlog.edit") %>
-        <% end %>
-      <% end %>
-    <% end %>
 
-    <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
-      <%= submit_tag I18n.t("backlog.extend_lock_time"), :id => 'extend_btn', :class => 'hidden'%>
-    <% end %>
-    
-    <span id="lock_timeout"></span>
-  </div>
+        <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
+          <% content_tag :button, :type => :submit, :id => 'extend_btn', :class => 'hidden'do %>
+            <%= image_tag "clock.png" %>
+            <%= content_tag :span, I18n.t("backlog.extend_lock_time") %>
+            (<span id="lock_timeout"></span>)
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
   
 <section id="main">
