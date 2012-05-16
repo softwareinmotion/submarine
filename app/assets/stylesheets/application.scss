@@ -78,8 +78,8 @@ header {
 
   a img#logo {
     position: relative;
-    float: right;
-    padding-right: 10px;
+    float: left;
+    padding-left: 10px;
     padding-top: 10px;
     z-index: 100000;
     overflow: visible;
@@ -247,7 +247,7 @@ section {
     width: $width;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 14px;
+    padding-right: 14px;
   }
   
   width: 100%;
@@ -259,7 +259,7 @@ section {
   
   
   form {
-    float: left;
+    float: right;
   }
   
   button {
