@@ -5,11 +5,11 @@ class IssuesController < ApplicationController
     if feature_active? :temp_lock_lists
       # if lists are locked show newly created issues only to other users
       if @lists_locked_by_current_user
-        @backlog_issues = sorted_list(Backlog.backlog.first_issue)
+        @backlog_issues = with_old_flag(sorted_list(Backlog.backlog.first_issue))
       else
-        @backlog_issues = sorted_list(Backlog.new_issues.first_issue) + sorted_list(Backlog.backlog.first_issue)
+        @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
       end
-      @sprint_issues = sorted_list Backlog.sprint_backlog.first_issue
+      @sprint_issues = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
     else
       @backlog_issues = sorted_list Issue.first.in_backlog[0]
       @sprint_issues = sorted_list Issue.first.in_sprint[0]
@@ -171,8 +171,8 @@ class IssuesController < ApplicationController
       issue = Issue.find(params[:id])
       issue.finish
       if feature_active? :temp_lock_lists
-        @backlog_issues = sorted_list Backlog.backlog.first_issue
-        @sprint_issues  = sorted_list Backlog.sprint_backlog.first_issue
+        @backlog_issues = with_old_flag(sorted_list(Backlog.backlog.first_issue))
+        @sprint_issues  = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
       else
         @backlog_issues = sorted_list Issue.first.in_backlog[0]
         @sprint_issues  = sorted_list Issue.first.in_sprint[0]
@@ -226,8 +226,8 @@ class IssuesController < ApplicationController
       end
     end
 
-    @backlog_issues = sorted_list(Backlog.new_issues.first_issue) + sorted_list(Backlog.backlog.first_issue)
-    @sprint_issues = sorted_list sprint_backlog.first_issue
+    @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
+    @sprint_issues = with_old_flag(sorted_list(sprint_backlog.first_issue))
   end
 
   def extend_lock_time
@@ -298,6 +298,18 @@ class IssuesController < ApplicationController
       backlog.with_lock do
         backlog.touch
       end
+    end
+  end
+
+  def with_old_flag issue_list
+    issue_list.collect do |issue|
+      [issue, :old]
+    end
+  end
+
+  def with_new_flag issue_list
+    issue_list.collect do |issue|
+      [issue, :new]
     end
   end
 end
