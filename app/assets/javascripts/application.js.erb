@@ -62,10 +62,10 @@ SUBMARINE = {
     },
 
     stop_timeout_on_server: function(){
-      $.post('issues/timeout_elapsed', function(data) {
+      $.post('timeout_elapsed', function(data, a, b) {
         $('#backlog').replaceWith(data.backlog);
         $('#sprint_backlog').replaceWith(data.sprint_backlog);
-      });
+      }, 'json');
     },
 
     extend_lock_time: function(){
@@ -81,7 +81,7 @@ SUBMARINE = {
         result = true;
       } else {
         SUBMARINE.lock.stop_timeout();
-//        SUBMARINE.lock.stop_timeout_on_server();
+        SUBMARINE.lock.stop_timeout_on_server();
         result = false;
       }
       return result;

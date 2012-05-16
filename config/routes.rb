@@ -13,6 +13,7 @@ Submarine::Application.routes.draw do
   get 'finished_issues' => 'issues#finished_issues_list', :as => 'finished_issues'
   post 'toggle_list_locks' => 'issues#toggle_list_locks'
   post 'extend_lock_time' => 'issues#extend_lock_time'
+  post "timeout_elapsed" => "issues#timeout_elapsed"
 
   get 'contact_page' => 'navigation#contact_page', :as => 'contact_page'
   get 'impressum' => 'navigation#impressum', :as => 'impressum'
