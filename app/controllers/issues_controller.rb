@@ -235,8 +235,11 @@ class IssuesController < ApplicationController
   end
 
   def timeout_elapsed
+    @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
+    @sprint_issues = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
+    
     respond_to do |format|
-      format.json render :partial => "issues/timeout_elapsed.json"
+      format.json{render :partial => "issues/timeout_elapsed.json"}
     end
   end
 
