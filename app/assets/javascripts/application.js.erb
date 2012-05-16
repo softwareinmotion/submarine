@@ -63,6 +63,13 @@ SUBMARINE = {
       $('#extend_btn').removeClass('visible').addClass('hidden');
     },
 
+    stop_timeout_on_server: function(){
+      $.post('issues/timeout_elapsed', function(data) {
+        $('#backlog').replaceWith(data.backlog);
+        $('#sprint_backlog').replaceWith(data.sprint_backlog);
+      });
+    },
+
     extend_lock_time: function(){
         SUBMARINE.lock.set_start_time_to_now();
         SUBMARINE.lock.update_timeout_view(0);
@@ -76,6 +83,7 @@ SUBMARINE = {
         result = true;
       } else {
         SUBMARINE.lock.stop_timeout();
+//        SUBMARINE.lock.stop_timeout_on_server();
         result = false;
       }
       return result;
