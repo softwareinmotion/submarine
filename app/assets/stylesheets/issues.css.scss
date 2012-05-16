@@ -202,6 +202,13 @@ ul.connectedSortable {
       }      
     }
   }
+
+  $new_issue_border: solid 3px #FFCF73;
+
+  li.new_issue {
+    border-left:  $new_issue_border;
+    border-right: $new_issue_border;
+  }
 }
 
 .issue_form {
