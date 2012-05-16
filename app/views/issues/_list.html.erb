@@ -40,7 +40,48 @@
 <% end %>
   </ul>
 
+<% if feature_active? :temp_lock_lists %>
+
   <ul id="<%= list_type %>_list" class="connectedSortable">
+    <% list_items.each do |item| %>
+      <li data-id="<%= item[0].id %>" id="#<%= item[0].id %>" data-story_points="<%= item[0].formatted_story_points %>"<%= " class=new_issue" if item[1] == :new %>>
+      <div class="issue_line">
+        <div class="project_logo"><%= image_tag("logo_#{item[0].project.name.downcase}_heavy.png") if item[0].project %></div>
+        <div class="issue_name"><%= item[0].name %></div>
+        <div class="issue_id">#<%= item[0].id %></div>
+        <div class="issue_type"><%= image_tag("#{item[0].type.downcase}_heavy.png") %></div>
+        <div class="issue_story_points"><%= image_tag("sp_#{item[0].formatted_story_points}_heavy.png", :size => "22x22") if item[0].story_points %>&nbsp;</div>
+        &nbsp;
+      </div>
+      <div class="issue_line">
+        <div class="description short"><%= item[0].description %></div>
+        <div class="controls_container <%="sprint_controls" if list_type == 'sprint_backlog' %>">
+          <div class="controls">
+            <% unless list_type == 'finished_issues' %>
+              <%= link_to edit_issue_path(item[0]), :title => t('item[0].edit') do %>
+                <%= image_tag("edit.png") %>
+              <% end %>
+              <%= link_to item[0], :method => :delete, :class => 'button', :title => t('item[0].delete') do %>
+                <%= image_tag("delete.png") %>
+              <% end %>
+              <%= link_to finish_issue_path(item[0]), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('item[0].finish') do %>
+                <%= image_tag("finish_issue.png") %>
+              <% end %>
+            <% else %>
+              <%= link_to activate_issue_path(item[0]), :method => :post, :class => 'button', :title => t('item[0].activate') do %>
+                <%= image_tag("activate_issue.png") %>
+              <% end %>  
+            <% end %>
+          </div>
+        </div>
+        &nbsp;
+      </div>
+      </li>
+    <% end %>
+
+<% else %>
+
+    <ul id="<%= list_type %>_list" class="connectedSortable">
     <% list_items.each do |issue| %>
       <li data-id="<%= issue.id %>" id="#<%= issue.id %>" data-story_points="<%= issue.formatted_story_points %>">
       <div class="issue_line">
@@ -75,8 +116,10 @@
         &nbsp;
       </div>
       </li>
-
     <% end %>
+
+<% end %>
+
 
   </ul>
 </article>
