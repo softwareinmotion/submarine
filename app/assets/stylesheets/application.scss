@@ -13,6 +13,10 @@
 $strip-line: 1px solid #ddd;
 $width: 1240px;
 
+@mixin debug {
+  border: 1px solid purple;
+}
+
 #flashnotice {
   color: #339A97;
   border: 1px solid #009D91;
@@ -26,7 +30,7 @@ $width: 1240px;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-align: center;
   font-style: italic;
   font-weight: normal;
@@ -52,28 +56,42 @@ body {
   font-size: 10pt;
 }
 
+.center {
+  width: $width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 header {
   background: white;
   border-bottom: $strip-line;
   width: 100%;
   position: fixed;
   top: 0;
+  height: 85px;
   
-  #menu-left {
+  .menu-left {
     float: left; 
-    width: 100px;
+    width: 30%;
   }
   
-  #menu-center {
+  .menu-center {
+    height: 85px;
     text-align: center;
     h1 {
-      margin-top: 30px;
+      margin-top: 50px;
     }
   }
   
-  #menu-right {
+  .menu-right {
     float: right; 
-    width: 100px;
+    width: 30%;
+    
+    .stack { margin: 0; padding: 0; float: right; margin-right: 6px;}    
+    .wrapper { height:85px; display:table-cell; vertical-align:bottom; }
+    .content { padding-bottom: 5px; max-height:100px; overflow:auto; }
+    .content div { padding: 0; margin: 0; }
+    #back-link { margin-bottom: 20px; }
   }
 
   a img#logo {
@@ -85,12 +103,6 @@ header {
     overflow: visible;
   }
 
-  span.back {
-    float: left;
-    margin-top: 62px;
-    margin-left: 10px;
-  }
-
   h1 {
     display: inline-block;
     margin-top: -20px;
@@ -100,9 +112,14 @@ header {
   }
 }
 
+
+#page-content {
+  margin-top: 130px;
+}
+
 #main {
   width: $width;
-  margin: 150px auto auto auto;
+  margin: 10px auto auto auto;
 
   .issue_form {
     margin-left: auto;
@@ -120,7 +137,6 @@ footer {
   border-top: $strip-line;
   padding: 6px 0;
   clear: both;
-  text-align: center;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -134,6 +150,24 @@ footer {
     display: block;
     float: right;
     margin-right: 1.5em;
+  }
+  
+  .menu-left {
+    display: block;
+    float: left; 
+    width: 30%;
+    min-height: 10px;
+  }
+  
+  .menu-center {
+    text-align: center;
+  }
+  
+  .menu-right {
+    float: right;
+    text-align: right;
+    padding-right: 7px;
+    width: 30%;
   }
 }
 
@@ -237,32 +271,14 @@ section {
       }
     }
   }
-  
+
 #locking_form {
-  padding-top:3px;
-  padding-bottom: 3px;
-  vertical-align: middle;
+  text-align: right;
   
-  #center {
-    width: $width;
-    margin-left: auto;
-    margin-right: auto;
-    padding-right: 14px;
-  }
-  
-  width: 100%;
-  background: #c4c4c4;
-  border-bottom: solid 1px #9c9c9c;
-  border-top: solid 1px #9c9c9c;
-  position: fixed;
-  top: 84px;
-  
-  
-  form {
-    float: right;
-  }
+  form { float: right;}
   
   button {
+    
     font-size: 10pt;
     padding: 4px;
     
@@ -274,4 +290,8 @@ section {
       vertical-align: middle;
     }
   }
+}
+
+#back-link {
+ text-align: right;
 }

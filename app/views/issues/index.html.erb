@@ -4,29 +4,24 @@
 <% feature_active? :temp_lock_lists do %>
   <% content_for :menu do %>
     <div id="locking_form">
-      <div id="center">
-        <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
-          <% if @lists_locked_by_current_user %>
-            <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
-              <%= image_tag "edit_doc.png" %>
-              <%= content_tag :span, I18n.t("backlog.finish_editing") %>
-            <% end %>
-          <% else %>
-            <%= content_tag :button, :type => :submit, :id => "lock_btn" do %>
-              <%= image_tag "edit_doc.png" %>
-              <%= content_tag :span, I18n.t("backlog.edit") %>
-            <% end %>
+      <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
+        <% if @lists_locked_by_current_user %>
+          <%= content_tag :button, :type => :submit, :id => "lock_btn", :title =>  I18n.t("backlog.finish_editing") do %>
+            <%= image_tag "edit_doc.png" %>
+          <% end %>
+        <% else %>
+          <%= content_tag :button, :type => :submit, :id => "lock_btn", :title => I18n.t("backlog.edit") do %>
+            <%= image_tag "edit_doc.png" %>
           <% end %>
         <% end %>
+      <% end %>
 
-        <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
-          <% content_tag :button, :type => :submit, :id => 'extend_btn', :class => 'hidden'do %>
-            <%= image_tag "clock.png" %>
-            <%= content_tag :span, I18n.t("backlog.extend_lock_time") %>
-            (<span id="lock_timeout"></span>)
-          <% end %>
+      <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
+        <% content_tag :button, :type => :submit, :id => 'extend_btn', :class => 'hidden', :title =>  I18n.t("backlog.extend_lock_time") do %>
+          <%= image_tag "clock.png" %>
+          (<span id="lock_timeout"></span>)
         <% end %>
-      </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>
