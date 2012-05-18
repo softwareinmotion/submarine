@@ -63,17 +63,32 @@ SUBMARINE = {
       $('#extend_btn').removeClass('visible').addClass('hidden');
     },
 
-    stop_timeout_on_server: function(){
+    stop_timeout_on_server: function() {
       $.post('timeout_elapsed', function(data, a, b) {
         $('#backlog').replaceWith(data.backlog);
         $('#sprint_backlog').replaceWith(data.sprint_backlog);
         SUBMARINE.showStoryPointsSum();
       }, 'json');
+      SUBMARINE.lock.set_lock_time_to_default();
     },
 
-    extend_lock_time: function(){
-        SUBMARINE.lock.set_start_time_to_now();
-        SUBMARINE.lock.update_timeout_view(0);
+    extend_lock_time: function() {
+      if(SUBMARINE.lock.max_lock_time != <%= Configurable.default_max_lock_time * 1000 %>) {
+        SUBMARINE.lock.max_lock_time = <%= Configurable.default_max_lock_time * 1000 %>;
+      }
+      SUBMARINE.lock.set_start_time_to_now();
+      SUBMARINE.lock.update_timeout_view(0);
+    },
+
+    increase_lock_time: function() {
+      SUBMARINE.lock.max_lock_time = <%= Configurable.max_edit_lock_time * 1000 %>;
+      $.post('increase_timeout');
+      SUBMARINE.lock.set_start_time_to_now();
+    },
+
+    set_lock_time_to_default: function() {
+      SUBMARINE.lock.extend_lock_time();
+      $.post('/default_timeout');
     },
 
     check_timeout: function(){
