@@ -185,7 +185,7 @@ class IssuesController < ApplicationController
 
   def finished_issues_list 
     if feature_active? :temp_lock_lists
-      @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+      @finished_issues = with_old_flag sorted_list Backlog.finished_backlog.first_issue
     else
       @finished_issues = sorted_list Issue.first.finished[0]
     end 

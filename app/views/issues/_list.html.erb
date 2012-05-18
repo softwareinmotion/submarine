@@ -58,17 +58,17 @@
         <div class="controls_container <%="sprint_controls" if list_type == 'sprint_backlog' %>">
           <div class="controls">
             <% unless list_type == 'finished_issues' %>
-              <%= link_to edit_issue_path(item[0]), :title => t('item[0].edit') do %>
+              <%= link_to edit_issue_path(item[0]), :title => t('issue.edit') do %>
                 <%= image_tag("edit.png") %>
               <% end %>
-              <%= link_to item[0], :method => :delete, :class => 'button', :title => t('item[0].delete') do %>
+              <%= link_to item[0], :method => :delete, :class => 'button', :title => t('issue.delete') do %>
                 <%= image_tag("delete.png") %>
               <% end %>
-              <%= link_to finish_issue_path(item[0]), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('item[0].finish') do %>
+              <%= link_to finish_issue_path(item[0]), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('issue.finish') do %>
                 <%= image_tag("finish_issue.png") %>
               <% end %>
             <% else %>
-              <%= link_to activate_issue_path(item[0]), :method => :post, :class => 'button', :title => t('item[0].activate') do %>
+              <%= link_to activate_issue_path(item[0]), :method => :post, :class => 'button', :title => t('issue.activate') do %>
                 <%= image_tag("activate_issue.png") %>
               <% end %>  
             <% end %>

@@ -13,10 +13,6 @@
 $strip-line: 1px solid #ddd;
 $width: 1240px;
 
-@mixin debug {
-  border: 1px solid purple;
-}
-
 #flashnotice {
   color: #339A97;
   border: 1px solid #009D91;
@@ -28,9 +24,7 @@ $width: 1240px;
   min-width: 100px;
   width: 450px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
+  margin: 150px auto -120px;
   text-align: center;
   font-style: italic;
   font-weight: normal;
@@ -129,7 +123,7 @@ header {
 
 #finished_issues_section {
   width: 600px;
-  margin: 0 auto;
+  margin: 150px auto 0;
 }
 
 footer {
