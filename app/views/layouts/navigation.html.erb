@@ -12,9 +12,13 @@
 <body>
 
 <header>
-  <%= link_to index_path do %>
-    <%= image_tag "logo.png", :id => "logo" %>
-  <% end %>
+  <div class="center">
+    <div class="menu-left">
+      <%= link_to index_path do %>
+        <%= image_tag "logo.png", :id => "logo" %>
+      <% end %>
+    </div>
+  </div>
 </header>
 
 <% flash.each do |name, msg| %>
