@@ -65,6 +65,7 @@ SUBMARINE = {
       $.post('timeout_elapsed', function(data, a, b) {
         $('#backlog').replaceWith(data.backlog);
         $('#sprint_backlog').replaceWith(data.sprint_backlog);
+        SUBMARINE.showStoryPointsSum();
       }, 'json');
     },
 
@@ -108,6 +109,7 @@ SUBMARINE = {
       list_elems.unbind('mouseenter', SUBMARINE.showControls);
       list_elems.unbind('mouseleave', SUBMARINE.hideControls);
       $('.controls').hide();
+      SUBMARINE.showStoryPointsSum();
     },
   },
 
