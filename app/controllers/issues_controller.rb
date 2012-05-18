@@ -73,6 +73,7 @@ class IssuesController < ApplicationController
         old_first_issue.predecessor_id = @issue.id
         old_first_issue.save!
       end
+      Configurable.max_lock_time = Configurable.default_max_lock_time
       redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
     else
       prepare_form
@@ -96,6 +97,7 @@ class IssuesController < ApplicationController
       end
 
       params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
+      Configurable.max_lock_time = Configurable.default_max_lock_time
 
       if @issue && @issue.update_attributes(params[@type])
         redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
@@ -211,6 +213,7 @@ class IssuesController < ApplicationController
     lock_mode = true
     sprint_backlog = Backlog.sprint_backlog
     backlog = Backlog.backlog
+    Configurable.max_lock_time = Configurable.default_max_lock_time
 
     backlog.with_lock do
       if backlog.locked_by_another_session? session_id
@@ -248,6 +251,16 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.json{render :partial => "issues/timeout_elapsed.json"}
     end
+  end
+
+  def increase_timeout
+    Configurable.max_lock_time = Configurable.max_edit_lock_time
+    render :nothing => true
+  end
+  
+  def set_timeout_to_default
+    Configurable.max_lock_time = Configurable.default_max_lock_time
+    render :nothing => true
   end
 
   private
