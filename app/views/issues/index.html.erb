@@ -50,6 +50,7 @@
       <% end %>
       SUBMARINE.showStoryPointsSum();
       $("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
+      $("a.edit_issue").live("click", SUBMARINE.lock.increase_lock_time);
     <% else %>
       $("#sprint_backlog_list, #backlog_list").sortable({
         connectWith: ".connectedSortable",
