@@ -24,9 +24,7 @@ $width: 1240px;
   min-width: 100px;
   width: 450px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 30px;
+  margin: 150px auto -120px;
   text-align: center;
   font-style: italic;
   font-weight: normal;
@@ -112,7 +110,7 @@ header {
 
 #finished_issues_section {
   width: 600px;
-  margin: 0 auto;
+  margin: 150px auto 0;
 }
 
 footer {
