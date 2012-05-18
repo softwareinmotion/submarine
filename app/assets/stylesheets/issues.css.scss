@@ -97,10 +97,10 @@ ul.list_header {
 }
 
 .locked_html {
-  background: -webkit-linear-gradient(#DDD 0%, #5ECCD1 300px);
-  background: -moz-linear-gradient(#DDD 0%, #5ECCD1 300px);
-  background: -o-linear-gradient(#DDD 0%, #5ECCD1 300px);
-  background: linear-gradient(#DDD 0%, #5ECCD1 300px);
+  background: -webkit-linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
+  background: -moz-linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
+  background: -o-linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
+  background: linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
 }
 
 .hidden {
