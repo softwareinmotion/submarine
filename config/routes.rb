@@ -14,7 +14,6 @@ Submarine::Application.routes.draw do
   post 'toggle_list_locks' => 'issues#toggle_list_locks'
   post 'extend_lock_time' => 'issues#extend_lock_time'
   post "timeout_elapsed" => "issues#timeout_elapsed"
-  post "increase_timeout" => "issues#increase_timeout"
   post "default_timeout" => "issues#set_timeout_to_default"
 
   get 'contact_page' => 'navigation#contact_page', :as => 'contact_page'
