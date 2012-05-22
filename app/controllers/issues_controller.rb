@@ -1,5 +1,6 @@
 class IssuesController < ApplicationController
   before_filter :check_locks, :except => :timeout_elapsed
+  @@reset_timeout = false
 
   def index
     if feature_active? :temp_lock_lists
@@ -9,6 +10,11 @@ class IssuesController < ApplicationController
       else
         @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
       end
+      if @@reset_timeout
+        @reset_timeout = true
+        @@reset_timeout = false
+      end
+
       @sprint_issues = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
     else
       @backlog_issues = sorted_list Issue.first.in_backlog[0]
@@ -17,12 +23,16 @@ class IssuesController < ApplicationController
   end
 
   def new
+    set_max_lock_time Configurable.max_edit_lock_time if @lists_locked_by_current_user
+    extend_lock_time_in_db
     @issue = Issue.new
     prepare_form
   end
 
   def edit
     if @lists_locked_by_current_user
+      set_max_lock_time Configurable.max_edit_lock_time
+      extend_lock_time_in_db
       @issue = Issue.find(params[:id])
       prepare_form
     else
@@ -57,6 +67,8 @@ class IssuesController < ApplicationController
         if @lists_locked_by_current_user
           old_first_issue = Backlog.backlog.first_issue
           Backlog.backlog.issues << @issue
+          set_max_lock_time Configurable.default_max_lock_time
+          @@reset_timeout = true
         else
           old_first_issue = Backlog.new_issues.first_issue
           Backlog.new_issues.issues << @issue
@@ -73,7 +85,6 @@ class IssuesController < ApplicationController
         old_first_issue.predecessor_id = @issue.id
         old_first_issue.save!
       end
-      Configurable.max_lock_time = Configurable.default_max_lock_time
       redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
     else
       prepare_form
@@ -97,7 +108,8 @@ class IssuesController < ApplicationController
       end
 
       params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
-      Configurable.max_lock_time = Configurable.default_max_lock_time
+      set_max_lock_time Configurable.default_max_lock_time
+      @@reset_timeout = true
 
       if @issue && @issue.update_attributes(params[@type])
         redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
@@ -205,6 +217,7 @@ class IssuesController < ApplicationController
   end
 
   def toggle_list_locks
+    set_max_lock_time Configurable.default_max_lock_time if @lists_locked_by_current_user
     session_id = session[:session_id]
     @lists_locked_by_another_user = false
     @lists_locked_by_current_user = false
@@ -213,7 +226,6 @@ class IssuesController < ApplicationController
     lock_mode = true
     sprint_backlog = Backlog.sprint_backlog
     backlog = Backlog.backlog
-    Configurable.max_lock_time = Configurable.default_max_lock_time
 
     backlog.with_lock do
       if backlog.locked_by_another_session? session_id
@@ -253,13 +265,13 @@ class IssuesController < ApplicationController
     end
   end
 
-  def increase_timeout
-    Configurable.max_lock_time = Configurable.max_edit_lock_time
-    render :nothing => true
-  end
-  
   def set_timeout_to_default
-    Configurable.max_lock_time = Configurable.default_max_lock_time
+    if @lists_locked_by_current_user
+      set_max_lock_time Configurable.default_max_lock_time
+      @@reset_timeout = true
+      extend_lock_time_in_db
+    end
+
     render :nothing => true
   end
 
@@ -340,5 +352,12 @@ class IssuesController < ApplicationController
     issue_list.collect do |issue|
       [issue, :new]
     end
+  end
+
+  def set_max_lock_time max
+    max_lock_time = Configurable.find_or_create_by_name 'max_lock_time'
+    max_lock_time.value = max
+    max_lock_time.save
+    extend_lock_time_in_db
   end
 end

@@ -42,6 +42,9 @@
 <script>
   $(function() {
     <% if feature_active? :temp_lock_lists %>
+      <% if @reset_timeout %>
+        SUBMARINE.lock.set_lock_time_to_default();
+      <% end %>
       <% if @lists_locked_by_current_user %>
         SUBMARINE.lock.revive_timeout();
         SUBMARINE.lock.enable_lock_bindings();
