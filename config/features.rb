@@ -7,7 +7,3 @@ condition :presentation do
 end
 
 feature :persist_present_demo, :presentation
-
-condition :temp_lock_lists do
-  (ENV['PRODUCT_VARIANT'] == 'lock_lists')
-end

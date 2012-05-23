@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<% if feature_active?(:temp_lock_lists) and @lists_locked_by_current_user %>
+<% if @lists_locked_by_current_user %>
   <html class="locked_html">
 <% else %>
   <html>
@@ -32,9 +32,7 @@
                 <span class="back"><%= link_to "Hauptseite", index_path %></span>
               </div>
             <% end %>
-            <% feature_active? :persist_present_demo do %>
-              <%= yield :menu %>
-            <% end %>
+            <%= yield :menu %>
           </div>
         </div>
       </div>

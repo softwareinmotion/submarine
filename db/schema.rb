@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(:version => 20120509064652) do
 
+  create_table "backlogs", :force => true do |t|
+    t.string   "name"
+    t.boolean  "locked"
+    t.string   "locked_session_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "configurables", :force => true do |t|
     t.string   "name"
     t.string   "value"
@@ -29,10 +37,9 @@ ActiveRecord::Schema.define(:version => 20120509064652) do
     t.float    "story_points"
     t.string   "type"
     t.integer  "project_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "sprint_flag"
-    t.boolean  "finished",       :default => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "backlog_id"
   end
 
   create_table "projects", :force => true do |t|

@@ -31,11 +31,9 @@ class CreateBacklogs < ActiveRecord::Migration
   end
 
   def down
-    feature_active? :temp_lock_lists do
-      drop_table :backlogs
+    drop_table :backlogs
 
-      add_column :issues, :sprint_flag, :boolean
-      add_column :issues, :finished, :boolean
-    end
+    add_column :issues, :sprint_flag, :boolean
+    add_column :issues, :finished, :boolean
   end
 end

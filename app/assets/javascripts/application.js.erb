@@ -143,9 +143,7 @@ SUBMARINE = {
 
   /*** list drag'n drop handling ***/
   changeListHandler: function(event,ui){
-    <% feature_active? :temp_lock_lists do %>
-      SUBMARINE.lock.extend_lock_time();
-    <% end %>
+    SUBMARINE.lock.extend_lock_time();
     $(ui.item).removeClass("dragging");
     var moved_issue_id;
     var list_element;
