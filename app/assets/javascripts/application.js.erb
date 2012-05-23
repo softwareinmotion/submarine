@@ -131,9 +131,13 @@ SUBMARINE = {
 
   show_notice: function(notice) {
     if($('#flashnotice').size() > 0) {
-      $('#flashnotice').replaceWith('<div id="flashnotice">' + notice + '<div>');
+      $('#flashnotice').replaceWith('<div id="flashnotice">' + notice + '</div>');
     } else {
-      $('header').after('<div id="flashnotice">' + notice + '<div>');
+      if($('body section').size() > 0) {
+        $($('body section')[0]).before('<div id="flashnotice">' + notice + '</div>');
+      } else {
+        $('header').after('<div id="flashnotice">' + notice + '</div>');
+      }
     }
   },
 
