@@ -19,10 +19,10 @@ SUBMARINE = {
     timer_id: null,
     start_time: null,
     max_lock_time: <%= Configurable.max_lock_time * 1000 %>,
-
+   
     start_timeout: function(max_lock_time){
       SUBMARINE.lock.max_lock_time = max_lock_time;
-      SUBMARINE.lock.set_start_time_to_now();
+      SUBMARINE.lock.set_start_time_to_now(max_lock_time);
       SUBMARINE.lock.timer_id = setInterval(SUBMARINE.lock.check_timeout, 1000);
 
       SUBMARINE.lock.update_timeout_view(0);
@@ -34,10 +34,10 @@ SUBMARINE = {
       $('#extend_btn').removeClass('hidden').addClass('visible');
     },
 
-    set_start_time_to_now: function(){
+    set_start_time_to_now: function(max_lock_time){
       SUBMARINE.lock.start_time = new Date().getTime();
       $.cookie('SUBMARINE.lock.start_time', SUBMARINE.lock.start_time);
-      $.cookie('SUBMARINE.lock.max_lock_time', SUBMARINE.lock.max_lock_time);
+      $.cookie('SUBMARINE.lock.max_lock_time', max_lock_time);
     },
 
     // revive a timeout after a page refresh or load
@@ -61,17 +61,33 @@ SUBMARINE = {
       $('#extend_btn').removeClass('visible').addClass('hidden');
     },
 
-    stop_timeout_on_server: function(){
+    stop_timeout_on_server: function() {
       $.post('timeout_elapsed', function(data, a, b) {
         $('#backlog').replaceWith(data.backlog);
         $('#sprint_backlog').replaceWith(data.sprint_backlog);
         SUBMARINE.showStoryPointsSum();
       }, 'json');
+      SUBMARINE.lock.set_lock_time_to_default();
     },
 
-    extend_lock_time: function(){
-        SUBMARINE.lock.set_start_time_to_now();
-        SUBMARINE.lock.update_timeout_view(0);
+    extend_lock_time: function() {
+      SUBMARINE.lock.set_start_time_to_now(SUBMARINE.lock.max_lock_time);
+      SUBMARINE.lock.update_timeout_view(0);
+    },
+
+    increase_lock_time: function() {
+      SUBMARINE.lock.max_lock_time = <%= Configurable.max_edit_lock_time * 1000 %>;
+      SUBMARINE.lock.set_start_time_to_now(SUBMARINE.lock.max_lock_time);
+    },
+
+    set_lock_time_to_default: function() {
+      SUBMARINE.lock.max_lock_time = <%= Configurable.default_max_lock_time * 1000 %>;
+      SUBMARINE.lock.extend_lock_time();
+      $.ajax({type: 'POST',
+        url: '/default_timeout',
+        async: false});
+      $.cookie('SUBMARINE.lock.max_lock_time', SUBMARINE.lock.max_lock_time);
+      $.cookie('SUBMARINE.lock.start_time', SUBMARINE.lock.start_time);
     },
 
     check_timeout: function(){
