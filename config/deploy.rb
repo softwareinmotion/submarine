@@ -25,6 +25,6 @@ namespace :deploy do
     deploy.start
   end
   task :seed, :roles => [:web, :app] do
-    run "cd #{deploy_to}/current && bundle exec rake db:seed"
+    run "cd #{deploy_to}/current && bundle exec rake db:seed RAILS_ENV=#{rails_env}"
   end
 end
