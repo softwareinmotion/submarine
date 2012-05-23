@@ -3,23 +3,18 @@ class IssuesController < ApplicationController
   @@reset_timeout = false
 
   def index
-    if feature_active? :temp_lock_lists
-      # if lists are locked show newly created issues only to other users
-      if @lists_locked_by_current_user
-        @backlog_issues = with_old_flag(sorted_list(Backlog.backlog.first_issue))
-      else
-        @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
-      end
-      if @@reset_timeout
-        @reset_timeout = true
-        @@reset_timeout = false
-      end
-
-      @sprint_issues = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
+    # if lists are locked show newly created issues only to other users
+    if @lists_locked_by_current_user
+      @backlog_issues = with_old_flag(sorted_list(Backlog.backlog.first_issue))
     else
-      @backlog_issues = sorted_list Issue.first.in_backlog[0]
-      @sprint_issues = sorted_list Issue.first.in_sprint[0]
-    end      
+      @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
+    end
+    if @@reset_timeout
+      @reset_timeout = true
+      @@reset_timeout = false
+    end
+
+    @sprint_issues = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
   end
 
   def new
@@ -63,20 +58,15 @@ class IssuesController < ApplicationController
     end
 
     if @issue
-      if feature_active? :temp_lock_lists
-        if @lists_locked_by_current_user
-          old_first_issue = Backlog.backlog.first_issue
-          Backlog.backlog.issues << @issue
-          set_max_lock_time Configurable.default_max_lock_time
-          @@reset_timeout = true
-        else
-          old_first_issue = Backlog.new_issues.first_issue
-          Backlog.new_issues.issues << @issue
-        end
+      if @lists_locked_by_current_user
+        old_first_issue = Backlog.backlog.first_issue
+        Backlog.backlog.issues << @issue
+        set_max_lock_time Configurable.default_max_lock_time
+        @@reset_timeout = true
       else
-        old_first_issue = Issue.in_backlog.find_by_predecessor_id(nil)
-        @issue.sprint_flag = false
-      end      
+        old_first_issue = Backlog.new_issues.first_issue
+        Backlog.new_issues.issues << @issue
+      end
       @issue.predecessor_id = nil
     end
 
@@ -140,41 +130,21 @@ class IssuesController < ApplicationController
   # "backlog_list" => [[0] "4",[1] "1",[2] "2"],
   # "sprint_backlog_list" => [[0] "3"]}
   def change_list
-    feature_active? :temp_lock_lists do
-      extend_lock_time_in_db
-    end
+    extend_lock_time_in_db
 
     if @lists_locked_by_current_user
       moved_issue = Issue.find params[:moved_issue_id]
       backlog_list = params[:backlog_list]
       sprint_backlog_list = params[:sprint_backlog_list]
 
-      if feature_active? :temp_lock_lists
-        if sprint_backlog_list and sprint_backlog_list.include?(moved_issue.id)
-          Backlog.sprint_backlog.issues << moved_issue
-        else
-          Backlog.backlog.issues << moved_issue
-        end
-        moved_issue.save!
-        Backlog.backlog.update_with_list backlog_list
-        Backlog.sprint_backlog.update_with_list sprint_backlog_list
+      if sprint_backlog_list and sprint_backlog_list.include?(moved_issue.id)
+        Backlog.sprint_backlog.issues << moved_issue
       else
-        if backlog_list == nil 
-          backlog_list = Array.new   
-        end
-        if sprint_backlog_list 
-          if sprint_backlog_list.include?(moved_issue.id)
-            moved_issue.sprint_flag = true;
-            moved_issue.save
-          else
-            moved_issue.sprint_flag = false;
-            moved_issue.save
-          end 
-        else
-          sprint_backlog_list = Array.new
-        end
-        moved_issue.reload.update_lists backlog_list, sprint_backlog_list
-      end    
+        Backlog.backlog.issues << moved_issue
+      end
+      moved_issue.save!
+      Backlog.backlog.update_with_list backlog_list
+      Backlog.sprint_backlog.update_with_list sprint_backlog_list
     end
 
     render :nothing => true
@@ -184,13 +154,8 @@ class IssuesController < ApplicationController
     if @lists_locked_by_current_user
       issue = Issue.find(params[:id])
       issue.finish
-      if feature_active? :temp_lock_lists
-        @backlog_issues = with_old_flag(sorted_list(Backlog.backlog.first_issue))
-        @sprint_issues  = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
-      else
-        @backlog_issues = sorted_list Issue.first.in_backlog[0]
-        @sprint_issues  = sorted_list Issue.first.in_sprint[0]
-      end    
+      @backlog_issues = with_old_flag(sorted_list(Backlog.backlog.first_issue))
+      @sprint_issues  = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
       render :index
     else
       redirect_to issues_path, notice: I18n.t("backlog.errors.lists_not_locked")
@@ -198,21 +163,13 @@ class IssuesController < ApplicationController
   end
 
   def finished_issues_list 
-    if feature_active? :temp_lock_lists
-      @finished_issues = with_old_flag sorted_list Backlog.finished_backlog.first_issue
-    else
-      @finished_issues = sorted_list Issue.first.finished[0]
-    end 
+    @finished_issues = with_old_flag sorted_list Backlog.finished_backlog.first_issue
   end
 
   def activate_issue
     issue = Issue.find(params[:id])
     issue.activate
-    if feature_active? :temp_lock_lists
-      @finished_issues = sorted_list Backlog.finished_backlog.first_issue
-    else
-      @finished_issues = sorted_list Issue.first.finished[0]
-    end    
+    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
     render :finished_issues_list
   end
 
@@ -301,28 +258,24 @@ class IssuesController < ApplicationController
   end
 
   def check_locks
-    if feature_active? :temp_lock_lists
-      session_id = session[:session_id]
-      now = Time.zone.now
+    session_id = session[:session_id]
+    now = Time.zone.now
 
-      sprint_backlog = Backlog.sprint_backlog
-      backlog = Backlog.backlog
+    sprint_backlog = Backlog.sprint_backlog
+    backlog = Backlog.backlog
 
-      backlog.with_lock do
-        elapsed_with_delay = (now - backlog.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
-        if backlog.locked && elapsed_with_delay
-          backlog.unlock
-          backlog.save!
-        else
-          @lists_locked_by_current_user |= backlog.locked_by_session?(session_id)
-          @lists_locked_by_another_user |= backlog.locked_by_another_session?(session_id)
-        end
+    backlog.with_lock do
+      elapsed_with_delay = (now - backlog.updated_at - Configurable.max_lock_time_delay) > Configurable.max_lock_time
+      if backlog.locked && elapsed_with_delay
+        backlog.unlock
+        backlog.save!
+      else
+        @lists_locked_by_current_user |= backlog.locked_by_session?(session_id)
+        @lists_locked_by_another_user |= backlog.locked_by_another_session?(session_id)
       end
-
-      clip_new_issues
-    else
-      @lists_locked_by_current_user = true
     end
+
+    clip_new_issues
   end
 
   # Clip new issues to the backlog list

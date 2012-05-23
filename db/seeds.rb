@@ -6,10 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-feature_active? :temp_lock_lists do
-  ['backlog', 'sprint_backlog', 'finished_backlog', 'new_issues'].each do |bl_name|
-    unless Backlog.find_by_name bl_name
-      Backlog.create! name: bl_name, locked: false
-    end
+['backlog', 'sprint_backlog', 'finished_backlog', 'new_issues'].each do |bl_name|
+  unless Backlog.find_by_name bl_name
+    Backlog.create! name: bl_name, locked: false
   end
 end
