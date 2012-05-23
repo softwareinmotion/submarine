@@ -26,7 +26,7 @@
 <% when 'backlog' %>
   <li>Backlog</li>
   <li id="btn_in_header">
-  <%= link_to new_issue_path, :title => t('issue.new') do %>
+  <%= link_to new_issue_path, :class => "edit_issue", :title => t('issue.new') do %>
     <%= image_tag("new.png") %>
   <% end %>
   </li>
@@ -58,7 +58,7 @@
         <div class="controls_container <%="sprint_controls" if list_type == 'sprint_backlog' %>">
           <div class="controls">
             <% unless list_type == 'finished_issues' %>
-              <%= link_to edit_issue_path(item[0]), :title => t('issue.edit') do %>
+              <%= link_to edit_issue_path(item[0]), :class => "edit_issue", :title => t('issue.edit') do %>
                 <%= image_tag("edit.png") %>
               <% end %>
               <%= link_to item[0], :method => :delete, :class => 'button', :title => t('issue.delete') do %>

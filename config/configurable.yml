@@ -37,6 +37,16 @@ max_lock_time:
   default: 30
   type: integer
 
+default_max_lock_time:
+  name: Max. backlog locking time default in seconds
+  default: 30
+  type: integer
+
+max_edit_lock_time:
+  name: Max. backlog locking time in seconds while editing/creating an issue
+  default: 300
+  type: integer
+
 max_lock_time_delay:
   name: Max. delay of backlog locking time in seconds
   default: 2

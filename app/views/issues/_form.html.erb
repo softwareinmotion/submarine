@@ -59,8 +59,11 @@
 </div>
 <div class="actions">
   <%= image_submit_tag "btn_save.png" %>
-  <%= link_to issues_path, class: "button" do %>
+  <%= link_to issues_path, class: "button finish_edit" do %>
     <%= image_tag "btn_cancel.png" %> 
   <% end %>
 </div>
 <% end %>
+<script>
+  $("a.finish_edit").bind('click', SUBMARINE.lock.set_lock_time_to_default);
+</script>
