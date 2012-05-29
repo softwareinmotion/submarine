@@ -49,7 +49,19 @@
   <p>
   Falls wir Sie neugierig gemacht haben sollten, dann können Sie submarine gleich online ausprobieren. Sie brauchen sich dafür nirgends anzumelden und nichts zu installieren. Die Demo ist kostenlos - eine für alle Internetbenutzer öffentlich zugängliche Version von submarine.
   </p>
-  <%= link_to "Ausprobieren", issues_path, :class => "button demo", :title => 'Zur Demo' %>
+  <%= link_to "Ausprobieren", '#', :class => "button demo inactive", :title => 'Zur Demo' %>
+  <script>
+    $(function() {
+      $('a.button.demo.inactive')
+      .removeClass('inactive')
+      .attr('href', '<%= issues_path %>');
+    });
+  </script>
+  <noscript>
+    <p>
+      Bitte aktivieren Sie JavaScript, wenn Sie submarine ausprobieren möchten. 
+    </p>
+  </noscript>
   <p>
      Weitere Hintergründe zu submarine und wie es entstanden ist, finden Sie auf unserem <%= link_to "Blog", 'http://blog.softwareinmotion.de' %>
   </p>
