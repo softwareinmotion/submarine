@@ -18,6 +18,7 @@ Submarine::Application.routes.draw do
 
   get 'contact_page' => 'navigation#contact_page', :as => 'contact_page'
   get 'impressum' => 'navigation#impressum', :as => 'impressum'
+  get 'finished'=> 'questions#finished', :as => 'finished'
   
   resources :issues
   resources :bugs, :controller => 'issues'
