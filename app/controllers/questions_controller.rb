@@ -46,7 +46,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to '/', notice: 'Danke das sie das Formular benutzt haben.' }
+        format.html { redirect_to '/finished' }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render action: "new" }
