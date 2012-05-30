@@ -66,6 +66,7 @@ SUBMARINE = {
         $('#backlog').replaceWith(data.backlog);
         $('#sprint_backlog').replaceWith(data.sprint_backlog);
         SUBMARINE.showStoryPointsSum();
+        $('.no_js').removeClass('no_js');
       }, 'json');
       SUBMARINE.lock.set_lock_time_to_default();
     },
