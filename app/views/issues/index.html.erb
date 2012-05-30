@@ -35,9 +35,6 @@
 <script>
   $(function() {
     $('.no_js').removeClass('no_js');
-    <% if @reset_timeout && false %>
-      SUBMARINE.lock.set_lock_time_to_default();
-    <% end %>
     <% if @lists_locked_by_current_user %>
       SUBMARINE.lock.revive_timeout();
       SUBMARINE.lock.enable_lock_bindings();
