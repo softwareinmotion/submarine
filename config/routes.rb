@@ -15,6 +15,8 @@ Submarine::Application.routes.draw do
   post 'extend_lock_time' => 'issues#extend_lock_time'
   post "timeout_elapsed" => "issues#timeout_elapsed"
   post "default_timeout" => "issues#set_timeout_to_default"
+  get 'get_start_time'=> 'issues#get_start_time', :as => 'get_start_time'
+  get 'get_max_lock_time'=> 'issues#get_max_lock_time', :as => 'get_max_lock_time'
 
   get 'contact_page' => 'navigation#contact_page', :as => 'contact_page'
   get 'impressum' => 'navigation#impressum', :as => 'impressum'
