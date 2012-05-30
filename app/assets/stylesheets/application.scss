@@ -290,3 +290,16 @@ section {
 #back-link {
  text-align: right;
 }
+
+noscript {
+  background-color: #C2474B;
+  color: white;
+  font-style: italic;
+  width: 100%;
+  display: block;
+  padding: 3px;
+}
+
+.no_js {
+  display: none;
+}
