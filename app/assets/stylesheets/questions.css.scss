@@ -2,3 +2,50 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#notice {
+  color: green; }
+
+.field_with_errors > input,
+ .field_with_errors > textarea {
+  border: 2px solid #C2474B;
+  border-radius: 2px 2px 2px 2px;
+}
+#error_explanation {
+  width: 386px;
+  border: 1px solid #C2474B;
+  border-radius: 2px 2px 2px 2px;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  margin-left: 130px;
+  background: -webkit-linear-gradient(#DDD 0%, #F2F1F0);
+  background: -moz-linear-gradient(#DDD 0%, #F2F1F0);
+  background: -o-linear-gradient(#DDD 0%, #F2F1F0);
+  background: linear-gradient(#DDD 0%, #F2F1F0);
+  h2 {
+    text-align: left;
+    font-style: italic;
+    font-weight: normal;
+    padding: 5px;
+    padding-bottom: 2px;
+    font-size: 10.5pt;
+    margin: -7px;
+    margin-bottom: 0px;
+    color: #555;
+  }
+  ul {
+    padding-left: 0;
+    li {
+      font-size: 8.5pt;
+      list-style: none;
+      padding-bottom: 3px;
+      margin-bottom: 4px;
+      
+      h3 {
+        font-weight: bold;
+        margin: 2px 0;
+      }
+    }
+  }
+}
+
