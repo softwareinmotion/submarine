@@ -1,6 +1,5 @@
 class IssuesController < ApplicationController
   before_filter :check_locks, :except => :timeout_elapsed
-  @@reset_timeout = false
 
   def index
     # if lists are locked show newly created issues only to other users
@@ -8,10 +7,6 @@ class IssuesController < ApplicationController
       @backlog_issues = with_old_flag(sorted_list(Backlog.backlog.first_issue))
     else
       @backlog_issues = with_new_flag(sorted_list(Backlog.new_issues.first_issue)) + with_old_flag(sorted_list(Backlog.backlog.first_issue))
-    end
-    if @@reset_timeout
-      @reset_timeout = true
-      @@reset_timeout = false
     end
 
     @sprint_issues = with_old_flag(sorted_list(Backlog.sprint_backlog.first_issue))
@@ -62,7 +57,6 @@ class IssuesController < ApplicationController
         old_first_issue = Backlog.backlog.first_issue
         Backlog.backlog.issues << @issue
         set_max_lock_time Configurable.default_max_lock_time
-        @@reset_timeout = true
       else
         old_first_issue = Backlog.new_issues.first_issue
         Backlog.new_issues.issues << @issue
@@ -99,7 +93,6 @@ class IssuesController < ApplicationController
 
       params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
       set_max_lock_time Configurable.default_max_lock_time
-      @@reset_timeout = true
 
       if @issue && @issue.update_attributes(params[@type])
         redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
@@ -229,7 +222,6 @@ class IssuesController < ApplicationController
   def set_timeout_to_default
     if @lists_locked_by_current_user
       set_max_lock_time Configurable.default_max_lock_time
-      @@reset_timeout = true
       extend_lock_time_in_db
     end
 
