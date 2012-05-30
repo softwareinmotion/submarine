@@ -5,6 +5,14 @@ de:
   finished_issues: 'Abgeschlossene Einträge'
   backlog: 'Backlog'
   activerecord:
+    errors:
+      models:
+        question:
+          attributes:
+            email:
+              invalid: 'Die eingegebene Email-Adresse ist ungültig.'
+              too_long: 'Die eingegebene Email-Adresse ist zu lang.'
+              too_short: 'Die eingegebene Email-Adresse ist zu kurz.'
     attributes:
       issue:
         id: 'Nr.'
@@ -13,11 +21,12 @@ de:
         story_points: 'Story Points'
         type: 'Typ'
         project_id: 'Produkt'
+        question: 'Frage'
       question:
         question: 'Frage'
-    errors:
-      messages:
-        blank: 'Das Feld darf nicht leer sein.'
+      errors:        
+        messages:
+          blank: 'Das Feld darf nicht leer sein.'
   issue:
     new: 'Eintrag erstellen'
     edit: 'Eintrag bearbeiten'
