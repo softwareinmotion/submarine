@@ -175,6 +175,7 @@ class IssuesController < ApplicationController
 
   def toggle_list_locks
     set_max_lock_time Configurable.default_max_lock_time if @lists_locked_by_current_user
+
     session_id = session[:session_id]
     @lists_locked_by_another_user = false
     @lists_locked_by_current_user = false
@@ -191,6 +192,9 @@ class IssuesController < ApplicationController
         backlog.unlock
         backlog.save!
       else
+        # set locking duration to default before start locking 
+        set_max_lock_time Configurable.default_max_lock_time 
+        
         # lock backlogs for the duration of several actions through lock flags in the DB table 
         backlog.lock_for_session session_id
         @lists_locked_by_current_user = true
@@ -231,7 +235,15 @@ class IssuesController < ApplicationController
 
     render :nothing => true
   end
-
+  
+  def get_start_time
+    render :text => Backlog.backlog.updated_at.to_i
+  end
+  
+  def get_max_lock_time
+    render :text => Configurable.max_lock_time
+  end
+  
   private
 
   def prepare_form

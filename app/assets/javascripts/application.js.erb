@@ -11,17 +11,52 @@
 //= require jquery_validate
 //= require jquery.tablednd
 //= require jquery.transform2d
-//= require jquery.cookie
 //= require_self
 
 SUBMARINE = {
   lock: {
     timer_id: null,
     start_time: null,
-    max_lock_time: <%= Configurable.max_lock_time * 1000 %>,
+    max_lock_time: null,
+    
+    getStartTime: function() {
+      if(SUBMARINE.lock.start_time == null) {
+        jQuery.ajax({
+          type: 'GET',
+          url: '/get_start_time',
+          success: function(result) {
+            SUBMARINE.lock.start_time = parseInt(result, 10)  * 1000;
+          },
+          async: false
+        });
+      }
+      return SUBMARINE.lock.start_time;
+    },
+
+    setStartTime: function(startTime) {
+      SUBMARINE.lock.start_time = startTime;
+    },
+    
+    getMaxLockTime: function() {
+      if(SUBMARINE.lock.max_lock_time == null) {
+        jQuery.ajax({
+          type: 'GET',
+          url: '/get_max_lock_time',
+          success: function(result) {
+            SUBMARINE.lock.max_lock_time = parseInt(result, 10) * 1000;
+          },
+          async: false
+        });
+      }
+      return SUBMARINE.lock.max_lock_time;
+    },
+    
+    setMaxLockTime: function(maxLockTime) {
+      SUBMARINE.lock.max_lock_time = maxLockTime;
+    },
    
     start_timeout: function(max_lock_time){
-      SUBMARINE.lock.max_lock_time = max_lock_time;
+      SUBMARINE.lock.setMaxLockTime(max_lock_time);
       SUBMARINE.lock.set_start_time_to_now(max_lock_time);
       SUBMARINE.lock.timer_id = setInterval(SUBMARINE.lock.check_timeout, 1000);
 
@@ -35,15 +70,13 @@ SUBMARINE = {
     },
 
     set_start_time_to_now: function(max_lock_time){
-      SUBMARINE.lock.start_time = new Date().getTime();
-      $.cookie('SUBMARINE.lock.start_time', SUBMARINE.lock.start_time);
-      $.cookie('SUBMARINE.lock.max_lock_time', max_lock_time);
+      SUBMARINE.lock.setStartTime(new Date().getTime());
     },
 
     // revive a timeout after a page refresh or load
     revive_timeout: function(){
-      SUBMARINE.lock.start_time = $.cookie('SUBMARINE.lock.start_time');
-      SUBMARINE.lock.max_lock_time = $.cookie('SUBMARINE.lock.max_lock_time');
+      SUBMARINE.lock.getStartTime();
+      SUBMARINE.lock.getMaxLockTime();
       if (SUBMARINE.lock.check_timeout()) {
         SUBMARINE.lock.timer_id = setInterval(SUBMARINE.lock.check_timeout, 1000);
         $('#extend_btn').removeClass('hidden').addClass('visible');
@@ -72,29 +105,27 @@ SUBMARINE = {
     },
 
     extend_lock_time: function() {
-      SUBMARINE.lock.set_start_time_to_now(SUBMARINE.lock.max_lock_time);
+      SUBMARINE.lock.set_start_time_to_now(SUBMARINE.lock.getMaxLockTime());
       SUBMARINE.lock.update_timeout_view(0);
     },
 
     increase_lock_time: function() {
-      SUBMARINE.lock.max_lock_time = <%= Configurable.max_edit_lock_time * 1000 %>;
-      SUBMARINE.lock.set_start_time_to_now(SUBMARINE.lock.max_lock_time);
+      SUBMARINE.lock.setMaxLockTime(<%= Configurable.max_edit_lock_time * 1000 %>);
+      SUBMARINE.lock.set_start_time_to_now(SUBMARINE.lock.getMaxLockTime());
     },
 
     set_lock_time_to_default: function() {
-      SUBMARINE.lock.max_lock_time = <%= Configurable.default_max_lock_time * 1000 %>;
+      SUBMARINE.lock.setMaxLockTime(<%= Configurable.default_max_lock_time * 1000 %>);
       SUBMARINE.lock.extend_lock_time();
       $.ajax({type: 'POST',
         url: '/default_timeout',
         async: false});
-      $.cookie('SUBMARINE.lock.max_lock_time', SUBMARINE.lock.max_lock_time);
-      $.cookie('SUBMARINE.lock.start_time', SUBMARINE.lock.start_time);
     },
 
     check_timeout: function(){
       var result = false;
-      var elapsed = new Date().getTime() - SUBMARINE.lock.start_time;
-      if(elapsed <= SUBMARINE.lock.max_lock_time) {
+      var elapsed = new Date().getTime() - SUBMARINE.lock.getStartTime();
+      if(elapsed <= SUBMARINE.lock.getMaxLockTime()) {
         SUBMARINE.lock.update_timeout_view(elapsed);
         result = true;
       } else {
@@ -106,7 +137,7 @@ SUBMARINE = {
     },
 
     update_timeout_view: function(elapsed) {
-      var time_left = Math.round(Math.floor(SUBMARINE.lock.max_lock_time - elapsed) / 1000);
+      var time_left = Math.round(Math.floor(SUBMARINE.lock.getMaxLockTime() - elapsed) / 1000);
       $("#lock_timeout").html(time_left + " sec");
     },
 
