@@ -22,6 +22,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'debugger'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -30,14 +31,13 @@ gem 'jquery-rails'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+gem 'rvm-capistrano'
 gem 'capistrano-ext'
 
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'factory_girl'
-  gem 'debugger'
   gem 'spork'
   gem 'watchr'
 
