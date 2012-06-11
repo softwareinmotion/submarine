@@ -19,6 +19,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer'
   gem 'execjs'
+  gem 'compass-rails'
 end
 
 gem 'jquery-rails'

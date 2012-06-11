@@ -5,6 +5,8 @@
  *= require lightbox
  *= require_self
 */
+@import "compass";
+
 @font-face {
   font-family: Conv_whitehall;
   src: url('whitehall.ttf'); 
@@ -14,10 +16,8 @@ $width: 1240px;
 $strip-line: 1px solid #ddd;
 
 html {
-  background: -webkit-linear-gradient(#DDD,#F2F1F0);
-  background: -moz-linear-gradient(#DDD, #F2F1F0) repeat scroll 0 0 transparent;
-  background: -o-linear-gradient(#DDD,#F2F1F0);
-  background: linear-gradient(#DDD,#F2F1F0) repeat scroll 0 0 transparent;
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#DDD 0%,#F2F1F0 300px));
   background-repeat: no-repeat;
   background-attachment: fixed;
   margin: 0;
@@ -51,6 +51,12 @@ body {
   border: 0;
   letter-spacing: 0.1em;
   font-size: 12pt;
+  
+  a {
+    img {
+      border-style: none;
+    }
+  }
 
   h1 {
     font-family: 'Open Sans', sans-serif;
@@ -271,14 +277,8 @@ a.button {
 	font-size: 14px;
 	color: #000000;
 	padding: 8px 20px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#3e99a3);
-	background: -webkit-gradient(
-		linear, left top, left bottom, 
-		from(#ffffff),
-		to(#3e99a3));
+	$experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#ffffff 0%, #3e99a3));
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -298,14 +298,8 @@ a.button {
       display: block;
 
       &.inactive {
-        background: -moz-linear-gradient(
-          top,
-          #ffffff 0%,
-          #dddddd);
-        background: -webkit-gradient(
-          linear, left top, left bottom, 
-          from(#ffffff),
-          to(#dddddd));
+        $experimental-support-for-svg: true;
+        @include background-image(linear-gradient(#ffffff 0%, #dddddd));
         border-radius: 10px;
         -moz-border-radius: 10px;
         -webkit-border-radius: 10px;
@@ -336,14 +330,8 @@ input.question_submit{
 	font-size: 14px;
 	color: #000000;
 	padding: 8px 20px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#3e99a3);
-	background: -webkit-gradient(
-		linear, left top, left bottom, 
-		from(#ffffff),
-		to(#3e99a3));
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#ffffff 0%, #3e99a3));
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -364,7 +352,10 @@ p.question_counter {
   color: white;
 }
 section#impressum {
-  height: 1625px;
+  .clear {
+    clear: both;
+    height: 10px;
+  }
 }
 
 noscript p {
