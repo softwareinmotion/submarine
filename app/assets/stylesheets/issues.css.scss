@@ -83,24 +83,20 @@ ul.list_header {
 
 .unlocked_list_header{
   color: black;
-  background: -webkit-linear-gradient(#F2F1F0 0%,#DDD 30px);
-  background: -moz-linear-gradient(#F2F1F0 0%,#DDD 30px);
-  background: -o-linear-gradient(#F2F1F0 0%,#DDD 30px);
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
 }
  
 .locked_list_header {
   color: white;
-  background: -webkit-linear-gradient(#009CA3 0%, #1F767A 30px);
-  background: -moz-linear-gradient(#009CA3 0%,#1F767A 30px);
-  background: -o-linear-gradient(#009CA3 0%,#1F767A 30px);
-  background: linear-gradient(#009CA3 0%,#1F767A 30px);
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#009CA3 0%, #1F767A 30px));
 }
 
 .locked_html {
-  background: -webkit-linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
-  background: -moz-linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
-  background: -o-linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
-  background: linear-gradient(#DDD 0%, #5ECCD1 300px) fixed;
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#DDD 0%, #5ECCD1 300px));
+  background-attachment: fixed;
 }
 
 .hidden {
@@ -219,7 +215,8 @@ ul.connectedSortable {
   
   ul.form_header {
     @include ul_header;
-    background: linear-gradient(#F2F1F0 0%,#DDD 30px);
+    $experimental-support-for-svg: true;
+    @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
     list-style-type: none; 
     margin-bottom: 30px;
     padding: 0;
