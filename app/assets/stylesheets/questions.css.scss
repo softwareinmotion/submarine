@@ -1,9 +1,11 @@
 // Place all the styles related to the questions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "compass";
 
 #notice {
-  color: green; }
+  color: green; 
+}
 
 .field_with_errors > input,
  .field_with_errors > textarea {
@@ -18,10 +20,8 @@
   padding-bottom: 0;
   margin-bottom: 20px;
   margin-left: 130px;
-  background: -webkit-linear-gradient(#DDD 0%, #F2F1F0);
-  background: -moz-linear-gradient(#DDD 0%, #F2F1F0);
-  background: -o-linear-gradient(#DDD 0%, #F2F1F0);
-  background: linear-gradient(#DDD 0%, #F2F1F0);
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#DDD 0%, #F2F1F0));
   h2 {
     text-align: left;
     font-style: italic;

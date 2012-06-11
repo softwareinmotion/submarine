@@ -7,6 +7,7 @@
 
 /* "require_tree" resulted in a "stack level too deep" error in "rake assets:precompile". Therefore 
  * the SASS import mechanism is used. */
+@import "compass";
 @import "issues.css.scss";
 
 
@@ -17,10 +18,8 @@ $width: 1240px;
   color: #339A97;
   border: 1px solid #009D91;
   border-radius: 2px 2px 2px 2px;
-  background: -webkit-linear-gradient(#DDD 0%, #F2F1F0);
-  background: -moz-linear-gradient(#DDD 0%, #F2F1F0);
-  background: -o-linear-gradient(#DDD 0%, #F2F1F0);
-  background: linear-gradient(#DDD 0%, #F2F1F0);
+  background-color: #F2F1F0;
+  @include background-image(linear-gradient(#DDD 0%, #F2F1F0));
   min-width: 100px;
   width: 450px;
   display: block;
@@ -32,10 +31,9 @@ $width: 1240px;
 }
 
 html {
-  background: -webkit-linear-gradient(#DDD 0%,#F2F1F0 300px);
-  background: -moz-linear-gradient(#DDD 0%,#F2F1F0 300px);
-  background: -o-linear-gradient(#DDD 0%,#F2F1F0 300px);
-  background: linear-gradient(#DDD 0%,#F2F1F0 300px);
+  background: #F2F1F0;
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#DDD 0%,#F2F1F0 300px));
   margin: 0;
   height: 100%;
   background-repeat: no-repeat;
@@ -48,6 +46,12 @@ body {
   border: 0;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 10pt;
+}
+
+a {
+  img {
+    border-style: none;
+  }
 }
 
 .center {
@@ -202,10 +206,8 @@ li > span {
   padding-bottom: 0;
   margin-bottom: 20px;
   margin-left: 130px;
-  background: -webkit-linear-gradient(#DDD 0%, #F2F1F0);
-  background: -moz-linear-gradient(#DDD 0%, #F2F1F0);
-  background: -o-linear-gradient(#DDD 0%, #F2F1F0);
-  background: linear-gradient(#DDD 0%, #F2F1F0);
+  $experimental-support-for-svg: true;
+  @include background-image(linear-gradient(#DDD 0%, #F2F1F0));
   h2 {
     text-align: left;
     font-style: italic;
