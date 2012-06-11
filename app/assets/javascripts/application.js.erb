@@ -71,7 +71,7 @@ SUBMARINE = {
     },
 
     set_start_time_to_now: function(max_lock_time){
-      SUBMARINE.lock.setStartTime(new Date().getTime());
+      SUBMARINE.lock.setStartTime(new Date().getTime() - SUBMARINE.lock.offset);
     },
 
     // revive a timeout after a page refresh or load
