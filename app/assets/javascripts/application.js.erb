@@ -18,6 +18,7 @@ SUBMARINE = {
     timer_id: null,
     start_time: null,
     max_lock_time: null,
+    offset: null,
     
     getStartTime: function() {
       if(SUBMARINE.lock.start_time == null) {
@@ -124,7 +125,7 @@ SUBMARINE = {
 
     check_timeout: function(){
       var result = false;
-      var elapsed = new Date().getTime() - SUBMARINE.lock.getStartTime();
+      var elapsed = new Date().getTime() - SUBMARINE.lock.offset - SUBMARINE.lock.getStartTime();
       if(elapsed <= SUBMARINE.lock.getMaxLockTime()) {
         SUBMARINE.lock.update_timeout_view(elapsed);
         result = true;
