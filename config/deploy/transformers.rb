@@ -8,5 +8,4 @@ set :deploy_to, "/var/lib/#{subdomain}#{application}"
 role :web,  domain 
 role :app,  domain 
 role :db, domain, :primary => true
-config.action_dispatch.rack_cache[:verbose] = false
 
