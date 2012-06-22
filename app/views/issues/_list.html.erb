@@ -44,7 +44,7 @@
         &nbsp;
       </div>
       <div class="issue_line">
-        <div class="description short"><%= item[0].description %></div>
+        <div class="description short"><%= simple_format(item[0].description) %></div>
         <div class="controls_container <%="sprint_controls" if list_type == 'sprint_backlog' %>">
           <div class="controls">
             <% unless list_type == 'finished_issues' %>

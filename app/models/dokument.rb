@@ -1,0 +1,3 @@
+class Dokument < Issue
+
+end
