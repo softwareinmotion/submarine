@@ -170,6 +170,11 @@ ul.connectedSortable {
         color: gray;
         font-size: 8pt;
         overflow: hidden;
+        p {
+          margin: 0px;
+          padding: 0px;
+          padding-bottom: 5px;  
+        }
       }
     
       div.short {
