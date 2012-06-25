@@ -26,5 +26,5 @@ Submarine::Application.routes.draw do
   resources :bugs, :controller => 'issues'
   resources :tasks, :controller => 'issues'
   resources :user_stories, :controller => 'issues'
-  resources :dokument, :controller => 'issues'
+  resources :document, :controller => 'issues'
 end
