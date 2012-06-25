@@ -34,7 +34,6 @@ class IssuesController < ApplicationController
     if params[:issue]
       type = params[:issue][:type]
       if Issue.children_type_names.include? type
-        debugger
         model_class = Kernel.const_get type
         params[:issue][:story_points] = nil if params[:issue][:story_points] == 'unknown'
         @issue = model_class.new(params[:issue])

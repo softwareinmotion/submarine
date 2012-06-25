@@ -14,7 +14,7 @@ class Issue < ActiveRecord::Base
   scope :last_in_list, lambda { find_by_sql("select * from issues a where not exists (select * from issues b where b.predecessor_id = a.id)") }
 
   def self.children_type_names
-    ['UserStory', 'Task', 'Bug', 'Dokument']
+    ['UserStory', 'Task', 'Bug', 'Document']
   end
 
   def formatted_story_points
