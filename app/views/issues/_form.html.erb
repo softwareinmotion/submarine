@@ -39,9 +39,9 @@
   <%= f.label :type %>
   <% @types.each do |type| %>
     <div class="radio_image <%= type.downcase %>" data-type="<%= type %>">
-      <img src="<%= image_path "#{type.downcase}_light.png" %>"
-           data-img_heavy="<%= image_path "#{type.downcase}_heavy.png" %>"
-           data-img_light="<%= image_path "#{type.downcase}_light.png" %>">
+      <%= image_tag("#{type.downcase}_light.png", :title => "#{type.titleize}", 
+      'data-img_heavy' => image_path("#{type.downcase}_heavy.png"), 
+      'data-img_light' => image_path("#{type.downcase}_light.png"))  %>    
     </div>
   <% end %>
     <%= f.hidden_field :type, :value => (@issue.type ? @issue.type : @types[0]) %>
@@ -50,10 +50,10 @@
   <%= f.label :project_id %>
   <% @projects.each do |project| %>
   <div class="radio_image <%= project[0].downcase %>" data-project-id="<%= project[1] %>">
-    <img src="<%= image_path "logo_#{project[0].downcase}_light.png" %>"
-         data-img_heavy="<%= image_path "logo_#{project[0].downcase}_heavy.png" %>"
-         data-img_light="<%= image_path "logo_#{project[0].downcase}_light.png" %>">
-  </div>
+      <%= image_tag("logo_#{project[0].downcase}_light.png", :title => "#{project[0]}", 
+      'data-img_heavy' => image_path("logo_#{project[0].downcase}_heavy.png"), 
+      'data-img_light' => image_path("logo_#{project[0].downcase}_light.png"))  %> 
+      </div>
   <% end %>
   <%= f.hidden_field :project_id, :value => (@issue.project_id ? @issue.project_id : @projects[0][1]) %>
 </div>
