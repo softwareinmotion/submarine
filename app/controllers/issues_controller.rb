@@ -163,7 +163,7 @@ class IssuesController < ApplicationController
     issue = Issue.find(params[:id])
     issue.activate
     @finished_issues = sorted_list Backlog.finished_backlog.first_issue
-    render :finished_issues_list
+    redirect_to finished_issues_url
   end
 
   def toggle_list_locks

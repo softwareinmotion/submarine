@@ -152,5 +152,38 @@ describe Issue do
       issue.finished?.should be_false
       issue.in_sprint?.should be_false
     end
+    
+    context 'with three finished issues' do
+      
+      before :each do
+        @issue1 = FactoryGirl.create :task, type: "Task", backlog_id: Backlog.finished_backlog
+        @issue2 = FactoryGirl.create :task, type: "Task", backlog_id: Backlog.finished_backlog, predecessor: @issue1
+        @issue3 = FactoryGirl.create :task, type: "Task", backlog_id: Backlog.finished_backlog, predecessor: @issue2
+      end
+      
+      it "removes the predecessor of the second issue when activating the first" do
+        @issue1.activate
+        @issue2.reload
+        @issue2.predecessor.should be_nil
+      end
+      
+      it "moves the first issue to the new issues backlog when activating the first" do
+        @issue1.activate
+        @issue1.backlog.should eq(Backlog.new_issues)
+      end
+      
+      it "updates the predecessor of the third issue to the first when activating the second" do
+        @issue2.activate
+        @issue3.reload
+        @issue3.predecessor.should eq(@issue1)
+      end
+      
+      it "updates the predecessor of the second issue to nil when activating the second" do
+        @issue2.activate
+        @issue2.predecessor.should be_nil
+      end
+      
+    end
+    
   end
 end
