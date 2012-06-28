@@ -48,12 +48,14 @@ class Issue < ActiveRecord::Base
 
   def push_to_backlog backlog
     close_gap
-    reload
+    self.reload
 
     unless backlog.issues.empty?
       backlog.first_issue.update_attributes predecessor_id: id
     end
     backlog.issues << self
+    self.predecessor_id = nil
+    self.save
   end
 
   def finished?
@@ -63,13 +65,12 @@ class Issue < ActiveRecord::Base
   def in_sprint?
     backlog == Backlog.sprint_backlog
   end
-
+  
   def close_gap
     descendant = self.descendant
     if descendant
       descendant.predecessor_id = self.predecessor_id
       descendant.save!
     end
-    self.predecessor_id = nil
   end
 end
