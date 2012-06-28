@@ -36,10 +36,11 @@ gem 'capistrano'
 gem 'rvm-capistrano'
 gem 'capistrano-ext'
 
-
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'factory_girl'
+  gem 'guard-rspec'
+  gem 'guard-spork'
   gem 'spork'
   gem 'watchr'
 
