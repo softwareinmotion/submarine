@@ -3,7 +3,7 @@ de:
   cancel: 'Abbrechen'
   errors_occured: 'Folgende Fehler sind aufgetreten'
   finished_issues: 'Abgeschlossene Einträge'
-  backlog: 'Backlog'
+  backlogs: 'Backlogs'
   activerecord:
     errors:
       models:
