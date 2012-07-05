@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509064652) do
+ActiveRecord::Schema.define(:version => 20120705103535) do
 
   create_table "backlogs", :force => true do |t|
     t.string   "name"
@@ -20,15 +20,6 @@ ActiveRecord::Schema.define(:version => 20120509064652) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
-
-  create_table "configurables", :force => true do |t|
-    t.string   "name"
-    t.string   "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "configurables", ["name"], :name => "index_configurables_on_name"
 
   create_table "issues", :force => true do |t|
     t.string   "name"

@@ -1,6 +1,6 @@
 require 'capistrano/ext/multistage'
 
-set :stages, %w(production ent transformers ent_lock)
+set :stages, %w(production ent transformers)
 set :default_stage, "ent"
 
 default_run_options[:pty] = true

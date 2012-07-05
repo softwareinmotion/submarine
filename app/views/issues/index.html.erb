@@ -1,30 +1,6 @@
 <META name="keywords" content="scrum, backlog, sprint, user stories, tool">
 <META name="description" content="Sie wollen ein virtuelles Backlog, das mehrere Projekte unterstützt? Dann probieren Sie es mit submarine. Eine kostenlose Online-Demo steht Ihnen hier zur Verfügung.">
   
-<% content_for :menu do %>
-  <div id="locking_form" class="no_js">
-    <%= form_tag toggle_list_locks_path, :method => :post, :remote => true do %>
-      <% if @lists_locked_by_current_user %>
-        <%= content_tag :button, :type => :submit, :id => "lock_btn", :title =>  I18n.t("backlog.finish_editing") do %>
-          <%= image_tag "edit_doc.png" %>
-        <% end %>
-      <% else %>
-        <%= content_tag :button, :type => :submit, :id => "lock_btn", :title => I18n.t("backlog.edit") do %>
-          <%= image_tag "edit_doc.png" %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <%= form_tag extend_lock_time_path, :method => :post, :remote => true do %>
-      <% content_tag :button, :type => :submit, :id => 'extend_btn', :class => 'hidden', :title =>  I18n.t("backlog.extend_lock_time") do %>
-        <%= image_tag "clock.png" %>
-        <span id="lock_timeout"></span>
-      <% end %>
-    <% end %>
-    <%= hidden_field_tag 'server_time', Time.now.to_i %>
-  </div>
-<% end %>
-  
 <section id="main">
 
 <%= render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues} %>
@@ -34,19 +10,18 @@
 </section>
 
 <script>
-  SUBMARINE.lock.offset = new Date().getTime() - parseInt($("#server_time").val(), 10) * 1000;
-  
   $(function() {
     $('.no_js').removeClass('no_js');
-    <% if @lists_locked_by_current_user %>
-      SUBMARINE.lock.revive_timeout();
-      SUBMARINE.lock.enable_lock_bindings();
-    <% else %>
-      $("#sprint_backlog_list, #backlog_list").disableSelection();
-    <% end %>
+    $("#sprint_backlog_list, #backlog_list").sortable({
+		connectWith: ".connectedSortable",
+		start: function(event,ui){
+			$(ui.item).addClass("dragging");
+		},
+		stop: SUBMARINE.changeListHandler,
+	}).disableSelection();
     SUBMARINE.showStoryPointsSum();
     $("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
-    $("a.edit_issue").live("click", SUBMARINE.lock.increase_lock_time);    
+    $("ul.connectedSortable > li").mouseenter(SUBMARINE.showControls).mouseleave(SUBMARINE.hideControls);
   });
   SUBMARINE.changeListURL = "<%= change_list_path %>";
   SUBMARINE.messages.save_failed = '<%= t 'issue.save_failed' %>';

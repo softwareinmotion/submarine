@@ -169,7 +169,7 @@ describe Issue do
       
       it "moves the first issue to the new issues backlog when activating the first" do
         @issue1.activate
-        @issue1.backlog.should eq(Backlog.new_issues)
+        @issue1.backlog.should eq(Backlog.backlog)
       end
       
       it "updates the predecessor of the third issue to the first when activating the second" do
