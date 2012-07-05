@@ -13,9 +13,7 @@ describe IssuesController do
     end
     
     it 'moves the issues from the sprint backlog to the finished backlog' do
-      xhr :post, :toggle_list_locks
       post :finish_issue, id: @issue
-      xhr :post, :toggle_list_locks
       @issue.reload
       @issue.backlog.should eq(Backlog.finished_backlog)
     end

@@ -43,7 +43,7 @@ class Issue < ActiveRecord::Base
   end
 
   def activate
-    self.push_to_backlog Backlog.new_issues
+    self.push_to_backlog Backlog.backlog
   end
 
   def push_to_backlog backlog
