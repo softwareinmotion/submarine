@@ -1,6 +1,6 @@
 <article class="log" id="<%= list_type %>">
 
-  <ul class="list_header <%= @lists_locked_by_current_user ? "locked_list_header" : "unlocked_list_header" %>">
+  <ul class="list_header">
 
 <% case list_type %>
 <% when 'sprint_backlog' %>
@@ -34,31 +34,31 @@
 
   <ul id="<%= list_type %>_list" class="connectedSortable">
     <% list_items.each do |item| %>
-      <li data-id="<%= item[0].id %>" id="#<%= item[0].id %>" data-story_points="<%= item[0].formatted_story_points %>"<%= " class=new_issue" if item[1] == :new %>>
+      <li data-id="<%= item.id %>" id="#<%= item.id %>" data-story_points="<%= item.formatted_story_points %>">
       <div class="issue_line">
-        <div class="project_logo"><%= image_tag("logo_#{item[0].project.name.downcase}_heavy.png") if item[0].project %></div>
-        <div class="issue_name"><%= item[0].name %></div>
-        <div class="issue_id">#<%= item[0].id %></div>
-        <div class="issue_type"><%= image_tag("#{item[0].type.downcase}_heavy.png") %></div>
-        <div class="issue_story_points"><%= image_tag("sp_#{item[0].formatted_story_points}_heavy.png", :size => "22x22") if item[0].story_points %>&nbsp;</div>
+        <div class="project_logo"><%= image_tag("logo_#{item.project.name.downcase}_heavy.png") if item.project %></div>
+        <div class="issue_name"><%= item.name %></div>
+        <div class="issue_id">#<%= item.id %></div>
+        <div class="issue_type"><%= image_tag("#{item.type.downcase}_heavy.png") %></div>
+        <div class="issue_story_points"><%= image_tag("sp_#{item.formatted_story_points}_heavy.png", :size => "22x22") if item.story_points %>&nbsp;</div>
         &nbsp;
       </div>
       <div class="issue_line">
-        <div class="description short"><%= simple_format(item[0].description) %></div>
+        <div class="description short"><%= simple_format(item.description) %></div>
         <div class="controls_container <%="sprint_controls" if list_type == 'sprint_backlog' %>">
           <div class="controls">
             <% unless list_type == 'finished_issues' %>
-              <%= link_to edit_issue_path(item[0]), :class => "edit_issue", :title => t('issue.edit') do %>
+              <%= link_to edit_issue_path(item), :class => "edit_issue", :title => t('issue.edit') do %>
                 <%= image_tag("edit.png") %>
               <% end %>
-              <%= link_to item[0], :method => :delete, :class => 'button', :title => t('issue.delete') do %>
+              <%= link_to item, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
                 <%= image_tag("delete.png") %>
               <% end %>
-              <%= link_to finish_issue_path(item[0]), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('issue.finish') do %>
+              <%= link_to finish_issue_path(item), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('issue.finish') do %>
                 <%= image_tag("finish_issue.png") %>
               <% end %>
             <% else %>
-              <%= link_to activate_issue_path(item[0]), :method => :post, :class => 'button', :title => t('issue.activate') do %>
+              <%= link_to activate_issue_path(item), :method => :post, :class => 'button', :title => t('issue.activate') do %>
                 <%= image_tag("activate_issue.png") %>
               <% end %>  
             <% end %>

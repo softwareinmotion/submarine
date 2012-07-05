@@ -13,10 +13,6 @@ class Backlog < ActiveRecord::Base
     Backlog.where(name: 'finished_backlog').first
   end
 
-  def self.new_issues
-    Backlog.where(name: 'new_issues').first
-  end
-
   def first_issue
     self.issues.first_in_list.first
   end
