@@ -69,10 +69,6 @@ namespace :submarine do
 
       proj
     end
-
-    ### overwrite configuration
-    Configurable.create name: "max_lock_time", value: 8
-    Configurable.create name: "max_lock_time_delay", value: 1
   end
 
   desc "Includes feature dependent migration files in db:migrate task"
