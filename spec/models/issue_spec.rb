@@ -183,7 +183,33 @@ describe Issue do
         @issue2.predecessor.should be_nil
       end
       
+    end    
+  end
+
+  # don't test the framework
+  describe '#create' do
+
+    it 'starts with lock_version number of 0' do
+      create(:issue).lock_version.should eq(0)
     end
-    
+
+  end
+
+  describe '#update_attributes' do
+
+    it "increments the lock number" do
+      issue = create :issue
+      issue.update_attributes :name => "Changed"
+      issue.lock_version.should eq(1)
+    end
+
+    it "throws an error for a stale model" do
+      issue = create :issue
+      issue1 = Issue.find_by_id(issue.id)
+      issue2 = Issue.find_by_id(issue.id)
+      issue1.update_attributes :name => 'Changed first'
+      expect { issue2.update_attributes :name => 'Changed second' }.to raise_error(ActiveRecord::StaleObjectError)
+    end
+
   end
 end
