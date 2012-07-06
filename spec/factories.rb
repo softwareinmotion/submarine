@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :bug do
     sequence(:name) {|n| "bug##{n}"}
     sequence(:description) {|n| "desc#{n}"}
