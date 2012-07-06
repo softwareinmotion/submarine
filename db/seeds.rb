@@ -8,6 +8,6 @@
 
 ['backlog', 'sprint_backlog', 'finished_backlog'].each do |bl_name|
   unless Backlog.find_by_name bl_name
-    Backlog.create! name: bl_name, locked: false
+    Backlog.create! name: bl_name
   end
 end
