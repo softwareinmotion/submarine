@@ -32,21 +32,4 @@ class Backlog < ActiveRecord::Base
     end 
   end
 
-  def locked_by_session? session_id
-    self.locked and self.locked_session_id == session_id
-  end
-
-  def locked_by_another_session? session_id
-    self.locked and not self.locked_session_id == session_id
-  end
-
-  def lock_for_session session_id
-    self.locked = true
-    self.locked_session_id = session_id
-  end
-
-  def unlock
-    self.locked = false
-    self.locked_session_id = nil
-  end
 end
