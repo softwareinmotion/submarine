@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(:version => 20120705135117) do
     t.float    "story_points"
     t.string   "type"
     t.integer  "project_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "backlog_id"
-    t.integer  "lock_version"
+    t.integer  "lock_version",   :default => 0
   end
 
   create_table "projects", :force => true do |t|
