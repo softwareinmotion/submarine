@@ -1,6 +1,8 @@
 class DeleteNewIssuesBacklog < ActiveRecord::Migration
   def up
-  	Backlog.find_by_name('new_issues').delete
+    if Backlog.find_by_name('new_issues')
+  	  Backlog.find_by_name('new_issues').delete
+    end
   end
 
   def down

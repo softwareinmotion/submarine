@@ -221,16 +221,88 @@ describe Issue do
     context "changing priotity of an issue" do
 
       it "
+      Start:  [ x     ]
+      Finish: [ x     ]" do
+        x = create :issue, backlog: Backlog.backlog
+
+        x.move_to Backlog.backlog
+        
+        x.reload
+        x.predecessor.should be_nil
+        x.descendant.should be_nil
+      end
+
+      it "
+      Start:  [ x a   ]
+      Finish: [ x a   ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.backlog, predecessor: x
+
+        x.move_to Backlog.backlog
+        
+        x.reload
+        x.predecessor.should be_nil
+        x.descendant.should eq a
+
+        a.reload
+        a.predecessor.should eq x
+        a.descendant.should be_nil
+      end 
+
+      it "
+      Start:  [ a x   ]
+      Finish: [ a x   ]" do
+        a = create :issue, backlog: Backlog.backlog
+        x = create :issue, backlog: Backlog.backlog, predecessor: a
+
+        x.move_to Backlog.backlog, new_predecessor: a
+        
+        x.reload
+        x.predecessor.should eq a
+        x.descendant.should be_nil
+
+        a.reload
+        a.predecessor.should be_nil
+        a.descendant.should eq x
+      end  
+
+      #it "
+      #Start:  [ a x b ]
+      #Finish: [ a x b ]" do
+      #  a = create :issue, backlog: Backlog.backlog
+      #  x = create :issue, backlog: Backlog.backlog, predecessor: a
+      #  b = create :issue, backlog: Backlog.backlog, predecessor: x
+#
+#      #  x.move_to Backlog.backlog,  new_predecessor: a
+#      #  
+#      #  x.reload
+#      #  x.predecessor.should eq a
+#      #  x.descendant.should eq b
+#
+#      #  a.reload
+#      #  a.predecessor.should be_nil
+#      #  a.descendant.should x
+#
+#      #  b.reload
+#      #  b.predecessor.should eq x
+#      #  b.descendant.should be_nil
+      #end  
+
+
+      it "
       Start:  [ x a   ]
       Finish: [ a x   ]" do
         x = create :issue, backlog: Backlog.backlog
         a = create :issue, backlog: Backlog.backlog, predecessor: x
 
         x.move_to Backlog.backlog, new_predecessor: a
-
+        
+        x.reload
         x.predecessor.should eq a
+        x.descendant.should be_nil
 
         a.reload
+        a.descendant.should eq x
         a.predecessor.should be_nil
       end
 
@@ -242,9 +314,12 @@ describe Issue do
 
         x.move_to Backlog.backlog
 
+        x.reload
         x.predecessor.should be_nil
+        x.descendant.should eq a
 
         a.reload
+        a.descendant.should be_nil
         a.predecessor.should eq x
       end
 
@@ -262,30 +337,34 @@ describe Issue do
         x.descendant.should eq b
 
         a.reload
+        a.descendant.should eq x
         a.predecessor.should be_nil
 
         b.reload
+        b.descendant.should be_nil
         b.predecessor.should eq x
       end
 
       it "
       Start:  [ a x b ]
       Finish: [ a b x ]" do
-        x = create :issue, backlog: Backlog.backlog
-        a = create :issue, backlog: Backlog.backlog, predecessor: x            
-        b = create :issue, backlog: Backlog.backlog, predecessor: a
+        a = create :issue, backlog: Backlog.backlog 
+        x = create :issue, backlog: Backlog.backlog, predecessor: a            
+        b = create :issue, backlog: Backlog.backlog, predecessor: x
 
-        x.move_to Backlog.backlog, new_predecessor: a
+        x.move_to Backlog.backlog, new_predecessor: b
 
         x.reload
-        x.predecessor.should eq a
-        x.descendant.should eq b
+        x.predecessor.should eq b
+        x.descendant.should be_nil
 
         a.reload
+        a.descendant.should eq b
         a.predecessor.should be_nil
 
         b.reload
-        b.predecessor.should eq x
+        b.descendant.should eq x
+        b.predecessor.should eq a
       end
 
       it "
@@ -302,10 +381,34 @@ describe Issue do
         x.descendant.should eq b
 
         a.reload
+        a.descendant.should eq x
         a.predecessor.should be_nil
 
         b.reload
+        b.descendant.should be_nil
         b.predecessor.should eq x
+      end
+      
+      it "
+      Start:  [ a b x ]
+      Finish: [ x a b ]" do
+        a = create :issue, backlog: Backlog.backlog            
+        b = create :issue, backlog: Backlog.backlog, predecessor: a
+        x = create :issue, backlog: Backlog.backlog, predecessor: b
+
+        x.move_to Backlog.backlog
+
+        x.reload
+        x.predecessor.should be_nil
+        x.descendant.should eq a
+
+        a.reload
+        a.descendant.should eq b
+        a.predecessor.should eq x
+
+        b.reload
+        b.descendant.should be_nil
+        b.predecessor.should eq a
       end
 
       it "
@@ -374,7 +477,9 @@ describe Issue do
         x = create :issue, backlog: Backlog.backlog
         a = create :issue, backlog: Backlog.backlog, predecessor: x
         x.move_to Backlog.sprint_backlog 
+        x.backlog.should eq Backlog.sprint_backlog
         a.reload
+        a.backlog.should eq Backlog.backlog
         a.predecessor.should be_nil
       end
 
@@ -386,8 +491,32 @@ describe Issue do
         x = create :issue, backlog: Backlog.backlog
         x.move_to Backlog.sprint_backlog
         x.predecessor.should be_nil
+        x.backlog.should eq Backlog.sprint_backlog
         a.reload
+        a.backlog.should eq Backlog.backlog
         a.descendant.should be_nil        
+      end
+
+      it "
+      Start:  [ a b x ] [       ] 
+      Finish: [ a b   ] [ x     ]" do
+        a = create :issue, backlog: Backlog.backlog
+        b = create :issue, backlog: Backlog.backlog, predecessor: a
+        x = create :issue, backlog: Backlog.backlog, predecessor: b
+
+        x.move_to Backlog.sprint_backlog
+        x.predecessor.should be_nil
+        x.backlog.should eq Backlog.sprint_backlog
+        
+        a.reload
+        a.descendant.should eq b
+        a.predecessor.should be_nil
+        a.backlog.should eq Backlog.backlog
+        
+        b.reload
+        b.predecessor.should eq a
+        b.descendant.should be_nil
+        b.backlog.should eq Backlog.backlog
       end
 
       it "
@@ -399,12 +528,15 @@ describe Issue do
 
         x.move_to Backlog.sprint_backlog
         x.predecessor.should be_nil
+        x.backlog.should eq Backlog.sprint_backlog
         
         a.reload
         a.descendant.should eq b
+        a.backlog.should eq Backlog.backlog
         
         b.reload
         b.predecessor.should eq a
+        b.backlog.should eq Backlog.backlog
       end
       
 
@@ -417,8 +549,10 @@ describe Issue do
 
         x.move_to Backlog.sprint_backlog
         x.predecessor.should be_nil
+        x.backlog.should eq Backlog.sprint_backlog
 
         a.reload
+        a.backlog.should eq Backlog.sprint_backlog
         a.predecessor.should eq x
 
         Backlog.backlog.issues.should be_empty
@@ -431,9 +565,14 @@ describe Issue do
         a = create :issue, backlog: Backlog.sprint_backlog
 
         x.move_to Backlog.sprint_backlog, new_predecessor: a
+        x.backlog.should eq Backlog.sprint_backlog
 
         x.reload
         x.predecessor.should eq a
+
+        a.reload
+        a.predecessor.should be_nil
+        a.backlog.should eq Backlog.sprint_backlog
       end
 
       it "      
@@ -446,9 +585,14 @@ describe Issue do
         x.move_to Backlog.sprint_backlog, new_predecessor: a
 
         x.reload
+        x.backlog.should eq Backlog.sprint_backlog
         x.predecessor.should eq a
 
+        a.reload
+        a.backlog.should eq Backlog.sprint_backlog
         b.reload
+
+        b.backlog.should eq Backlog.sprint_backlog
         b.predecessor.should eq x
       end
     end

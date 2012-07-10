@@ -85,33 +85,30 @@ class Issue < ActiveRecord::Base
       descendant.save
     end
     self.predecessor = nil
-
+    self.backlog = nil
     #insert issue into linked list
     #by setting new predecessor and his descendant
     if options.has_key? :new_predecessor
       new_predecessor = options[:new_predecessor]
+      new_predecessor.reload
       new_descendant = new_predecessor.descendant
-      if new_descendant
+      if new_descendant && new_descendant != self
         new_descendant.predecessor = self
         new_descendant.save
       end
       self.predecessor = new_predecessor
-      self.save
     else
       self.predecessor = nil
-      
-      if backlog.first_issue != self && backlog.first_issue
-        new_descendant = backlog.first_issue
+
+      new_descendant = Issue.where("backlog_id = :backlog_id AND predecessor_id IS NULL AND id != :issue_id", backlog_id: backlog.id, issue_id: self.id ).first
+      if new_descendant
         new_descendant.predecessor = self
         new_descendant.save
       end
-
-      if self.backlog != backlog
-        self.backlog = backlog
-      end
-
-      self.save
     end
-
+    if self.backlog != backlog
+      self.backlog = backlog
+    end
+      self.save
   end
 end
