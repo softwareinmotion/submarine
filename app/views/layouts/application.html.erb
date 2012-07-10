@@ -24,20 +24,15 @@
       <div class="stack">        
         <div class="wrapper">
           <div class="content">
-            <% feature_active? :persist_present_demo do %>
-              <div id="back-link">
-                <span class="back"><%= link_to "Hauptseite", index_path %></span>
-              </div>
-            <% end %>
+            <div id="back-link">
+              <span class="back"><%= link_to "Startseite", index_path %></span>
+              <span class="back"><%= link_to "Backlogs (#{@backlog_count}/#{@sprintbacklog_count})", issues_url %></span>
+              <span class="back"><%= link_to "Abgeschlossene Einträge (#{@finished_issues_count})", finished_issues_url %></span>
+            </div>
             <%= yield :menu %>
           </div>
         </div>
       </div>
-    </div>
-    <div class="menu-center">
-      <% feature_active? :persist_present_demo do %>
-        <h1>Demo</h1>
-      <% end %>
     </div>
   </div>
   <noscript>
