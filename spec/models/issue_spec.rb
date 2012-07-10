@@ -187,15 +187,15 @@ describe Issue do
   end
 
   # don't test the framework
-  describe '#create' do
+  describe "#create" do
 
-    it 'starts with lock_version number of 0' do
+    it "starts with lock_version number 0" do
       create(:issue).lock_version.should eq(0)
     end
 
   end
 
-  describe '#update_attributes' do
+  describe "#update_attributes" do
 
     it "increments the lock number" do
       issue = create :issue
@@ -212,4 +212,248 @@ describe Issue do
     end
 
   end
+
+  describe "#move_to" do
+
+    # x ... issue to move
+    # 0 ... other issues
+
+    context "changing priotity of an issue" do
+
+      it "
+      Start:  [ x a   ]
+      Finish: [ a x   ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.backlog, predecessor: x
+
+        x.move_to Backlog.backlog, new_predecessor: a
+
+        x.predecessor.should eq a
+
+        a.reload
+        a.predecessor.should be_nil
+      end
+
+      it "
+      Start:  [ a x   ]
+      Finish: [ x a   ]" do
+        a = create :issue, backlog: Backlog.backlog            
+        x = create :issue, backlog: Backlog.backlog, predecessor: a
+
+        x.move_to Backlog.backlog
+
+        x.predecessor.should be_nil
+
+        a.reload
+        a.predecessor.should eq x
+      end
+
+      it "
+      Start:  [ x a b ]
+      Finish: [ a x b ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.backlog, predecessor: x            
+        b = create :issue, backlog: Backlog.backlog, predecessor: a
+
+        x.move_to Backlog.backlog, new_predecessor: a
+
+        x.reload
+        x.predecessor.should eq a
+        x.descendant.should eq b
+
+        a.reload
+        a.predecessor.should be_nil
+
+        b.reload
+        b.predecessor.should eq x
+      end
+
+      it "
+      Start:  [ a x b ]
+      Finish: [ a b x ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.backlog, predecessor: x            
+        b = create :issue, backlog: Backlog.backlog, predecessor: a
+
+        x.move_to Backlog.backlog, new_predecessor: a
+
+        x.reload
+        x.predecessor.should eq a
+        x.descendant.should eq b
+
+        a.reload
+        a.predecessor.should be_nil
+
+        b.reload
+        b.predecessor.should eq x
+      end
+
+      it "
+      Start:  [ a b x ]
+      Finish: [ a x b ]" do
+        a = create :issue, backlog: Backlog.backlog            
+        b = create :issue, backlog: Backlog.backlog, predecessor: a
+        x = create :issue, backlog: Backlog.backlog, predecessor: b
+
+        x.move_to Backlog.backlog, new_predecessor: a
+
+        x.reload
+        x.predecessor.should eq a
+        x.descendant.should eq b
+
+        a.reload
+        a.predecessor.should be_nil
+
+        b.reload
+        b.predecessor.should eq x
+      end
+
+      it "
+      Start:  [ a x b ]
+      Finish: [ x a b ]" do
+        a = create :issue, backlog: Backlog.backlog            
+        x = create :issue, backlog: Backlog.backlog, predecessor: a
+        b = create :issue, backlog: Backlog.backlog, predecessor: x
+        
+
+        x.move_to Backlog.backlog
+
+        x.reload
+        x.predecessor.should be_nil
+        x.descendant.should eq a
+
+        a.reload
+        a.predecessor.should eq x
+        a.descendant.should eq b
+
+        b.reload
+        b.predecessor.should eq a
+        b.descendant.should be_nil
+      end
+
+      it "
+      Start:  [ x a b ]
+      Finish: [ a b x ]" do
+        x = create :issue, backlog: Backlog.backlog            
+        a = create :issue, backlog: Backlog.backlog, predecessor: x
+        b = create :issue, backlog: Backlog.backlog, predecessor: a
+        
+        x.move_to Backlog.backlog, new_predecessor: b
+
+        x.reload
+        x.predecessor.should eq b
+        x.descendant.should be_nil
+
+        a.reload
+        a.predecessor.should be_nil
+        a.descendant.should eq b
+
+        b.reload
+        b.predecessor.should eq a
+        b.descendant.should eq x
+      end
+
+    end
+
+    context "move issue between backlogs" do
+
+      ## test effects on source list
+      it "
+      Start:  [ x     ] [       ]
+      Finish: [       ] [ x     ]" do
+        x = create :issue, backlog: Backlog.backlog
+        x.move_to Backlog.sprint_backlog
+        x.reload
+        x.backlog.should eq Backlog.sprint_backlog
+        x.predecessor.should be_nil
+      end
+      
+      it "
+      Start:  [ x a   ] [       ]
+      Finish: [ a     ] [ x     ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.backlog, predecessor: x
+        x.move_to Backlog.sprint_backlog 
+        a.reload
+        a.predecessor.should be_nil
+      end
+
+
+      it "
+      Start:  [ a x   ] [       ]
+      Finish: [ a     ] [ x     ]" do
+        a = create :issue, backlog: Backlog.backlog
+        x = create :issue, backlog: Backlog.backlog
+        x.move_to Backlog.sprint_backlog
+        x.predecessor.should be_nil
+        a.reload
+        a.descendant.should be_nil        
+      end
+
+      it "
+      Start:  [ a x b ] [       ] 
+      Finish: [ a b   ] [ x     ]" do
+        a = create :issue, backlog: Backlog.backlog
+        x = create :issue, backlog: Backlog.backlog, predecessor: a
+        b = create :issue, backlog: Backlog.backlog, predecessor: x
+
+        x.move_to Backlog.sprint_backlog
+        x.predecessor.should be_nil
+        
+        a.reload
+        a.descendant.should eq b
+        
+        b.reload
+        b.predecessor.should eq a
+      end
+      
+
+      ## test effects on target list
+      it "
+      Start:  [ x     ] [ a     ]
+      Finish: [       ] [ x a   ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.sprint_backlog
+
+        x.move_to Backlog.sprint_backlog
+        x.predecessor.should be_nil
+
+        a.reload
+        a.predecessor.should eq x
+
+        Backlog.backlog.issues.should be_empty
+      end
+
+      it "
+      Start:  [ x     ] [ a     ]
+      Finish: [       ] [ a x   ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.sprint_backlog
+
+        x.move_to Backlog.sprint_backlog, new_predecessor: a
+
+        x.reload
+        x.predecessor.should eq a
+      end
+
+      it "      
+      Start:  [ x     ] [ a b   ]
+      Finish: [       ] [ a x b ]" do
+        x = create :issue, backlog: Backlog.backlog
+        a = create :issue, backlog: Backlog.sprint_backlog
+        b = create :issue, backlog: Backlog.sprint_backlog, predecessor: a
+
+        x.move_to Backlog.sprint_backlog, new_predecessor: a
+
+        x.reload
+        x.predecessor.should eq a
+
+        b.reload
+        b.predecessor.should eq x
+      end
+    end
+    
+   
+  end
+  
 end
