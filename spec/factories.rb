@@ -21,7 +21,7 @@ FactoryGirl.define do
   factory :issue do
     sequence(:name) {|n| "issue#{n}"}
     sequence(:description) {|n| "desc#{n}"}
-    type "Task"
+    type "Issue"
     association :project
   end
   
