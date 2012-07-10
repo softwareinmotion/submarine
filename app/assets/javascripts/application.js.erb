@@ -52,14 +52,15 @@ SUBMARINE = {
       controls.removeClass('sprint_controls');
     }
 
-    moved_issue_id = list_element.attr("data-id");
-    var data = { moved_issue_id: moved_issue_id, backlog_list: [], sprint_backlog_list: [] };
-    data.predecessor_id = $(list_element).prev() && $(list_element).prev().attr("data-id");
+    var data = { moved_issue: list_element.attr("data-id"), 
+      predecessor: $(list_element).prev() && $(list_element).prev().attr("data-id"),
+      issues: [],
+      backlog: $(list_element).parent().attr("id").split("_list")[0]};
     $('ul#backlog_list > li').each(function(i, li){
-      data.backlog_list.push($(li).attr("data-id")); 
+      data.issues[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
     });
     $('ul#sprint_backlog_list > li').each(function(i, li){
-      data.sprint_backlog_list.push($(li).attr("data-id")); 
+      data.issues[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
     });
     $.ajax({
       type: 'POST',

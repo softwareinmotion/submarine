@@ -91,19 +91,15 @@ class IssuesController < ApplicationController
   # "backlog_list" => [[0] "4",[1] "1",[2] "2"],
   # "sprint_backlog_list" => [[0] "3"]}
   def change_list
-    moved_issue = Issue.find params[:moved_issue_id]
-    backlog_list = params[:backlog_list]
-    sprint_backlog_list = params[:sprint_backlog_list]
-
-    if sprint_backlog_list and sprint_backlog_list.include?(moved_issue.id)
-      Backlog.sprint_backlog.issues << moved_issue
+    moved_issue = Issue.find params[:moved_issue]
+    predecessor = params[:predecessor] ? Issue.find(params[:predecessor]) : nil
+    backlog = Backlog.find_by_name params[:backlog]
+    lock_version = params[:issues]
+    if predecessor
+      moved_issue.move_to backlog, new_predecessor: predecessor
     else
-      Backlog.backlog.issues << moved_issue
+      moved_issue.move_to backlog 
     end
-    
-    moved_issue.save!
-    Backlog.backlog.update_with_list backlog_list
-    Backlog.sprint_backlog.update_with_list sprint_backlog_list
     
     render :nothing => true
   end

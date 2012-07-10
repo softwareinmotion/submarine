@@ -10,11 +10,6 @@
   <%= image_tag "sp_sum_0.5_heavy.png", :id => "half_story_point" %>
   <%= image_tag "sp_0.5_heavy.png", :id => "half_story_point_small" %>
   </li>
-  <li id="show_finish_issues">
-  <%= link_to finished_issues_path, :title => t('finished_issues') do %>
-    <%= image_tag "show_finished_issues.png" %>
-  <% end %>
-  </li>
 <% when 'backlog' %>
   <li>Backlog</li>
   <li id="btn_in_header">
@@ -34,10 +29,10 @@
 
   <ul id="<%= list_type %>_list" class="connectedSortable">
     <% list_items.each do |item| %>
-      <li data-id="<%= item.id %>" id="#<%= item.id %>" data-story_points="<%= item.formatted_story_points %>">
+      <li data-id="<%= item.id %>" id="#<%= item.id %>" data-story_points="<%= item.formatted_story_points %>" data-lock-version="<%= item.lock_version %>">
       <div class="issue_line">
         <div class="project_logo"><%= image_tag("logo_#{item.project.name.downcase}_heavy.png") if item.project %></div>
-        <div class="issue_name"><%= item.name %></div>
+        <div class="issue_name"><%= item.name %>(<%= item.backlog.name %>)</div>
         <div class="issue_id">#<%= item.id %></div>
         <div class="issue_type"><%= image_tag("#{item.type.downcase}_heavy.png") %></div>
         <div class="issue_story_points"><%= image_tag("sp_#{item.formatted_story_points}_heavy.png", :size => "22x22") if item.story_points %>&nbsp;</div>
