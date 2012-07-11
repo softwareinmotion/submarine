@@ -596,8 +596,56 @@ describe Issue do
         b.predecessor.should eq x
       end
     end
-    
-   
   end
   
+  describe '#save_with_lock' do
+    before :each do
+      @issue = create :issue, lock_version: 1, backlog: Backlog.backlog
+    end
+
+    context "when having a lower lock versions in memory than in db" do
+      
+      it "raises an error when having a different lock version" do
+        lock_version = { }
+        lock_version[@issue.id.to_s] = 0
+
+        expect {
+          @issue.save_with_lock lock_version
+        }.to raise_error ActiveRecord::StaleObjectError
+      end
+
+    end
+
+    context "when having the same lock version in memory and db" do
+      before :each do
+        @lock_version = {}
+        @lock_version[@issue.id.to_s] = 1
+      end
+
+      it "saves the issue" do
+        @issue.name = "Changed"
+        @issue.save_with_lock @lock_version
+
+        @issue.reload
+        @issue.name.should eq "Changed"    
+      end
+      
+      it "doesn't raise an error" do
+        @issue.name = "Changed"
+
+        expect {
+          @issue.save_with_lock @lock_version
+        }.not_to raise_error
+      end
+      
+      it "increments the lock version in memory" do
+        @issue.name = "Changed"
+        @issue.save_with_lock @lock_version
+
+        @lock_version[@issue.id.to_s].should be 2
+      end
+
+    end
+  end
+
 end
