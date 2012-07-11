@@ -266,27 +266,27 @@ describe Issue do
         a.descendant.should eq x
       end  
 
-      #it "
-      #Start:  [ a x b ]
-      #Finish: [ a x b ]" do
-      #  a = create :issue, backlog: Backlog.backlog
-      #  x = create :issue, backlog: Backlog.backlog, predecessor: a
-      #  b = create :issue, backlog: Backlog.backlog, predecessor: x
-#
-#      #  x.move_to Backlog.backlog,  new_predecessor: a
-#      #  
-#      #  x.reload
-#      #  x.predecessor.should eq a
-#      #  x.descendant.should eq b
-#
-#      #  a.reload
-#      #  a.predecessor.should be_nil
-#      #  a.descendant.should x
-#
-#      #  b.reload
-#      #  b.predecessor.should eq x
-#      #  b.descendant.should be_nil
-      #end  
+      it "
+      Start:  [ a x b ]
+      Finish: [ a x b ]" do
+        a = create :issue, backlog: Backlog.backlog
+        x = create :issue, backlog: Backlog.backlog, predecessor: a
+        b = create :issue, backlog: Backlog.backlog, predecessor: x
+
+        x.move_to Backlog.backlog,  new_predecessor: a
+        
+        x.reload
+        x.predecessor.should eq a
+        x.descendant.should eq b
+
+        a.reload
+        a.predecessor.should be_nil
+        a.descendant.should eq x
+
+        b.reload
+        b.predecessor.should eq x
+        b.descendant.should be_nil
+      end
 
 
       it "
