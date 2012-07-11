@@ -54,18 +54,19 @@ SUBMARINE = {
 
     var data = { moved_issue: list_element.attr("data-id"), 
       predecessor: $(list_element).prev() && $(list_element).prev().attr("data-id"),
-      issues: [],
+      lock_versions: {},
       backlog: $(list_element).parent().attr("id").split("_list")[0]};
     $('ul#backlog_list > li').each(function(i, li){
-      data.issues[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
+      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
     });
     $('ul#sprint_backlog_list > li').each(function(i, li){
-      data.issues[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
+      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
     });
     $.ajax({
       type: 'POST',
       url: SUBMARINE.changeListURL,
-      data: data,
+      contentType: "application/json",
+      data: JSON.stringify(data),
       error: function(){window.alert(SUBMARINE.messages.save_failed)}});
     SUBMARINE.showStoryPointsSum();
   },
