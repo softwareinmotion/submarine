@@ -75,7 +75,6 @@ class Issue < ActiveRecord::Base
   end
 
   def move_to(backlog, options={})
-    
     #remove issue from linked list
     #by connecting predecessor and descendant
     if self.descendant
@@ -86,6 +85,8 @@ class Issue < ActiveRecord::Base
     end
     self.predecessor = nil
     self.backlog = nil
+    self.save
+
     #insert issue into linked list
     #by setting new predecessor and his descendant
     if options.has_key? :new_predecessor
