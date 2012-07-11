@@ -75,41 +75,49 @@ class Issue < ActiveRecord::Base
   end
 
   def move_to(backlog, options={})
-    #remove issue from linked list
-    #by connecting predecessor and descendant
-    if self.descendant
-      descendant = self.descendant
-      self.descendant = nil
-      descendant.predecessor = self.predecessor
-      descendant.save
-    end
-    self.predecessor = nil
-    self.backlog = nil
-    self.save
-
-    #insert issue into linked list
-    #by setting new predecessor and his descendant
-    if options.has_key? :new_predecessor
-      new_predecessor = options[:new_predecessor]
-      new_predecessor.reload
-      new_descendant = new_predecessor.descendant
-      if new_descendant && new_descendant != self
-        new_descendant.predecessor = self
-        new_descendant.save
+    transaction do
+      #remove issue from linked list
+      #by connecting predecessor and descendant
+      if self.descendant
+        descendant = self.descendant
+        self.descendant = nil
+        descendant.predecessor = self.predecessor
+        descendant.save_with_lock options[:lock_version]
       end
-      self.predecessor = new_predecessor
-    else
       self.predecessor = nil
-
-      new_descendant = Issue.where("backlog_id = :backlog_id AND predecessor_id IS NULL AND id != :issue_id", backlog_id: backlog.id, issue_id: self.id ).first
-      if new_descendant
-        new_descendant.predecessor = self
-        new_descendant.save
+      self.backlog = nil
+      self.save_with_lock options[:lock_version]
+  
+      #insert issue into linked list
+      #by setting new predecessor and his descendant
+      if options.has_key? :new_predecessor
+        new_predecessor = options[:new_predecessor]
+        new_predecessor.reload
+        new_descendant = new_predecessor.descendant
+        if new_descendant && new_descendant != self
+          new_descendant.predecessor = self
+          new_descendant.save_with_lock options[:lock_version]
+        end
+        self.predecessor = new_predecessor
+      else
+        self.predecessor = nil
+  
+        new_descendant = Issue.where("backlog_id = :backlog_id AND predecessor_id IS NULL AND id != :issue_id", backlog_id: backlog.id, issue_id: self.id ).first
+        if new_descendant
+          new_descendant.predecessor = self
+          new_descendant.save_with_lock options[:lock_version]
+        end
       end
+      if self.backlog != backlog
+        self.backlog = backlog
+      end
+        self.save_with_lock options[:lock_version]
     end
-    if self.backlog != backlog
-      self.backlog = backlog
-    end
-      self.save
+  end
+
+  def save_with_lock(lock_version)
+    self.lock_version = lock_version[self.id.to_s]
+    self.save!
+    lock_version[self.id.to_s] = self.lock_version
   end
 end
