@@ -96,7 +96,6 @@ header {
     float: left;
     padding-left: 10px;
     padding-top: 10px;
-    z-index: 100000;
     overflow: visible;
   }
 
@@ -304,4 +303,44 @@ noscript {
 
 .no_js {
   display: none;
+}
+
+.ui-dialog {
+    background: white;
+    border-color: gray;
+    border-width: 1px;
+    border-style: solid;
+
+    .ui-dialog-titlebar {
+      padding: 5px;
+      font-size: 12pt;
+      font-style: bold;
+      $experimental-support-for-svg: true;
+      @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
+    }
+    .ui-button {
+      float: right;
+      background: none;
+      border: none;
+      width: 101px;
+      height: 32px;
+      background-image: url(/assets/btn_background.png);
+      cursor: pointer;
+    }
+
+    .ui-dialog-buttonset {
+      width: 100%;
+      display: table;
+    }
+
+    .ui-dialog-content {
+      padding: 5px;
+    }
+}
+
+.ui-widget-overlay {
+  @include opacity(0.3);
+  position: absolute;
+  top: 0;
+  background: gray;
 }

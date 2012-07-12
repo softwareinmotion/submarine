@@ -67,7 +67,15 @@ SUBMARINE = {
       url: SUBMARINE.changeListURL,
       contentType: "application/json",
       data: JSON.stringify(data),
-      error: function(){window.alert(SUBMARINE.messages.save_failed)}});
+      success: function(data, textStatus, jqXHR) {
+        for (var key in data) {
+          $("li[data-id='" + key + "']").attr('data-lock-version', data[key]);
+        }
+      },
+      error: function(){
+        $("#refresh-dialog").dialog('open');
+      }
+    });
     SUBMARINE.showStoryPointsSum();
   },
 
@@ -169,7 +177,5 @@ SUBMARINE = {
     if(project_div.size() > 0) {
       SUBMARINE.animate_radio_image(project_div[0], 'project_radio_images');
     }
-  },
-
-  messages: {}
+  }
 }

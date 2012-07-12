@@ -94,14 +94,17 @@ class IssuesController < ApplicationController
     moved_issue = Issue.find params[:moved_issue]
     predecessor = params[:predecessor] ? Issue.find(params[:predecessor]) : nil
     backlog = Backlog.find_by_name params[:backlog]
-    lock_versions = params[:lock_versions]
+
+    LockVersionHelper::lock_version = params[:lock_versions]
     if predecessor
-      moved_issue.move_to backlog, new_predecessor: predecessor, lock_version: lock_versions
+      moved_issue.move_to backlog, new_predecessor: predecessor
     else
-      moved_issue.move_to backlog , lock_version: lock_versions
+      moved_issue.move_to backlog
     end
     
-    render :nothing => true
+    render :json => LockVersionHelper::lock_version
+  ensure
+    LockVersionHelper::lock_version = nil
   end
 
   def finish_issue

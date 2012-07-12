@@ -1,3 +1,5 @@
+require 'helper/lock_version_helper'
+
 class Issue < ActiveRecord::Base
   belongs_to :project
   belongs_to :predecessor, :class_name => 'Issue', :foreign_key => :predecessor_id
@@ -9,6 +11,8 @@ class Issue < ActiveRecord::Base
   validates :name, :type, :project, :description, presence: true
 
   before_destroy :close_gap
+  before_save :set_lock
+  after_save :update_lock
 
   scope :first_in_list, where(predecessor_id: nil)
   scope :last_in_list, lambda { find_by_sql("select * from issues a where not exists (select * from issues b where b.predecessor_id = a.id)") }
@@ -82,21 +86,24 @@ class Issue < ActiveRecord::Base
         descendant = self.descendant
         self.descendant = nil
         descendant.predecessor = self.predecessor
-        descendant.save_with_lock options[:lock_version]
+        descendant.save!
       end
       self.predecessor = nil
       self.backlog = nil
-      self.save_with_lock options[:lock_version]
+      self.save!
   
       #insert issue into linked list
       #by setting new predecessor and his descendant
       if options.has_key? :new_predecessor
         new_predecessor = options[:new_predecessor]
         new_predecessor.reload
+
+        raise "Backlog of predecessor does not match the passed backlog" if new_predecessor.backlog != backlog
+
         new_descendant = new_predecessor.descendant
         if new_descendant && new_descendant != self
           new_descendant.predecessor = self
-          new_descendant.save_with_lock options[:lock_version]
+          new_descendant.save!
         end
         self.predecessor = new_predecessor
       else
@@ -105,23 +112,30 @@ class Issue < ActiveRecord::Base
         new_descendant = Issue.where("backlog_id = :backlog_id AND predecessor_id IS NULL AND id != :issue_id", backlog_id: backlog.id, issue_id: self.id ).first
         if new_descendant
           new_descendant.predecessor = self
-          new_descendant.save_with_lock options[:lock_version]
+          new_descendant.save!
         end
       end
       if self.backlog != backlog
         self.backlog = backlog
       end
-        self.save_with_lock options[:lock_version]
+        self.save!
     end
   end
 
-  def save_with_lock(lock_version)
-    if lock_version != nil
-      self.lock_version = lock_version[self.id.to_s]
-      self.save!
-      lock_version[self.id.to_s] = self.lock_version
-    else
-      self.save!
+  def set_lock
+    if LockVersionHelper::lock_version == nil
+      return
     end
+
+    self.lock_version = LockVersionHelper::lock_version[self.id.to_s]
   end
+
+  def update_lock
+    if LockVersionHelper::lock_version == nil
+      return
+    end
+
+    LockVersionHelper::lock_version[self.id.to_s] = self.lock_version
+  end
+
 end
