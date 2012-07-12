@@ -116,8 +116,12 @@ class Issue < ActiveRecord::Base
   end
 
   def save_with_lock(lock_version)
-    self.lock_version = lock_version[self.id.to_s]
-    self.save!
-    lock_version[self.id.to_s] = self.lock_version
+    if lock_version != nil
+      self.lock_version = lock_version[self.id.to_s]
+      self.save!
+      lock_version[self.id.to_s] = self.lock_version
+    else
+      self.save!
+    end
   end
 end

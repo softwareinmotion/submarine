@@ -98,7 +98,7 @@ class IssuesController < ApplicationController
     if predecessor
       moved_issue.move_to backlog, new_predecessor: predecessor, lock_version: lock_versions
     else
-      moved_issue.move_to backlog , lock_version: lock_version
+      moved_issue.move_to backlog , lock_version: lock_versions
     end
     
     render :nothing => true
