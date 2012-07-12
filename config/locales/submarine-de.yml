@@ -1,4 +1,5 @@
 de:
+  notification: "Hinweis"
   save: 'Speichern'
   cancel: 'Abbrechen'
   errors_occured: 'Folgende Fehler sind aufgetreten'
@@ -33,6 +34,8 @@ de:
     delete: 'Eintrag löschen' 
     finish: 'Eintrag abschließen'
     activate: 'Eintrag reaktivieren'
+    errors:
+      data_staled: 'Das Backlog wurde in der Zwischenzeit geändert. Die Listen müssen neu geladen werden.'
   backlog:
     edit: 'Bearbeiten'
     finish_editing: 'Bearbeiten beenden'
