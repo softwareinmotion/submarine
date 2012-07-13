@@ -90,11 +90,15 @@ SUBMARINE = {
   },
 
   showControls: function(event){
+    $(this).find('div.controls_container').parent().addClass('selected');
+    $(this).find('div.controls').addClass('selected');
     $(this).find('div.controls').fadeIn(80);
   },
 
   hideControls: function(event){
-    //$(this).find('div.controls').fadeOut(80);
+    $(this).find('div.controls_container').parent().removeClass('selected');
+    $(this).find('div.controls').removeClass('selected');
+    $(this).find('div.controls').fadeOut(80);
   },
 
   showStoryPointsSum: function(){
