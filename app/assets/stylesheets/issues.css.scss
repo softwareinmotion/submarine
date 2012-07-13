@@ -104,6 +104,11 @@ ul.connectedSortable {
   border-left: $default_border;
   border-right: $default_border;
 
+  li.selected {
+    background-color: #eee;
+
+  }
+
   li {
     margin: 0; 
     cursor:pointer;cursor:hand;
@@ -118,13 +123,17 @@ ul.connectedSortable {
       
       div.controls {
         position: absolute;
-        width: 70px;
+        width: 80px;
         z-index: 3;
         display: none;
         
         a.finish {
           display: none;
         }
+      }
+
+      div.selected {
+        background-color: #eee;
       }
       
       &.sprint_controls {

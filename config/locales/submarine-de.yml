@@ -34,6 +34,7 @@ de:
     delete: 'Eintrag löschen' 
     finish: 'Eintrag abschließen'
     activate: 'Eintrag reaktivieren'
+    move: 'Eintrag verschieben'
     errors:
       data_staled: 'Das Backlog wurde in der Zwischenzeit geändert. Die Listen müssen neu geladen werden.'
   backlog:
