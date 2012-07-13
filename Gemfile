@@ -40,6 +40,7 @@ group :test, :development do
   gem 'factory_girl'
   gem 'guard-rspec'
   gem 'guard-spork'
+  gem 'guard-livereload'
   gem 'spork'
   gem 'watchr'
 
