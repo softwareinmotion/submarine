@@ -17,6 +17,7 @@
   $(function() {
     $('.no_js').removeClass('no_js');
     $("#sprint_backlog_list, #backlog_list").sortable({
+      handle: ".move_issue",
   		connectWith: ".connectedSortable",
   		start: function(event,ui){
   			$(ui.item).addClass("dragging");
