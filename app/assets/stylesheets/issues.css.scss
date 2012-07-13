@@ -110,7 +110,28 @@ ul.connectedSortable {
     clear: both;
     padding-bottom: 5px;
     border-bottom: $default_border;
+    position: relative;
     
+    div.controls_container {
+      position: absolute;
+      top: -20px;
+      
+      div.controls {
+        position: absolute;
+        width: 70px;
+        z-index: 3;
+        display: none;
+        
+        a.finish {
+          display: none;
+        }
+      }
+      
+      &.sprint_controls {
+        width: 55px;
+      }
+    }
+
     .issue_line {
       clear: both;
       
@@ -167,28 +188,6 @@ ul.connectedSortable {
     
       div.short {
         height: 2.4ex;
-      }
-      
-      div.controls_container {
-        margin-top: -5px;
-        margin-right: 3px;
-        width: 40px;
-        float: right;
-
-        div.controls {
-          position: absolute;
-          width: 70px;
-          z-index: 3;
-          display: none;
-          
-          a.finish {
-            display: none;
-          }
-        }
-        
-        &.sprint_controls {
-          width: 55px;
-        }
       }      
     }
   }
