@@ -61,6 +61,7 @@ a {
 }
 
 header {
+  z-index: 10;
   background: white;
   border-bottom: $strip-line;
   width: 100%;
@@ -87,7 +88,7 @@ header {
     
     .stack { margin: 0; padding: 0; float: right; margin-right: 6px;}    
     .wrapper { height:85px; display:table-cell; vertical-align:bottom; }
-    .content { padding-bottom: 5px; max-height:100px; overflow:auto; }
+    .content { max-height:100px; overflow:auto; }
     .content div { padding: 0; margin: 0; }
   }
 
@@ -349,4 +350,24 @@ noscript {
   position: absolute;
   top: 0;
   background: gray;
+}
+
+#navigation {
+  width: 500px;
+  text-align: right;
+  height: 25px;
+  a {
+    vertical-align: middle;
+    height: inherit;
+    margin: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &.active {
+      background-color: #168a94;
+      color: white;
+    }
+  }
 }

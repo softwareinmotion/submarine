@@ -24,10 +24,10 @@
       <div class="stack">        
         <div class="wrapper">
           <div class="content">
-            <div id="back-link">
-              <span class="back"><%= link_to "Startseite", index_path %></span>
-              <span class="back"><%= link_to "Backlogs (#{@backlog_count}/#{@sprintbacklog_count})", issues_url %></span>
-              <span class="back"><%= link_to "Abgeschlossene Einträge (#{@finished_issues_count})", finished_issues_url %></span>
+            <div id="navigation">
+              <%= link_to "Startseite", index_path %>
+              <%= link_to "Backlogs (#{@backlog_count}/#{@sprintbacklog_count})", issues_url %>
+              <%= link_to "Abgeschlossene Einträge (#{@finished_issues_count})", finished_issues_url %>
             </div>
             <%= yield :menu %>
           </div>
