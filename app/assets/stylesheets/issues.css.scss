@@ -104,14 +104,10 @@ ul.connectedSortable {
   border-left: $default_border;
   border-right: $default_border;
 
-  li.selected {
-    background-color: #eee;
-
-  }
-
   li {
+    position: relative;
     margin: 0; 
-    cursor:pointer;cursor:hand;
+    cursor: move;
     clear: both;
     padding-bottom: 5px;
     border-bottom: $default_border;
@@ -119,25 +115,26 @@ ul.connectedSortable {
     
     div.controls_container {
       position: absolute;
-      top: -20px;
-      
+      top: 25px;
+      right: 25px;
+
       div.controls {
-        position: absolute;
-        width: 80px;
+        text-align: right;
+        width: 200px;
         z-index: 3;
         display: none;
         
         a.finish {
           display: none;
         }
+
+        a:last-child {
+          margin-left: 10px;
+        }
       }
 
       div.selected {
         background-color: #eee;
-      }
-      
-      &.sprint_controls {
-        width: 55px;
       }
     }
 
@@ -182,6 +179,7 @@ ul.connectedSortable {
       }
 
       div.description {
+        cursor: pointer;
         max-width: 490px;
         margin-left: 40px;
         padding-left: 3px;

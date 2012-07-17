@@ -33,19 +33,16 @@
         <div class="controls_container <%="sprint_controls" if list_type == 'sprint_backlog' %>">
           <div class="controls">
             <% unless list_type == 'finished_issues' %>
-              <%= link_to edit_issue_path(item), :class => "move_issue", :title => t('issue.move') do %>
-                <%= image_tag("btn_move.png") %>
-              <% end %>
               <%= link_to edit_issue_path(item), :class => "edit_issue", :title => t('issue.edit') do %>
                 <%= image_tag("edit.png") %>
-              <% end %>
-              <%= link_to item, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
-                <%= image_tag("delete.png") %>
               <% end %>
               <% if list_type == 'sprint_backlog' %>
                 <%= link_to finish_issue_path(item), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('issue.finish') do %>
                   <%= image_tag("finish_issue.png") %>
                 <% end %>
+              <% end %>
+              <%= link_to item, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
+                <%= image_tag("delete.png") %>
               <% end %>
             <% else %>
               <%= link_to activate_issue_path(item), :method => :post, :class => 'button', :title => t('issue.activate') do %>

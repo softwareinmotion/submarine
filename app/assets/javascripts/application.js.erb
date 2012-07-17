@@ -74,7 +74,8 @@ SUBMARINE = {
       },
       error: function(){
         $("#refresh-dialog").dialog('open');
-      }
+      },
+      async: false
     });
     SUBMARINE.showStoryPointsSum();
   },
@@ -85,19 +86,15 @@ SUBMARINE = {
       $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");
-      $(this).parent().css('height', $(this).height());	  
+      $(this).parent().css('height', $(this).height() + 2);	  
     }
   },
 
   showControls: function(event){
-    $(this).find('div.controls_container').parent().addClass('selected');
-    $(this).find('div.controls').addClass('selected');
     $(this).find('div.controls').fadeIn(80);
   },
 
   hideControls: function(event){
-    $(this).find('div.controls_container').parent().removeClass('selected');
-    $(this).find('div.controls').removeClass('selected');
     $(this).find('div.controls').fadeOut(80);
   },
 
@@ -183,3 +180,8 @@ SUBMARINE = {
     }
   }
 }
+
+$(function() {
+  $lnk = $("#navigation a[href='" + window.location.href + "']");
+  $lnk.addClass("active");
+});
