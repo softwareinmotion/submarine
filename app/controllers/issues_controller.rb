@@ -110,9 +110,7 @@ class IssuesController < ApplicationController
   def finish_issue
     issue = Issue.find(params[:id])
     issue.finish
-    @backlog_issues = sorted_list(Backlog.backlog.first_issue)
-    @sprint_issues  = sorted_list(Backlog.sprint_backlog.first_issue)
-    render :index
+    redirect_to issues_path
   end
 
   def finished_issues_list 
@@ -122,10 +120,9 @@ class IssuesController < ApplicationController
   def activate_issue
     issue = Issue.find(params[:id])
     issue.activate
-    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
     redirect_to finished_issues_url
   end
-  
+
   private
 
   def prepare_form
