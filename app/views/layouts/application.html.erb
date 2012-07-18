@@ -25,14 +25,19 @@
         <div class="wrapper">
           <div class="content">
             <div id="navigation">
-              <%= link_to "Startseite", index_path %>
-              <%= link_to "Backlogs (#{@backlog_count}/#{@sprintbacklog_count})", issues_url %>
-              <%= link_to "Abgeschlossene Einträge (#{@finished_issues_count})", finished_issues_url %>
+              <%= link_to "Startseite", index_path, id: "landingpage" %>
+              <%= link_to "Backlogs (#{@backlog_count}/#{@sprintbacklog_count})", issues_url, id: "backlogs" %>
+              <%= link_to "Abgeschlossene Einträge (#{@finished_issues_count})", finished_issues_url, id: "finished_issues" %>
             </div>
             <%= yield :menu %>
           </div>
         </div>
       </div>
+    </div>
+    <div class="menu-center">
+      <% feature_active? :persist_present_demo do %>
+        <h1>Demo</h1>
+      <% end %>
     </div>
   </div>
   <noscript>

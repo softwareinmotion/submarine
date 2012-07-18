@@ -78,6 +78,7 @@ SUBMARINE = {
       async: false
     });
     SUBMARINE.showStoryPointsSum();
+    SUBMARINE.updateBacklogNavigation();
   },
 
   toggleDescription: function(event){
@@ -177,6 +178,21 @@ SUBMARINE = {
     var project_div = $('div.' + project.toLowerCase());
     if(project_div.size() > 0) {
       SUBMARINE.animate_radio_image(project_div[0], 'project_radio_images');
+    }
+  },
+
+  updateBacklogNavigation: function() {
+    var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.counter.getSprintBacklogCount() + ")";
+    $("#backlogs").text(caption);
+  },
+
+  counter: {
+    getBacklogCount: function() {
+      return $("#backlog_list li").length;
+    },
+
+    getSprintBacklogCount: function() {
+      return $("#sprint_backlog_list li").length;
     }
   }
 }
