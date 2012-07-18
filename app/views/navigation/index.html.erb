@@ -72,3 +72,11 @@
   <span>&nbsp;</span>
 </section>
 
+<script type="text/javascript">
+  $(function() {
+    //highlight current navigation link
+    $lnk = $("#navigation a[href='" + window.location.href + "']");
+    $lnk.addClass("active");
+  });
+</script>
+
