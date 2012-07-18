@@ -36,10 +36,8 @@
               <%= link_to edit_issue_path(item), :class => "edit_issue", :title => t('issue.edit') do %>
                 <%= image_tag("edit.png") %>
               <% end %>
-              <% if list_type == 'sprint_backlog' %>
-                <%= link_to finish_issue_path(item), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('issue.finish') do %>
-                  <%= image_tag("finish_issue.png") %>
-                <% end %>
+              <%= link_to finish_issue_path(item), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('issue.finish') do %>
+                <%= image_tag("finish_issue.png") %>
               <% end %>
               <%= link_to item, :method => :delete, :class => 'button', :title => t('issue.delete') do %>
                 <%= image_tag("delete.png") %>
