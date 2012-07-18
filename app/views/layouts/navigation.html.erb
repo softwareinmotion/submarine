@@ -19,6 +19,21 @@
         <%= image_tag "logo.png", :id => "logo" %>
       <% end %>
     </div>
+
+    <div class="menu-right">  
+      <div class="stack">        
+        <div class="wrapper">
+          <div class="content">
+            <div id="navigation">
+              <%= link_to "Startseite", index_url, id: "landingpage" %>
+              <%= link_to "Backlogs (#{@backlog_count}/#{@sprintbacklog_count})", issues_url, id: "backlogs" %>
+              <%= link_to "Abgeschlossene Einträge (#{@finished_issues_count})", finished_issues_url, id: "finished_issues" %>
+            </div>
+            <%= yield :menu %>
+          </div>
+        </div>
+      </div>
+   </div>
   </div>
 </header>
 
