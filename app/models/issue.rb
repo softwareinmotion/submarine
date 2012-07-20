@@ -30,36 +30,11 @@ class Issue < ActiveRecord::Base
   end
   
   def finish
-    self.close_gap
-    self.reload
-    if Backlog.finished_backlog.issues.count > 0
-      first_finished = Backlog.finished_backlog.first_issue
-      if first_finished
-        first_finished.predecessor_id = self.id
-        first_finished.save
-      end
-    end
-
-    self.predecessor_id = nil
-    Backlog.finished_backlog.issues << self
-
-    self.save!
+    move_to Backlog.finished_backlog
   end
 
   def activate
-    self.push_to_backlog Backlog.backlog
-  end
-
-  def push_to_backlog backlog
-    close_gap
-    self.reload
-
-    unless backlog.issues.empty?
-      backlog.first_issue.update_attributes predecessor_id: id
-    end
-    backlog.issues << self
-    self.predecessor_id = nil
-    self.save
+    move_to Backlog.backlog
   end
 
   def finished?
