@@ -67,14 +67,21 @@ class IssuesController < ApplicationController
         break
       end
     end
-    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
-    
+    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'     
+
     if @issue && @issue.update_attributes(params[@type])
+
       redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
     else
       prepare_form
+      @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
       render action: "edit"
     end
+
+  rescue ActiveRecord::StaleObjectError
+    prepare_form
+    @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
+    render action: "edit"  
   end
 
   def destroy
