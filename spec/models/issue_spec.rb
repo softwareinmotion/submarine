@@ -156,9 +156,9 @@ describe Issue do
     context 'with three finished issues' do
       
       before :each do
-        @issue1 = FactoryGirl.create :task, type: "Task", backlog_id: Backlog.finished_backlog
-        @issue2 = FactoryGirl.create :task, type: "Task", backlog_id: Backlog.finished_backlog, predecessor: @issue1
-        @issue3 = FactoryGirl.create :task, type: "Task", backlog_id: Backlog.finished_backlog, predecessor: @issue2
+        @issue1 = FactoryGirl.create :task, type: "Task", backlog: Backlog.finished_backlog
+        @issue2 = FactoryGirl.create :task, type: "Task", backlog: Backlog.finished_backlog, predecessor: @issue1
+        @issue3 = FactoryGirl.create :task, type: "Task", backlog: Backlog.finished_backlog, predecessor: @issue2
       end
       
       it "removes the predecessor of the second issue when activating the first" do
