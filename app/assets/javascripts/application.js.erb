@@ -142,7 +142,7 @@ SUBMARINE = {
     SUBMARINE.animate_radio_image(this, 'project_radio_images');
 
     // set value in form
-    $(this).siblings('input').val($(this).attr('data-project-id'))
+    $(this).siblings('input[id$="_project_id"]').val($(this).attr('data-project-id'))
   },
 
   animate_radio_image: function(element, image_type){
