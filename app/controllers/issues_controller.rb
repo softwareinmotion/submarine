@@ -70,7 +70,6 @@ class IssuesController < ApplicationController
     params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'     
 
     if @issue && @issue.update_attributes(params[@type])
-
       redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
     else
       prepare_form
