@@ -1,5 +1,5 @@
 ---
-    environment: production-transformers
+    environment: admin_submarine
     chdir: /var/lib/admin_submarine/current
     address: ent
     user: administrator
