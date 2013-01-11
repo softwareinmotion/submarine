@@ -1,6 +1,6 @@
 ssh_options[:user] = "railsprod"
 set :rails_env, 'admin_submarine'
-set :domain, 'admarine'
+set :domain, 'submarine'
 set :product_variant, 'swim'
 set :subdomain, 'admin_'
 set :stage, "admin"
