@@ -76,9 +76,9 @@ admin_submarine:
   adapter: postgresql
   encoding: utf8
   database: admin.submarine
-  host: ent
+  host: submarine
   port: 5432
-  username: postgres
+  username: SubAdmin
   password: Pass2Swim!
   pool: 5
   timeout: 5000
