@@ -1,8 +1,8 @@
 ---
     environment: admin_submarine
     chdir: /var/lib/admin_submarine/current
-    address: ent
-    user: administrator
+    address: admarine
+    user: railsprod
     group: rvm
     port: 3010
     pid: /var/lib/admin_submarine/current/tmp/pids/thin.pid
