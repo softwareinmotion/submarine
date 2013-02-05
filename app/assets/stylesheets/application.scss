@@ -293,7 +293,9 @@ section {
  text-align: right;
 }
 
-noscript {
+noscript p {
+  display: block;
+  text-align: center;
   background-color: #C2474B;
   color: white;
   font-style: italic;
