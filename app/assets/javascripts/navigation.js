@@ -9,4 +9,5 @@
 //= require jquery.tablednd
 //= require jquery.transform2d
 //= require lightbox
+//= require modernizr-2.6.2.min
 //= require_self
