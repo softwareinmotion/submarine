@@ -7,9 +7,9 @@ gem 'rails', '3.2.2'
 
 gem 'sqlite3'
 gem 'thin'
-gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
 gem 'ruby_flipper'
 gem 'simple-navigation'
+gem 'jquery-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -22,21 +22,8 @@ group :assets do
   gem 'compass-rails'
 end
 
-gem 'jquery-rails'
-gem 'debugger'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-gem 'capistrano'
-gem 'rvm-capistrano'
-gem 'capistrano-ext'
-
 group :test, :development do
+  gem 'debugger'
   gem 'rspec-rails', '~> 2.6'
   gem 'factory_girl'
   gem 'guard-rspec'
@@ -50,8 +37,4 @@ group :test, :development do
   gem 'turn', '0.8.2', :require => false
   
   gem 'yaml_db'
-end
-
-group :production do
-  gem 'pg'
 end
