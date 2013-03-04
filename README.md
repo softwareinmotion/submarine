@@ -1,4 +1,4 @@
-# submarine - ein Scum-Backlog-Tool
+# submarine - ein Scrum-Backlog-Tool
 
 submarine ist ein Scrum-Tool für Backlogs. Es unterstützt Sie bei der Planung ihrer Sprints. Mehr Infos zu submarine gibt's unter www.scrum-backlog.de.
 
