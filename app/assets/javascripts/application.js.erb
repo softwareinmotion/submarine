@@ -6,9 +6,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery_ui
 //= require jquery_tmpl
 //= require jquery_validate
+//= require swimbox.js
+//= require jquery.ui.all
 //= require jquery.tablednd
 //= require jquery.transform2d
 //= require modernizr-2.6.2.min
@@ -37,10 +38,10 @@ SUBMARINE = {
     $(ui.item).removeClass("dragging");
     var moved_issue_id;
     var list_element;
-    if($(event.target).is("li")) {
-      list_element = $(event.target);
+    if($(ui.item).is("li")) {
+      list_element = $(ui.item);
     } else {
-      list_element = $(event.target).parents('li'); 
+      list_element = $(ui.item).parents('li'); 
     }
 
     var controls = list_element.find('.controls_container');

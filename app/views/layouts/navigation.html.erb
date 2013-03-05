@@ -4,6 +4,7 @@
   <title>Submarine</title>
   <%= stylesheet_link_tag "navigation", "questions" %>
   <%= javascript_include_tag "navigation" %>
+  <%= javascript_include_tag "swimbox.js" %>
   <%= csrf_meta_tags %>
   <meta name="msvalidate.01" content="EC7C55357265A423945004A6731B561E" />
   <link rel="shortcut icon" href="favicon.ico" />
@@ -11,6 +12,7 @@
 </head>
 
 <body>
+  <script type="text/javascript"> $(document).ready(SWIMBOX.init); </script>
 
 <header>
   <div class="center">

@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.3.7'
 gem 'thin'
 gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
 gem 'ruby_flipper'
@@ -17,13 +17,13 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
-  gem 'therubyracer'
+  gem 'therubyracer', "~> 0.11.3"
+  gem 'jquery-rails', "~> 2.2.1"
+  gem "jquery-ui-rails", "~> 4.0.1"
   gem 'execjs'
   gem 'compass-rails'
 end
 
-gem 'jquery-rails'
-gem 'debugger'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -44,7 +44,7 @@ group :test, :development do
   gem 'guard-livereload'
   gem 'spork'
   gem 'watchr'
-
+  gem 'debugger'
   gem 'awesome_print'
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
