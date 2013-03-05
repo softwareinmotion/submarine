@@ -1,4 +1,4 @@
-set :rvm_ruby_string, '1.9.3-p125@submarine'
+set :rvm_ruby_string, '1.9.3-p385@submarine'
 set :rvm_type, :system  # Copy the exact line. I really mean :user here
 
 require 'rvm/capistrano'
