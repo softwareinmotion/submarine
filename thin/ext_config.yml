@@ -1,9 +1,7 @@
 ---
     environment: production-ext
     chdir: /var/lib/submarine/current
-    address: 0.0.0.0
-    user: railsprod
-    group: railsprod
+    address: 10.10.50.4
     port: 3000
     pid: /var/lib/submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/submarine/current/config.ru

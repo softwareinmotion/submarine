@@ -1,7 +1,10 @@
-ssh_options[:user] = "administrator"
+ssh_options[:user] = "railsprod"
 set :rails_env, 'production-ext'
-set :domain, "swim-ext003.swim.dmz"
+set :domain, "10.10.50.4"
 set :product_variant, 'presentation'
+set :deploy_via, :copy
+set :copy_strategy, :export
+
 set :deploy_to, "/var/lib/#{application}"
 set :stage, "ext"
 role :web,  domain 

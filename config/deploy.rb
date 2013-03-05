@@ -1,6 +1,7 @@
 require 'capistrano/ext/multistage'
+require 'bundler/capistrano'
 
-set :stages, %w(production ent transformers admin)
+set :stages, %w(production ent transformers admin ext)
 set :default_stage, "ent"
 
 default_run_options[:pty] = true
