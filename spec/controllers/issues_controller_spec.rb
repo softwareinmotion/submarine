@@ -4,7 +4,7 @@ describe IssuesController do
     
   describe 'POST #finish_issue' do 
     before :each do
-      @issue = FactoryGirl.create :issue, type: "Task", backlog_id: Backlog.sprint_backlog
+      @issue = FactoryGirl.create :issue, type: "Task", backlog: Backlog.sprint_backlog
     end
     
     it 'locates the requested issue' do
@@ -25,7 +25,7 @@ describe IssuesController do
     context "their's only one issue finished" do
       
       before :each do
-        @issue = FactoryGirl.create :issue, type: "Task", backlog_id: Backlog.finished_backlog
+        @issue = FactoryGirl.create :issue, type: "Task", backlog: Backlog.finished_backlog
       end
       
       it "redirects to finished issue list" do
@@ -38,8 +38,8 @@ describe IssuesController do
     context "their are two finished issues" do
       
       before :each do
-         @issue1 = FactoryGirl.create :issue, type: "Task", backlog_id: Backlog.finished_backlog
-         @issue2 = FactoryGirl.create :issue, type: "Task", backlog_id: Backlog.finished_backlog
+         @issue1 = FactoryGirl.create :issue, type: "Task", backlog: Backlog.finished_backlog
+         @issue2 = FactoryGirl.create :issue, type: "Task", backlog: Backlog.finished_backlog
       end
     
       it "redirect to finished issue list when activating the first" do

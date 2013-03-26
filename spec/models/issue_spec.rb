@@ -48,7 +48,7 @@ describe Issue do
 
     it 'should finish the only one element in the list' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @sprint_backlog, project: project
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project
 
       issue.finish
 
@@ -58,8 +58,8 @@ describe Issue do
 
     it 'should finish the only unfinished element if one finished exists' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @sprint_backlog, project: project
-      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog_id: @finished_backlog, project: project
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project
+      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @finished_backlog, project: project
 
       issue1.finish
 
@@ -68,8 +68,8 @@ describe Issue do
 
     it 'should finish one of two unfinished elements' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @sprint_backlog, project: project
-      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog_id: @sprint_backlog, project: project
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project
+      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @sprint_backlog, project: project
 
       issue1.finish
 
@@ -78,7 +78,7 @@ describe Issue do
 
     it 'should finish a finished element' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @finished_backlog, project: project
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
 
       issue.finish
 
