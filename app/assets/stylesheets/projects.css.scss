@@ -1,0 +1,44 @@
+.projects_table{
+  width: 100%;
+    .image{
+      width: 60px;
+      max-width: 60px;
+    }
+    .name{
+      float: left;
+    }
+    .action{
+      float: right;
+      width: 16px;
+      margin-right: 5px;
+    }
+}
+.projects_main {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.project_form {
+  width: $article_default_width;
+  border: $default_border;
+  margin-bottom: 50px;
+  background: white;
+  
+  ul.form_header {
+    @include ul_header;
+    $experimental-support-for-svg: true;
+    @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
+    list-style-type: none; 
+    margin-bottom: 30px;
+    padding: 0;
+    margin-top: 0;
+
+    li {
+      float: left;
+      padding: 10px 5px;
+    }
+  }
+}
+.project_label {
+  text-indent: 25px;
+}

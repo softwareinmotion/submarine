@@ -10,6 +10,7 @@ gem 'thin'
 gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
 gem 'ruby_flipper'
 gem 'simple-navigation'
+gem 'carrierwave'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -24,6 +25,7 @@ group :assets do
   gem 'compass-rails'
 end
 
+gem 'slim-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -37,8 +39,9 @@ gem 'rvm-capistrano'
 gem 'capistrano-ext'
 
 group :test, :development do
-  gem 'rspec-rails', '~> 2.6'
-  gem 'factory_girl'
+  gem 'rspec-rails'
+  gem "factory_girl_rails"
+  gem "database_cleaner"
   gem 'guard-rspec'
   gem 'guard-spork'
   gem 'guard-livereload'

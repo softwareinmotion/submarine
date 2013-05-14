@@ -1,0 +1,8 @@
+= form_for(@project) do |x| 
+  div.field
+    = x.label :name
+    = x.text_field :name
+  div.actions
+    = image_submit_tag "btn_save.png"
+    = link_to projects_path, class: "button finish_edit" do
+      = image_tag "btn_cancel.png"

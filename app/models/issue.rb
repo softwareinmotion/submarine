@@ -53,7 +53,7 @@ class Issue < ActiveRecord::Base
     end
   end
 
-  def move_to(backlog, options={})
+  def move_to(backlog, options={}) #!ref!
     transaction do
       #remove issue from linked list
       #by connecting predecessor and descendant

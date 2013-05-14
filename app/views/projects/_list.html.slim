@@ -1,0 +1,12 @@
+div.projects_main
+  p Eine vollständige Auflistung aller Bisher angelegten Projekte.
+  p Um ein Projekt zu editieren klicken sie auf das entsprechende Editier Symbol am ende der Leiste.
+  
+  div.projects_sub
+    ul.list_header
+      li Alle Projekte
+      li#btn_in_header 
+        = link_to new_project_path, :class => "edit_project", :title => t('project.new') do 
+          = image_tag("new.png")
+
+    table.projects_table = render @projects

@@ -17,6 +17,7 @@ Submarine::Application.routes.draw do
   get 'finished'=> 'questions#finished', :as => 'finished'
   
   resources :issues
+  resources :projects
   resources :bugs, :controller => 'issues'
   resources :tasks, :controller => 'issues'
   resources :user_stories, :controller => 'issues'

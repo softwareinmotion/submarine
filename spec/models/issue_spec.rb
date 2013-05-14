@@ -222,8 +222,8 @@ describe Issue do
 
       it "
       Start:  [ x     ]
-      Finish: [ x     ]" do
-        x = create :issue, backlog: Backlog.backlog
+      Finish: [ x     ]"  do
+        x = create(:issue, backlog: Backlog.backlog)
 
         x.move_to Backlog.backlog
         

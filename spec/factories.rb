@@ -16,16 +16,5 @@ FactoryGirl.define do
     sequence(:name) {|n| "user_story#{n}"}
     sequence(:description) {|n| "desc#{n}"}
     association :project
-  end
-  
-  factory :issue do
-    sequence(:name) {|n| "issue#{n}"}
-    sequence(:description) {|n| "desc#{n}"}
-    type "Issue"
-    association :project
-  end
-  
-  factory :project do
-    sequence(:name) {|n| "Project_#{n}"}
-  end
+  end 
 end

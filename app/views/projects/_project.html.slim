@@ -1,0 +1,8 @@
+tr  
+  td.image = image_tag("logo_#{project.name.downcase}_heavy.png")
+  td.name = project.name
+  td.action
+    = link_to  image_tag("edit.png"), edit_project_path(project)
+  td.action
+    = link_to project, :method => :delete, :class => 'button',:confirm => "Sind Sie Sicher das Sie dieses Projekt Löschen wollen?",  :title => t('project.delete') do 
+      = image_tag("delete.png")
