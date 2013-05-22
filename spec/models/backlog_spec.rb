@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Backlog do
-  before :all do
-    @backlog = Backlog.backlog
-    @sprint_backlog = Backlog.sprint_backlog
-    @finished_backlog = Backlog.finished_backlog
+  before :each do
+    @backlog = create(:backlog)
+    @sprint_backlog = create(:backlog, name: "sprint_backlog")
+    @finished_backlog = create(:backlog, name: "finished_backlog")
   end
 
   describe '#update' do

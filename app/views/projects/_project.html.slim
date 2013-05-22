@@ -1,5 +1,5 @@
-tr  
-  td.image = image_tag("logo_#{project.name.downcase}_heavy.png")
+tr.list_row  
+  td.image = image_tag(project.project_icon.url)
   td.name = project.name
   td.action
     = link_to  image_tag("edit.png"), edit_project_path(project)

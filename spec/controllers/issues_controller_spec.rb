@@ -1,12 +1,18 @@
 require 'spec_helper'
 
 describe IssuesController do
-    
+  
+  before :each do
+    create(:backlog)
+    create(:backlog, name: "sprint_backlog")
+    create(:backlog, name: "finished_backlog")
+  end
+
   describe 'POST #finish_issue' do 
     before :each do
       @issue = FactoryGirl.create :issue, type: "Task", backlog: Backlog.sprint_backlog
     end
-    
+
     it 'locates the requested issue' do
       post :finish_issue, id: @issue
       assigns(:issue).should eq(@message)

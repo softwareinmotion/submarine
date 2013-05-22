@@ -43,7 +43,8 @@
   <%= f.label :type %>
   <% @types.each do |type| %>
     <div class="radio_image <%= type.downcase %>" data-type="<%= type %>">
-      <%= image_tag("#{type.downcase}_light.png", :title => "#{type.titleize}", 
+      <%= image_tag(
+      "#{type.downcase}_light.png", :title => "#{type.titleize}", 
       'data-img_heavy' => image_path("#{type.downcase}_heavy.png"), 
       'data-img_light' => image_path("#{type.downcase}_light.png"))  %>    
     </div>

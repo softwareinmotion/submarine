@@ -23,9 +23,10 @@ class ProjectsController < ApplicationController
 
   def update
     @projects = Project.find(params[:id])
-    if @projects.update_attributes({:name => params[:project][:name]})
-      redirect_to projects_path, :notice => 'Editieren erfolgreich!'
+    if @projects.update_attributes(params[:project])
+      redirect_to projects_path, :notice => 'Erfolgreich Editiert'
     else
+      flash[:error] = 'User was not updated.'
       render :action => 'edit'
     end
   end

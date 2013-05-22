@@ -1,6 +1,10 @@
 require 'spec_helper'
-
 describe Issue do
+  before :each do
+    @backlog = create(:backlog)
+    @sprint_backlog = create(:backlog, name: "sprint_backlog")
+    @finished_backlog = create(:backlog, name: "finished_backlog")
+  end
   describe '#close_gap' do
     it 'should delete an issue and close the gap if the first issue of the list is deleted' do 
       issue1 = FactoryGirl.create :issue, type: "Task"
@@ -40,11 +44,6 @@ describe Issue do
   end
 
   describe '#finish' do
-    before :all do
-      @backlog = Backlog.backlog
-      @sprint_backlog = Backlog.sprint_backlog
-      @finished_backlog = Backlog.finished_backlog
-    end
 
     it 'should finish the only one element in the list' do
       project = FactoryGirl.create :project, name: 'Projekt1'
@@ -90,7 +89,7 @@ describe Issue do
   describe '#activate' do
     it 'should activate the only finished element' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @finished_backlog, project: project
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
 
       issue.activate
 
@@ -100,8 +99,8 @@ describe Issue do
 
     it 'should activate the only finished element if one unfinished in the backlog exists' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog_id: @backlog, project: project
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @backlog, project: project
 
       issue1.activate
 
@@ -111,8 +110,8 @@ describe Issue do
 
     it 'should activate one of two finished elements' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog_id: @finished_backlog, project: project
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @finished_backlog, project: project
 
       issue1.activate
 
@@ -122,8 +121,8 @@ describe Issue do
 
     it 'should activate the only finished element if one unfinished in the sprint backlog exists' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog_id: @sprint_backlog, project: project
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @sprint_backlog, project: project
 
       issue1.activate
 
@@ -133,9 +132,9 @@ describe Issue do
 
     it 'should activate the only finished element if one unfinished exists in the backlog and one in the sprint backlog' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog_id: @backlog, project: project
-      issue3 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog_id: @sprint_backlog, project: project
+      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
+      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @backlog, project: project
+      issue3 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @sprint_backlog, project: project
 
       issue1.activate
 
@@ -145,7 +144,7 @@ describe Issue do
 
     it 'should activate an unfinished element' do
       project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog_id: @backlog, project: project
+      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @backlog, project: project
 
       issue.activate
 

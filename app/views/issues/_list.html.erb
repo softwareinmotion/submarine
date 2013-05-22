@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="issue_line">
-          <div class="project_logo"><%= image_tag("logo_#{item.project.name.downcase}_heavy.png") if item.project %></div>
+          <div class="project_logo"><%= image_tag(item.project.project_icon.url) if item.project %></div>
           <div class="issue_name"><%= item.name %></div>
           <div class="issue_id">#<%= item.id %></div>
           <div class="issue_type"><%= image_tag("#{item.type.downcase}_heavy.png") %></div>

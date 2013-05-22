@@ -39,6 +39,33 @@
     }
   }
 }
-.project_label {
-  text-indent: 25px;
+.form_label {
+  margin-left: 20px;
+  margin-top: 10px;
+
+}
+.form_field {
+  margin-left: 20px;
+  margin-top: 10px;
+  width: 80%;
+}
+.form_image {
+  margin-left: 80px;
+  margin-top: 10px;
+}
+.form_file{
+  margin-left: 80px;
+  margin-top: 10px;
+}
+.form_checkbox{
+  margin-left: 10px;
+
+}
+.actions {
+  width: 203px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.list_row {
+  margin-top: 10px;
 }

@@ -1,7 +1,23 @@
 = form_for(@project) do |x| 
   div.field
-    = x.label :name
-    = x.text_field :name
+    = x.label :name , {:class => "form_label"}
+    = x.text_field :name , {:class => "form_field"}
+    = x.hidden_field :project_icon_cache
+  div.field
+    = x.label 'Das Icon darf maximal 60 x 20 pixel Groß sein.', {:class => "form_file"}
+  div.field
+    = x.label 'Größere Bilder werden Automatisch angepasst.', {:class => "form_file"}
+  div.field
+    = x.file_field :project_icon, {:class => "form_file"}
+  div.field
+    - if @project.project_icon?
+      = image_tag(@project.project_icon_url, {:class => 'form_image'})
+    - else
+      div.form_field
+        = render :text => 'Es wird das default Icon verwendet.'
+  div.field 
+    = x.label 'Icon entfernen?', {:class => "form_label"}
+    = x.check_box :remove_project_icon, {:class => "form_checkbox"}
   div.actions
     = image_submit_tag "btn_save.png"
     = link_to projects_path, class: "button finish_edit" do

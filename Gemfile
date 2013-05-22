@@ -11,6 +11,7 @@ gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
 gem 'ruby_flipper'
 gem 'simple-navigation'
 gem 'carrierwave'
+gem "mini_magick"
 
 # Gems used only for assets and not required
 # in production environments by default.
