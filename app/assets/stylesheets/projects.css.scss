@@ -1,3 +1,24 @@
+@import "compass";
+
+$default_border: 1px solid #ddd;
+$article_default_width: 600px;
+
+@mixin ul_base {
+  width: 100%;
+  list-style-type: none; 
+  margin: 0; 
+  padding: 0; 
+  float: left; 
+  margin-right: 10px; 
+}
+
+@mixin ul_header {
+  height: 43px;
+  border-radius: 2px 2px;
+  border: $default_border;
+  font-size: 14pt;
+}
+
 .projects_table{
   width: 100%;
     .image{

@@ -61,6 +61,17 @@ production:
   pool: 5
   timeout: 5000
 
+production_local:
+  adapter: postgresql
+  encoding: utf8
+  database: submarine
+  host: localhost
+  port: 5432
+  username: postgres
+  password: postgres
+  pool: 5
+  timeout: 5000
+
 production-transformers:
   adapter: postgresql
   encoding: utf8
