@@ -7,9 +7,9 @@ describe Issue do
   end
   describe '#close_gap' do
     it 'should delete an issue and close the gap if the first issue of the list is deleted' do 
-      issue1 = FactoryGirl.create :issue, type: "Task"
-      issue2 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue1.id
-      issue3 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue2.id
+      issue1 = create(:issue, type: "Task")
+      issue2 = create(:issue, type: "Task", predecessor_id: issue1.id)
+      issue3 = create(:issue, type: "Task", predecessor_id: issue2.id)
 
       issue1.reload.destroy
 
@@ -19,9 +19,9 @@ describe Issue do
     end
 
     it 'should delete an issue and close the gap if the last issue of the list is deleted' do 
-      issue1 = FactoryGirl.create :issue, type: "Task"
-      issue2 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue1.id
-      issue3 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue2.id
+      issue1 = create(:issue, type: "Task")
+      issue2 = create(:issue, type: "Task", predecessor_id: issue1.id)
+      issue3 = create(:issue, type: "Task", predecessor_id: issue2.id)
 
       issue3.reload.destroy
 
@@ -31,9 +31,9 @@ describe Issue do
     end
 
     it 'should delete an issue and close the gap if an issue from the middle of the list is deleted' do 
-      issue1 = FactoryGirl.create :issue, type: "Task"
-      issue2 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue1.id
-      issue3 = FactoryGirl.create :issue, type: "Task", predecessor_id: issue2.id
+      issue1 = create(:issue, type: "Task")
+      issue2 = create(:issue, type: "Task", predecessor_id: issue1.id)
+      issue3 = create(:issue, type: "Task", predecessor_id: issue2.id)
 
       issue2.reload.destroy
 
@@ -46,8 +46,8 @@ describe Issue do
   describe '#finish' do
 
     it 'should finish the only one element in the list' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project)
 
       issue.finish
 
@@ -56,9 +56,9 @@ describe Issue do
     end
 
     it 'should finish the only unfinished element if one finished exists' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project
-      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @finished_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue1 = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project)
+      issue2 = create(:bug, name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @finished_backlog, project: project)
 
       issue1.finish
 
@@ -66,9 +66,9 @@ describe Issue do
     end
 
     it 'should finish one of two unfinished elements' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project
-      issue2 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @sprint_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue1 = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project)
+      issue2 = create(:bug, name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @sprint_backlog, project: project)
 
       issue1.finish
 
@@ -76,8 +76,8 @@ describe Issue do
     end
 
     it 'should finish a finished element' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project)
 
       issue.finish
 
@@ -88,8 +88,8 @@ describe Issue do
 
   describe '#activate' do
     it 'should activate the only finished element' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project)
 
       issue.activate
 
@@ -98,9 +98,9 @@ describe Issue do
     end
 
     it 'should activate the only finished element if one unfinished in the backlog exists' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue1 = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project)
+      issue2 = create(:user_story, name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @backlog, project: project)
 
       issue1.activate
 
@@ -109,9 +109,9 @@ describe Issue do
     end
 
     it 'should activate one of two finished elements' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @finished_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue1 = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project)
+      issue2 = create(:user_story, name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @finished_backlog, project: project)
 
       issue1.activate
 
@@ -120,9 +120,9 @@ describe Issue do
     end
 
     it 'should activate the only finished element if one unfinished in the sprint backlog exists' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @sprint_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue1 = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project)
+      issue2 = create(:user_story, name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @sprint_backlog, project: project)
 
       issue1.activate
 
@@ -131,10 +131,10 @@ describe Issue do
     end
 
     it 'should activate the only finished element if one unfinished exists in the backlog and one in the sprint backlog' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue1 = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project
-      issue2 = UserStory.create name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @backlog, project: project
-      issue3 = Bug.create name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @sprint_backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue1 = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @finished_backlog, project: project)
+      issue2 = create(:user_story, name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: @backlog, project: project)
+      issue3 = create(:bug, name: 'Bug 1', description: 'Das ist ein doofer Bug', backlog: @sprint_backlog, project: project)
 
       issue1.activate
 
@@ -143,8 +143,8 @@ describe Issue do
     end
 
     it 'should activate an unfinished element' do
-      project = FactoryGirl.create :project, name: 'Projekt1'
-      issue = Task.create name: 'Task 1', description: 'Das ist ein toller Task', backlog: @backlog, project: project
+      project = create(:project, name: 'Projekt1')
+      issue = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @backlog, project: project)
 
       issue.activate
 
@@ -155,9 +155,9 @@ describe Issue do
     context 'with three finished issues' do
       
       before :each do
-        @issue1 = FactoryGirl.create :task, type: "Task", backlog: Backlog.finished_backlog
-        @issue2 = FactoryGirl.create :task, type: "Task", backlog: Backlog.finished_backlog, predecessor: @issue1
-        @issue3 = FactoryGirl.create :task, type: "Task", backlog: Backlog.finished_backlog, predecessor: @issue2
+        @issue1 = create(:task, type: "Task", backlog: Backlog.finished_backlog)
+        @issue2 = create(:task, type: "Task", backlog: Backlog.finished_backlog, predecessor: @issue1)
+        @issue3 = create(:task, type: "Task", backlog: Backlog.finished_backlog, predecessor: @issue2)
       end
       
       it "removes the predecessor of the second issue when activating the first" do
