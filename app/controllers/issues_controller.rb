@@ -133,7 +133,7 @@ class IssuesController < ApplicationController
 
   def prepare_form
     @projects = Project.all(:order => 'name ASC').collect do |project|
-      [project.name, project.id]
+      [project.name, project.id, project.project_icon_url]
     end
     a_number = 0
     @types = Issue.children_type_names.map do |name|

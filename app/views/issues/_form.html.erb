@@ -55,9 +55,7 @@
   <%= f.label :project_id %>
   <% @projects.each do |project| %>
     <div class="radio_image <%= project[0].downcase %>" data-project-id="<%= project[1] %>">
-      <%= image_tag("logo_#{project[0].downcase}_light.png", :title => "#{project[0]}", 
-      'data-img_heavy' => image_path("logo_#{project[0].downcase}_heavy.png"), 
-      'data-img_light' => image_path("logo_#{project[0].downcase}_light.png"))  %> 
+      <%= image_tag(project[2]) %> 
     </div>
   <% end %>
   <%= f.hidden_field :project_id, :value => (@issue.project_id ? @issue.project_id : @projects[0][1]) %>
