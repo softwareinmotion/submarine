@@ -20,7 +20,10 @@ $article_default_width: 600px;
 }
 
 .projects_table{
-  width: 100%;
+  width: 600px;
+  background-color: white;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
     .image{
       width: 60px;
       max-width: 60px;
@@ -35,10 +38,17 @@ $article_default_width: 600px;
     }
 }
 .projects_main {
-  width: 600px;
+  width: 602px;
   margin-left: auto;
   margin-right: auto;
 }
+.list_row {
+  margin-top: 10px;
+}
+.projects_sub{
+  background: white;
+}
+
 .project_form {
   width: $article_default_width;
   border: $default_border;
@@ -59,37 +69,39 @@ $article_default_width: 600px;
       padding: 10px 5px;
     }
   }
-}
-.form_label {
-  margin-left: 20px;
-  margin-top: 10px;
+  .project_text_label {
+    width: 400px;
+    margin-left: 130px;
+  }
+  .field {
+    padding-bottom: 8px;
+    clear: both;
+  }
 
-}
-.form_field {
-  margin-left: 20px;
-  margin-top: 10px;
-  width: 80%;
-}
-.form_image {
-  margin-left: 80px;
-  margin-top: 10px;
-}
-.form_file{
-  margin-left: 80px;
-  margin-top: 10px;
-}
-.form_checkbox{
-  margin-left: 10px;
+  .form_image{
+    margin-left: 130px;
+    max-width: 400px;
+  }
 
+  label {
+    width: 120px;
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+  }
+  input[type="file"] {
+    margin-left: 130px;
+    width: 400px;
+  }
+
+  input[type="text"] {
+    width: 400px;
+  }
+
+  .actions {
+    margin: 15px auto;
+    display: block;
+    width: 203px;
+  }
 }
-.actions {
-  width: 203px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.list_row {
-  margin-top: 10px;
-}
-.projects_sub{
-  background: white;
-}
+

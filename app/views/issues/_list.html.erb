@@ -13,8 +13,12 @@
 <% when 'backlog' %>
   <li>Backlog</li>
   <li id="btn_in_header">
-  <%= link_to new_issue_path, :class => "edit_issue", :title => t('issue.new') do %>
-    <%= image_tag("new.png") %>
+  <% if Project.all == [] %>
+    <%= flash.now[:notice] = 'Issues koennen nicht ohne Projekte Angelegt werden' %>
+  <% else %>
+    <%= link_to new_issue_path, :class => "edit_issue", :title => t('issue.new') do %>
+      <%= image_tag("new.png") %>
+    <% end %>
   <% end %>
   </li>
   

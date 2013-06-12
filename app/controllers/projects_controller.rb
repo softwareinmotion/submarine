@@ -22,18 +22,21 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @projects = Project.find(params[:id])
-    if @projects.update_attributes(params[:project])
+    @project = Project.find(params[:id])
+    if @project.update_attributes(params[:project])
       redirect_to projects_path, :notice => 'Erfolgreich Editiert'
     else
-      flash[:error] = 'User was not updated.'
       render :action => 'edit'
     end
   end
 
   def destroy
     @project = Project.find(params[:id])
-    @project.destroy
-    redirect_to projects_path, :notice => 'Erfolgreich Gelöscht'
+    if Issue.where('project_id = ?',@project.id).where('backlog_id != ?', Backlog.finished_backlog).count == 0
+      @project.destroy
+      redirect_to projects_path, :notice => 'Erfolgreich Gelöscht'
+    else
+      redirect_to projects_path, :notice => 'Projekte können nur Gelöscht werden wenn alle Issues abgeschlossen sind!'
+    end 
   end
 end

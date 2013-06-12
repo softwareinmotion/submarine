@@ -1,23 +1,31 @@
-= form_for(@project) do |x| 
+= form_for(@project) do |x|
+  - if @project.errors.any?
+    div#error_explanation
+      h2 Folgende Fehler sind aufgetreten:
+      ul 
+        - @project.errors.full_messages.each do |msg|
+          li = msg
   div.field
-    = x.label :name , {:class => "form_label"}
-    = x.text_field :name , {:class => "form_field"}
+    = x.label :name
+    = x.text_field :name
     = x.hidden_field :project_icon_cache
   div.field
-    = x.label 'Das Icon darf maximal 60 x 20 pixel Groß sein.', {:class => "form_file"}
+    p.project_text_label Maximal Größe: 60 x 20 pixel.
+    p.project_text_label Größere Bilder werden Automatisch skaliert
   div.field
-    = x.label 'Größere Bilder werden Automatisch skaliert', {:class => "form_file"}
-  div.field
-    = x.file_field :project_icon, {:class => "form_file"}
+    = x.file_field :project_icon
   div.field
     - if @project.project_icon?
       = image_tag(@project.project_icon_url, {:class => 'form_image'})
     - else
       div.form_field
-        = render :text => 'Es wird das default Icon verwendet.'
+        p.project_text_label Es wird das default Icon verwendet.
+        = image_tag("fallback/default.png", {:class => 'form_image'})
   div.field 
-    = x.label 'Icon entfernen?', {:class => "form_label"}
-    = x.check_box :remove_project_icon, {:class => "form_checkbox"}
+    - if @project.project_icon? == false
+    - else
+      = x.label 'Icon löschen?'
+      = x.check_box :remove_project_icon
   div.actions
     = image_submit_tag "btn_save.png"
     = link_to projects_path, class: "button finish_edit" do

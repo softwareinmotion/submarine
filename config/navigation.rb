@@ -4,6 +4,6 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :startpage, 'Startseite', index_path, :if => Proc.new { feature_active? :presentation }
     primary.item :backlogs, "Backlogs (#{@backlog_count}/#{@sprintbacklog_count})", issues_path, :highlights_on => controller_action_matcher('issues', 'index') 
     primary.item :finished_issues, "Abgeschlossene Einträge (#{@finished_issues_count})", finished_issues_path
-    primary.item :index, 'Alle Projekte', projects_path
+    primary.item :index, "Alle Projekte (#{Project.count})", projects_path
   end
 end
