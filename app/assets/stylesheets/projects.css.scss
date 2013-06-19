@@ -18,7 +18,6 @@ $article_default_width: 600px;
   border: $default_border;
   font-size: 14pt;
 }
-
 .projects_table{
   width: 600px;
   background-color: white;
@@ -26,6 +25,9 @@ $article_default_width: 600px;
   border-right: 1px solid #dddddd;
     .image{
       width: 60px;
+      max-width: 60px;
+    }
+    .list_image {
       max-width: 60px;
     }
     .name{
