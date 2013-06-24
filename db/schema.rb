@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20130514130831) do
     t.float    "story_points"
     t.string   "type"
     t.integer  "project_id"
+    t.datetime "finished_at"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.integer  "backlog_id"

@@ -64,6 +64,16 @@
         </div>
         <div class="issue_line">
           <div class="description short"><%= simple_format(item.description) %></div>
+          <% if list_type == 'finished_issues' %>
+            <script type="text/javascript">
+              $('.connectedSortable > li').css('height', '65px');
+            </script>
+            <div class="issue_line"> 
+              <div class="finished_at_timestamp">
+                <%= item.finished_at %>
+              </div>
+            </div>
+          <% end %>
           &nbsp;
         </div>
       </li>

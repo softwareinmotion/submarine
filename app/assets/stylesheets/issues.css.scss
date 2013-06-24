@@ -180,8 +180,8 @@ ul.connectedSortable {
 
       div.description {
         cursor: pointer;
-        max-width: 490px;
-        margin-left: 40px;
+        max-width: 450px;
+        margin-left: 60px;
         padding-left: 3px;
         color: gray;
         font-size: 8pt;
@@ -192,7 +192,14 @@ ul.connectedSortable {
           padding-bottom: 5px;  
         }
       }
-    
+      div.finished_at_timestamp{
+        max-width: 200px;
+        color: gray;
+        font-size: 8pt;
+        margin-left: 60px;
+        padding-left: 3px;
+        overflow: hidden; 
+      }
       div.short {
         height: 2.4ex;
       }      

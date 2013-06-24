@@ -116,6 +116,8 @@ class IssuesController < ApplicationController
   def finish_issue
     issue = Issue.find(params[:id])
     issue.finish
+    issue.finished_at = Time.now
+    issue.save
     redirect_to issues_path
   end
 
