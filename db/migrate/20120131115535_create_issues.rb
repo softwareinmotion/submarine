@@ -7,7 +7,6 @@ class CreateIssues < ActiveRecord::Migration
       t.float :story_points
       t.string :type
       t.integer :project_id
-      t.datetime :finished_at
 
       t.timestamps
     end
