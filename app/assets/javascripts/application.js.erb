@@ -86,6 +86,8 @@ SUBMARINE = {
   toggleDescription: function(event){
     if($(this).hasClass("short")){
       $(this).removeClass("short");
+      console.log($(this));
+      console.log($(this).height());
       $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");

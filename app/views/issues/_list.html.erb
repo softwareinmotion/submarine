@@ -63,17 +63,17 @@
           &nbsp;
         </div>
         <div class="issue_line">
-          <div class="description short"><%= simple_format(item.description) %></div>
-          <% if list_type == 'finished_issues' %>
-            <script type="text/javascript">
-              $('.connectedSortable > li').css('height', '65px');
-            </script>
-            <div class="issue_line"> 
-              <div class="finished_at_timestamp">
-                <%= item.finished_at.localtime %>
+          <div class="description short">
+            <%= simple_format(item.description) %>
+            <% if list_type == 'finished_issues' %>
+              <div class="issue_line"> 
+                <div class="finished_at_timestamp">
+                  <p>Abgeschlossen am:</p>
+                  <%= item.finished_at.localtime.to_formatted_s(:short) %>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
           &nbsp;
         </div>
       </li>
