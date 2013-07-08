@@ -4,7 +4,7 @@
     address: admarine
     user: railsprod
     group: rvm
-    port: 3020
+    port: 3010
     pid: /var/lib/admin_submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/admin_submarine/current/config.ru
     log: /var/lib/admin_submarine/current/log/thin.log
