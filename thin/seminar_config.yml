@@ -4,7 +4,7 @@
     address: SubSeminar
     user: railsprod
     group: rvm
-    port: 3020
+    port: 3011
     pid: /var/lib/seminar_submarine/current/tmp/pids/thin.pid
     rackup: /var/lib/seminar_submarine/current/config.ru
     log: /var/lib/seminar_submarine/current/log/thin.log
