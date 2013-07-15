@@ -9,7 +9,6 @@ class Issue < ActiveRecord::Base
   has_one :descendant, :class_name => 'Issue', :foreign_key => :predecessor_id
   
   validates :name, :type, :project, :description, presence: true
-  validates :name, uniqueness: true
 
   before_destroy :close_gap
   before_save :set_lock

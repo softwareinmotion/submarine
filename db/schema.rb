@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20130709133412) do
     t.datetime "updated_at",                                        :null => false
     t.integer  "backlog_id"
     t.integer  "lock_version",   :default => 0
-    t.datetime "finished_at",    :default => '2013-07-09 13:53:50'
+    t.datetime "finished_at",    :default => '2013-07-15 05:59:01'
   end
 
   create_table "projects", :force => true do |t|
