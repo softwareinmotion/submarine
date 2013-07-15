@@ -40,10 +40,8 @@ SUBMARINE = {
     var list_element;
     if($(ui.item).is("li")) {
       list_element = $(ui.item);
-      console.log(list_element);
     } else {
-      list_element = $(ui.item).parents('li'); 
-      console.log(list_element);  
+      list_element = $(ui.item).parents('li');  
     }
 
     var controls = list_element.find('.controls_container');
@@ -66,7 +64,6 @@ SUBMARINE = {
     $('ul#sprint_backlog_list > li').each(function(i, li){
       data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
     });
-    console.log(JSON.stringify(data));
     $.ajax({
       type: 'POST',
       url: SUBMARINE.changeListURL,
@@ -89,8 +86,6 @@ SUBMARINE = {
   toggleDescription: function(event){
     if($(this).hasClass("short")){
       $(this).removeClass("short");
-      console.log($(this));
-      console.log($(this).height());
       $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");

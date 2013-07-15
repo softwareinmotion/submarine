@@ -327,7 +327,7 @@ noscript p {
       $experimental-support-for-svg: true;
       @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
     }
-    .ui-button {
+    .ui-button-text-only {
       margin: 5px;
       float: right;
       background: none;
@@ -336,6 +336,9 @@ noscript p {
       height: 32px;
       background-image: url(/assets/btn_background.png);
       cursor: pointer;
+    }
+    .ui-dialog-titlebar-close{
+      display: none;
     }
 
     .ui-dialog-buttonset {
