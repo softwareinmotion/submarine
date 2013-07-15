@@ -119,8 +119,8 @@ ul.connectedSortable {
       right: 25px;
 
       div.controls {
-        text-align: right;
-        width: 200px;
+        float: right;
+        max-width: 150px;
         z-index: 3;
         display: none;
         
@@ -147,12 +147,14 @@ ul.connectedSortable {
       }
       
       div.project_logo {
+        max-width: 60px;
         width: 60px;
         padding-left: 3px;
       }
 
       div.issue_name {
         overflow: hidden;
+        max-width: 410px;
       }
 
       div.issue_type {

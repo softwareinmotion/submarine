@@ -1,0 +1,17 @@
+meta name="keywords" content="scrum, backlog, sprint, user stories, tool, contact"
+section.contact_data
+  article#contact_data
+    - if @question.errors.any?
+      div#error_explanation
+        h2
+          = t "errors_occured"
+          | :
+        ul
+          - @question.errors.messages.each do |key, msg| 
+            li
+              h3 
+                = t 'activerecord.attributes.issue.' + key.to_s 
+              = msg[0]
+    = render 'form'
+  span
+    | &nbsp;

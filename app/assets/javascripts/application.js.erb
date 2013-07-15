@@ -40,8 +40,10 @@ SUBMARINE = {
     var list_element;
     if($(ui.item).is("li")) {
       list_element = $(ui.item);
+      console.log(list_element);
     } else {
       list_element = $(ui.item).parents('li'); 
+      console.log(list_element);  
     }
 
     var controls = list_element.find('.controls_container');
@@ -64,6 +66,7 @@ SUBMARINE = {
     $('ul#sprint_backlog_list > li').each(function(i, li){
       data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
     });
+    console.log(JSON.stringify(data));
     $.ajax({
       type: 'POST',
       url: SUBMARINE.changeListURL,

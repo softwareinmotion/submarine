@@ -1,0 +1,16 @@
+p*{'style' => "clear:both; min-height: 8ex;"}
+	| &nbsp;
+footer
+	div.center
+		div.menu-left
+		div.menu-right
+			- feature_active? :persist_present_demo do
+				span
+					= link_to 'Impressum', impressum_path
+		div.menu-center
+			span 
+				| powered by 
+				= link_to 'http://www.softwareinmotion.de' do 
+					= image_tag 'swim_logo.png'
+				= link_to 'http://www.softwareinmotion.de' do
+					= " softwareinmotion"
