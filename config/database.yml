@@ -104,6 +104,7 @@ admin_submarine:
   password: Pass2Swim!
   pool: 5
   timeout: 5000
+
 seminar_submarine:
   adapter: postgresql
   encoding: utf8
@@ -114,3 +115,15 @@ seminar_submarine:
   password: Pass2Swim!
   pool: 5
   timeout: 5000
+
+azubi_submarine:
+  adapter: postgresql
+  encoding: utf8
+  database: SubmarineAzubi
+  host: DB-SubAzubi
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
