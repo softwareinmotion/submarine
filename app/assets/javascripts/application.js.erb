@@ -44,6 +44,22 @@ SUBMARINE = {
       list_element = $(ui.item).parents('li');  
     }
 
+    var check_for_backlog = $(ui.item);
+    var current_item_id = $(check_for_backlog).attr('id');
+
+    console.log(current_item_id);
+
+    if (check_for_backlog.parents('ul#sprint_backlog_list').size() > 0) {
+      $("#" + current_item_id + ' .delete_issue').css('display', 'none');
+      $("#" + current_item_id + ' .finish_issue').css('display', 'inline');
+      $("#" + current_item_id + ' .set_issue_ready').css('display', 'inline');
+    }
+    if(check_for_backlog.parents('ul#backlog_list').size() > 0){
+      $("#" + current_item_id + ' .delete_issue').css('display', 'inline');
+      $("#" + current_item_id + ' .finish_issue').css('display', 'none');
+      $("#" + current_item_id + ' .set_issue_ready').css('display', 'none');
+    }
+
     var controls = list_element.find('.controls_container');
     var finish_button = list_element.find('a.finish_button');
     if (list_element.parents('ul#sprint_backlog_list').size() > 0) {
@@ -89,16 +105,8 @@ SUBMARINE = {
       $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");
-      $(this).parent().css('height', $(this).height() + 2);	  
+      $(this).parent().css('height', $(this).height());	  
     }
-  },
-
-  showControls: function(event){
-    $(this).find('div.controls').fadeIn(80);
-  },
-
-  hideControls: function(event){
-    $(this).find('div.controls').fadeOut(80);
   },
 
   showStoryPointsSum: function(){

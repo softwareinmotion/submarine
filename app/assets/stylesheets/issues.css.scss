@@ -105,7 +105,6 @@ ul.connectedSortable {
   border-right: $default_border;
 
   li {
-    position: relative;
     margin: 0; 
     cursor: move;
     clear: both;
@@ -114,22 +113,28 @@ ul.connectedSortable {
     position: relative;
     
     div.controls_container {
-      position: absolute;
-      top: 25px;
-      right: 25px;
+      width: 29px;
 
       div.controls {
-        float: right;
-        max-width: 150px;
-        z-index: 3;
-        display: none;
-        
-        a.finish {
-          display: none;
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 16px;
+        text-align: center;
+      
+        .edit_issue > img{
+          margin-top: 4px;
         }
-
-        a:last-child {
-          margin-left: 10px;
+        .delete_issue > img{
+          margin-top: 4px;
+        }
+        .finish_issue > img{
+          margin-top: 4px;
+        }
+        .set_issue_ready > img{
+          margin-top: 4px;
+        }
+        .activate_issue > img{
+          margin-top: 4px;
         }
       }
 
@@ -138,70 +143,86 @@ ul.connectedSortable {
       }
     }
 
+    div.project_logo {
+        max-width: 40px;
+        width: 40px;
+        max-height: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        margin-top: 4px;
+        overflow: hidden;
+      }
+    
+    div.issue_type {
+      margin-top: 4px;
+    }
+
+    div.issue_story_points {
+      font-size: 8pt;
+      font-weight: bold;
+      color: #339A97;
+      text-align: center;
+      margin-top: 4px;
+      margin-bottom: 2px;
+    }
+
+    .issue_line_title {
+      clear: both;
+      width: 510px;
+      margin-left: 60px;
+      margin-right: 30px;
+      height: 16px;
+      min-height: 16px;
+
+      div.issue_name {
+        overflow: hidden;
+        width: 460px;
+        float: left;
+        max-height: 32px;
+      }
+
+      div.issue_id {
+        width: 45px;
+        text-align: left;
+        color: gray;
+        padding-left: 5px;
+        float: left;
+      }  
+
+    }
+
     .issue_line {
       clear: both;
+      width: 510px;
+      margin-left: 60px;
+      margin-right: 30px;
+      height: 54px;
+      min-height: 54px;
       
       div {
         float: left;
         padding-top: 3px;
       }
-      
-      div.project_logo {
-        max-width: 60px;
-        width: 60px;
-        padding-left: 3px;
-      }
-
-      div.issue_name {
-        overflow: hidden;
-        max-width: 410px;
-      }
-
-      div.issue_type {
-        float: right;
-        width: 30px;
-        margin-top: 2px;
-      }
-
-      div.issue_id {
-        float: right;
-        width: 40px;
-        text-align: left;
-        color: gray;
-      }  
-        
-      div.issue_story_points {
-        font-size: 8pt;
-        font-weight: bold;
-        color: #339A97;
-        height: 22px;
-        width: 48px;
-        margin-top: -2px;
-        float: right;
-      }
 
       div.description {
         cursor: pointer;
-        max-width: 450px;
-        margin-left: 60px;
-        padding-left: 3px;
+        max-width: 505px;
+        padding-left: 5px;
         color: gray;
         font-size: 8pt;
         overflow: hidden;
         p {
           margin: 0px;
           padding: 0px;
-          padding-bottom: 5px;  
         }
       }
       div.finished_at_timestamp{
-        max-width: 200px;
         color: gray;
         font-size: 8pt;
-        overflow: hidden; 
       }
       div.short {
-        height: 2.4ex;
+        height: 54px;
       }      
     }
   }
@@ -271,4 +292,28 @@ ul.connectedSortable {
     display: block;
     width: 255px;
   }
+}
+.issue_controls {
+  float: left;
+  max-width: 30px;
+  max-height: 60px;
+}
+.visuals_left{
+  min-width: 59px;
+  min-height: 73px;
+  height: 100%;
+  border-right: 1px solid #dddddd;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+}
+.visuals_right{
+  min-width: 29px;
+  min-height: 73px;
+  height: 100%;
+  border-left: 1px solid #dddddd;
+  position: absolute;
+  top: 0;
+  right: 0;
 }

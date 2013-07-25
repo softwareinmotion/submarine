@@ -13,7 +13,7 @@ article.log*{'id' => list_type}
         - if Project.all == []
           = flash.now[:notice] = 'Issues koennen nicht ohne Projekte Angelegt werden'
         - else
-          = link_to new_issue_path, :class => "edit_issue", :title => t('issue.new') do
+          = link_to new_issue_path,:title => t('issue.new') do
             = image_tag("new.png") 
     - when 'finished_issues'
       li 
@@ -23,38 +23,59 @@ article.log*{'id' => list_type}
           = image_tag("show_backlogs.png")
   ul.connectedSortable*{'id' => list_type + "_list"} 
     - list_items.each do |item| 
-      li *{'data-id' => item.id, 'id' => "##{item.id}", 'data-story_points' => item.formatted_story_points, 'data-lock-version' => item.lock_version}
-        div*{ 'class' => "#{list_type == 'sprint_backlog' ? 'sprint_controls controls_container' : 'controls_container' }"}
-          div.controls
-            - unless list_type == 'finished_issues'
-              = link_to edit_issue_path(item), :class => "edit_issue", :title => t('issue.edit') do
-                = image_tag("edit.png")
-              = link_to finish_issue_path(item), :method => :post, :class => (list_type == 'sprint_backlog' ? 'finish_button' : 'finish_button finish'), :title => t('issue.finish') do
-                = image_tag("finish_issue.png")
-              = link_to item, :method => :delete, :class => 'button', :title => t('issue.delete') do
-                = image_tag("delete.png")
-            - else
-              = link_to activate_issue_path(item), :method => :post, :class => 'button', :title => t('issue.activate') do
-                = image_tag("activate_issue.png")
-        div.issue_line
+      li *{'data-id' => item.id, 'id' => "#{item.id}", 'data-story_points' => item.formatted_story_points, 'data-lock-version' => item.lock_version}
+
+        div.visuals_left
           div.project_logo
             = image_tag(item.project.project_icon.url) if item.project
-          div.issue_name
-            = item.name
-          div.issue_id
-            = "##{item.id}"
           div.issue_type
             = image_tag("#{item.type.downcase}_heavy.png")
           div.issue_story_points
             = image_tag("sp_#{item.formatted_story_points}_heavy.png", :size => "22x22") if item.story_points
-            | &nbsp;
-          | &nbsp;
+
+        div.visuals_right
+          div*{ 'class' => "#{list_type == 'sprint_backlog' ? 'sprint_controls controls_container' : 'controls_container' }"}
+            div.controls
+              - if list_type == 'sprint_backlog'
+                = link_to edit_issue_path(item), :class => 'edit_issue',:title => t('issue.edit') do
+                  = image_tag("edit.png")
+
+                = link_to finish_issue_path(item), :method => :post, :class => 'finish_issue', :title => t('issue.finish') do
+                  = image_tag("finish_issue.png")
+
+                = link_to("#", :class => "set_issue_ready") do
+                  = image_tag("issue_ready.png")
+
+                = link_to item, :method => :delete, :class => 'delete_issue', :style => 'display: none;', :title => t('issue.delete') do
+                  = image_tag("delete.png")
+
+              - if list_type == 'backlog'
+                = link_to edit_issue_path(item), :class => 'edit_issue',:title => t('issue.edit') do
+                  = image_tag("edit.png")
+
+                = link_to finish_issue_path(item), :method => :post, :class => 'finish_issue', :style => 'display: none;', :title => t('issue.finish') do
+                  = image_tag("finish_issue.png")
+
+                = link_to("#", :class => "set_issue_ready", :style => 'display: none;') do
+                  = image_tag("issue_ready.png")
+
+                = link_to item, :method => :delete, :class => 'delete_issue', :title => t('issue.delete') do
+                  = image_tag("delete.png")
+
+              - if list_type == "finished_issues"
+                = link_to activate_issue_path(item), :method => :post, :class => 'activate_issue', :title => t('issue.activate') do
+                  = image_tag("activate_issue.png")
+
+        div.issue_line_title
+          div.issue_id
+            = "##{item.id}"
+          div.issue_name
+            = item.name
         div.issue_line
           div.description.short
             = simple_format(item.description)
             - if list_type == 'finished_issues'
-              div.issue_line
-                div.finished_at_timestamp
-                  p Abgeschlossen am:
-                  = item.finished_at.localtime.to_formatted_s(:short)
-          | &nbsp;
+              div.finished_at_timestamp
+                | <br>
+                p Abgeschlossen am:
+                = item.finished_at.localtime.to_formatted_s(:short)
