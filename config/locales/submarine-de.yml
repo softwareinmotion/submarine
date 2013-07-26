@@ -35,6 +35,8 @@ de:
     finish: 'Eintrag abschließen'
     activate: 'Eintrag reaktivieren'
     move: 'Eintrag verschieben'
+    ready: 'Eintrag als wird bearbeitet setzen'
+    pending: 'Eintrag als bearbeitet setzen'
     errors:
       data_staled: 'Das Backlog wurde in der Zwischenzeit geändert. Die Listen müssen neu geladen werden.'
   backlog:

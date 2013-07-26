@@ -16,6 +16,9 @@ Submarine::Application.routes.draw do
   get 'impressum' => 'navigation#impressum', :as => 'impressum'
   get 'finished'=> 'questions#finished', :as => 'finished'
   
+  put 'issues/:id' => 'issues#set_ready', :as => 'issue_set_ready'
+  post 'issues/:id' => 'issues#set_in_progress', :as => 'issue_set_in_progress'
+
   resources :issues
   resources :projects
   resources :bugs, :controller => 'issues'

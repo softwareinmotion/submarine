@@ -106,7 +106,8 @@ class IssuesController < ApplicationController
     else
       moved_issue.move_to backlog
     end
-    
+    moved_issue.ready_to_finish = false
+    moved_issue.save
     render :json => LockVersionHelper::lock_version
   ensure
     LockVersionHelper::lock_version = nil
@@ -129,6 +130,20 @@ class IssuesController < ApplicationController
     issue.activate
     redirect_to finished_issues_url
   end
+
+  def set_ready
+    issue = Issue.find(params[:id])
+    issue.ready_to_finish = true
+    issue.save
+    redirect_to issues_path
+  end
+
+  def set_in_progress
+    issue = Issue.find(params[:id])
+    issue.ready_to_finish = false
+    issue.save
+    redirect_to issues_path
+  end 
 
   private
 
