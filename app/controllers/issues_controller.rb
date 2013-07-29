@@ -131,19 +131,16 @@ class IssuesController < ApplicationController
     redirect_to finished_issues_url
   end
 
-  def set_ready
+  def status_handler
     issue = Issue.find(params[:id])
-    issue.ready_to_finish = true
+    if issue.ready_to_finish == true
+      issue.ready_to_finish = false
+    else
+      issue.ready_to_finish = true
+    end
     issue.save
     redirect_to issues_path
   end
-
-  def set_in_progress
-    issue = Issue.find(params[:id])
-    issue.ready_to_finish = false
-    issue.save
-    redirect_to issues_path
-  end 
 
   private
 
