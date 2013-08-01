@@ -29,3 +29,8 @@ namespace :deploy do
     run "cd #{deploy_to}/current && bundle exec rake db:seed RAILS_ENV=#{rails_env}"
   end
 end
+after "deploy:update_code" do
+  run "rm -rf  #{release_path}/public/uploads"
+  run "mkdir -p  #{shared_path}/uploads"
+  run "ln -nfs  #{shared_path}/uploads  #{release_path}/public/uploads"
+end
