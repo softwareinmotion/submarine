@@ -46,7 +46,7 @@ ul.list_header {
   
   li#story_points_sum {
     float: right;
-    margin-right: 83px;
+    margin-right: -5px;
     margin-top: -5px;
     span {
       height: 22px;
@@ -209,7 +209,7 @@ ul.connectedSortable {
         cursor: pointer;
         max-width: 505px;
         padding-left: 5px;
-        color: gray;
+        color: black;
         font-size: 8pt;
         overflow: hidden;
         p {

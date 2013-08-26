@@ -47,8 +47,6 @@ SUBMARINE = {
     var check_for_backlog = $(ui.item);
     var current_item_id = $(check_for_backlog).attr('id');
 
-    console.log(current_item_id);
-
     if (check_for_backlog.parents('ul#sprint_backlog_list').size() > 0) {
       $("#" + current_item_id + ' .delete_issue').css('display', 'none');
       $("#" + current_item_id + ' .finish_issue').css('display', 'inline');
