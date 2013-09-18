@@ -31,7 +31,7 @@ de:
   issue:
     new: 'Eintrag erstellen'
     edit: 'Eintrag bearbeiten'
-    delete: 'Eintrag löschen' 
+    delete: 'Eintrag löschen'
     finish: 'Eintrag abschließen'
     activate: 'Eintrag reaktivieren'
     move: 'Eintrag verschieben'

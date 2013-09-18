@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725093302) do
+ActiveRecord::Schema.define(:version => 20130828085815) do
 
   create_table "backlogs", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20130725093302) do
     t.integer  "lock_version",    :default => 0
     t.datetime "finished_at",     :default => '2013-07-16 07:17:20'
     t.boolean  "ready_to_finish", :default => false
+    t.string   "file_attachment"
   end
 
   create_table "projects", :force => true do |t|

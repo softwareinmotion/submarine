@@ -39,6 +39,25 @@
         = image_tag(project[2])
     = f.hidden_field :project_id, :value => (@issue.project_id ? @issue.project_id : @projects[0][1])
     = f.hidden_field :lock_version, :value => (@issue.lock_version)
+  div.field
+    = f.label 'Anhang'
+    = f.file_field :file_attachment
+    - if @issue.file_attachment? == true
+      = link_to image_tag('box1.png', {:class => 'download_file_attachment'}), @issue.file_attachment.url
+  div.field
+    - if @issue.file_attachment? == true
+      = f.hidden_field :file_attachment_cache
+      - if @extension_whitelist.index(File.extname(@issue.file_attachment.path))
+        = f.label 'Vorschau'
+        = image_tag(@issue.file_attachment.url, {:class => 'issue_image_file'})
+      - else
+        = f.label 'Vorschau'
+        = File.basename(@issue.file_attachment.path)
+    
+  div.field
+    - if @issue.file_attachment? == true
+      = f.label 'Anhang löschen?'
+      = f.check_box :remove_file_attachment
   div.actions
     = image_submit_tag "btn_save.png"
     = link_to issues_path, class: "button finish_edit" do

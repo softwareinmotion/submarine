@@ -4,6 +4,7 @@ class Issue < ActiveRecord::Base
   belongs_to :project
   belongs_to :predecessor, :class_name => 'Issue', :foreign_key => :predecessor_id
   belongs_to :backlog
+  mount_uploader :file_attachment, FileAttachmentUploader
 
   # next item in the list
   has_one :descendant, :class_name => 'Issue', :foreign_key => :predecessor_id

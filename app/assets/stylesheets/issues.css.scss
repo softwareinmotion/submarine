@@ -12,11 +12,11 @@ $article_default_width: 600px;
 
 @mixin ul_base {
   width: 100%;
-  list-style-type: none; 
-  margin: 0; 
-  padding: 0; 
-  float: left; 
-  margin-right: 10px; 
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  float: left;
+  margin-right: 10px;
 }
 
 @mixin ul_header {
@@ -38,12 +38,12 @@ ul.list_header {
   li#btn_in_header {
     float: right;
     padding: 5px 5px;
-    
+
     img {
       padding-top: 5px;
     }
   }
-  
+
   li#story_points_sum {
     float: right;
     margin-right: -5px;
@@ -69,12 +69,12 @@ ul.list_header {
       margin-top: 2px;
     }
   }
-  
+
   li#show_finish_issues {
     float: right;
     margin-right: -132px;
     margin-top: -5px;
-    
+
     img {
       padding-top: 5px;
       width: 24px;
@@ -87,7 +87,7 @@ ul.list_header {
   $experimental-support-for-svg: true;
   @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
 }
- 
+
 .hidden {
   visibility: hidden;
 }
@@ -96,22 +96,22 @@ ul.list_header {
   visibility: visible;
 }
 
-ul.connectedSortable { 
+ul.connectedSortable {
   @include ul_base;
-  
+
   background: white;
   min-height: 150px;
   border-left: $default_border;
   border-right: $default_border;
 
   li {
-    margin: 0; 
+    margin: 0;
     cursor: move;
     clear: both;
     padding-bottom: 5px;
     border-bottom: $default_border;
     position: relative;
-    
+
     div.controls_container {
       width: 29px;
 
@@ -120,7 +120,7 @@ ul.connectedSortable {
         margin-top: 5px;
         width: 16px;
         text-align: center;
-      
+
         .edit_issue > img{
           margin-top: 4px;
         }
@@ -153,7 +153,7 @@ ul.connectedSortable {
         margin-top: 4px;
         overflow: hidden;
       }
-    
+
     div.issue_type {
       margin-top: 4px;
     }
@@ -188,7 +188,7 @@ ul.connectedSortable {
         color: gray;
         padding-left: 5px;
         float: left;
-      }  
+      }
 
     }
 
@@ -199,7 +199,7 @@ ul.connectedSortable {
       margin-right: 30px;
       height: 54px;
       min-height: 54px;
-      
+
       div {
         float: left;
         padding-top: 3px;
@@ -218,12 +218,16 @@ ul.connectedSortable {
         }
       }
       div.finished_at_timestamp{
-        color: gray;
+        color: black;
         font-size: 8pt;
+        height: 40px;
+        p {
+          margin-top: 10px;
+        }
       }
       div.short {
         height: 54px;
-      }      
+      }
     }
   }
 }
@@ -233,12 +237,12 @@ ul.connectedSortable {
   border: $default_border;
   margin-bottom: 50px;
   background: white;
-  
+
   ul.form_header {
     @include ul_header;
     $experimental-support-for-svg: true;
     @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
-    list-style-type: none; 
+    list-style-type: none;
     margin-bottom: 30px;
     padding: 0;
     margin-top: 0;
@@ -248,7 +252,7 @@ ul.connectedSortable {
       padding: 10px 5px;
     }
   }
-  
+
   .field {
 	  padding-bottom: 8px;
     clear: both;
@@ -264,15 +268,20 @@ ul.connectedSortable {
     text-align: right;
     float: left;
   }
-  
+
+  input[type="file"]{
+    float: left;
+    height: 20px;
+  }
+
   input[type="text"] {
 	  width: 400px;
   }
-  
+
   textarea {
 	  width: 400px;
   }
-  
+
   .sp_radio_images,
    .type_radio_images,
    .project_radio_images {
@@ -286,6 +295,19 @@ ul.connectedSortable {
     padding-right: 10px;
     width: auto;
   }
+
+  .issue_image_file{
+    max-width: 400px;
+    max-height: 300px;
+  }
+  .download_file_attachment{
+    float: left;
+    margin-left: 5px;
+  }
+
+  .download_file{
+    margin-left: 5px;
+    padding-top: 5px;  }
 
   .actions {
     margin: 15px auto;
@@ -316,4 +338,14 @@ ul.connectedSortable {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.description{
+  a{
+    img{
+      margin-top: 15px;
+      margin-right: 10px;
+      float: left;
+    }
+  }
 }

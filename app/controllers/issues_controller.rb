@@ -7,11 +7,13 @@ class IssuesController < ApplicationController
 
   def new
     @issue = Issue.new
+    extension_whitelist
     prepare_form
   end
 
   def edit
     @issue = Issue.find(params[:id])
+    extension_whitelist
     prepare_form
   end
 
@@ -140,6 +142,10 @@ class IssuesController < ApplicationController
     end
     issue.save
     redirect_to issues_path
+  end
+
+  def extension_whitelist
+    @extension_whitelist = ['.jpg', '.jpeg', '.png', '.bmp', '.gif']
   end
 
   private
