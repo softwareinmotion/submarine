@@ -8,7 +8,7 @@ class Issue < ActiveRecord::Base
 
   # next item in the list
   has_one :descendant, :class_name => 'Issue', :foreign_key => :predecessor_id
-  
+
   validates :name, :type, :project, :description, presence: true
 
   before_destroy :close_gap
@@ -29,7 +29,7 @@ class Issue < ActiveRecord::Base
       ''
     end
   end
-  
+
   def finish
     move_to Backlog.finished_backlog
   end
@@ -45,7 +45,7 @@ class Issue < ActiveRecord::Base
   def in_sprint?
     backlog == Backlog.sprint_backlog
   end
-  
+
   def close_gap
     descendant = self.descendant
     if descendant
@@ -67,7 +67,7 @@ class Issue < ActiveRecord::Base
       self.predecessor = nil
       self.backlog = nil
       self.save!
-  
+
       #insert issue into linked list
       #by setting new predecessor and his descendant
       if options.has_key? :new_predecessor
@@ -84,7 +84,7 @@ class Issue < ActiveRecord::Base
         self.predecessor = new_predecessor
       else
         self.predecessor = nil
-  
+
         new_descendant = Issue.where("backlog_id = :backlog_id AND predecessor_id IS NULL AND id != :issue_id", backlog_id: backlog.id, issue_id: self.id ).first
         if new_descendant
           new_descendant.predecessor = self

@@ -1,6 +1,6 @@
 # encoding: utf-8
-class ProjectsController < ApplicationController 
-  def index 
+class ProjectsController < ApplicationController
+  def index
     @projects = Project.all
   end
 
@@ -37,6 +37,6 @@ class ProjectsController < ApplicationController
       redirect_to projects_path, :notice => 'Erfolgreich Gelöscht'
     else
       redirect_to projects_path, :notice => 'Projekte können nur Gelöscht werden wenn alle Issues abgeschlossen sind!'
-    end 
+    end
   end
 end

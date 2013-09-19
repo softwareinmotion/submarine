@@ -2,7 +2,7 @@
   - if @project.errors.any?
     div#error_explanation
       h2 Folgende Fehler sind aufgetreten:
-      ul 
+      ul
         - @project.errors.full_messages.each do |msg|
           li = msg
   div.field
@@ -21,7 +21,7 @@
       div.form_field
         p.project_text_label Es wird das default Icon verwendet.
         = image_tag("fallback/default.png", {:class => 'form_image'})
-  div.field 
+  div.field
     - if @project.project_icon? == false
     - else
       = x.label 'Icon löschen?'

@@ -1,12 +1,12 @@
 doctype html
-html  
+html
   head
     title Submarine
-    = stylesheet_link_tag "navigation", "questions" 
-    = javascript_include_tag "navigation" 
-    = csrf_meta_tags 
+    = stylesheet_link_tag "navigation", "questions"
+    = javascript_include_tag "navigation"
+    = csrf_meta_tags
     meta name="msvalidate.01" content="EC7C55357265A423945004A6731B561E"
-    = favicon_link_tag 
+    = favicon_link_tag
 
   body
     header
@@ -15,5 +15,5 @@ html
     - flash.each do |name, msg|
       = content_tag :div, msg, id: "flash#{name}"
     = yield
-    
+
     = render :partial => "layouts/footer"

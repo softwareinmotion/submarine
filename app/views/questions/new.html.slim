@@ -7,10 +7,10 @@ section.contact_data
           = t "errors_occured"
           | :
         ul
-          - @question.errors.messages.each do |key, msg| 
+          - @question.errors.messages.each do |key, msg|
             li
-              h3 
-                = t 'activerecord.attributes.issue.' + key.to_s 
+              h3
+                = t 'activerecord.attributes.issue.' + key.to_s
               = msg[0]
     = render 'form'
   span

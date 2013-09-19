@@ -1,5 +1,5 @@
 class IssuesController < ApplicationController
-  
+
   def index
     @backlog_issues = sorted_list(Backlog.backlog.first_issue)
     @sprint_issues = sorted_list(Backlog.sprint_backlog.first_issue)
@@ -69,7 +69,7 @@ class IssuesController < ApplicationController
         break
       end
     end
-    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'     
+    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
 
     if @issue && @issue.update_attributes(params[@type])
       redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
@@ -82,7 +82,7 @@ class IssuesController < ApplicationController
   rescue ActiveRecord::StaleObjectError
     prepare_form
     @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
-    render action: "edit"  
+    render action: "edit"
   end
 
   def destroy
@@ -123,7 +123,7 @@ class IssuesController < ApplicationController
     redirect_to issues_path
   end
 
-  def finished_issues_list 
+  def finished_issues_list
     @finished_issues = sorted_list Backlog.finished_backlog.first_issue
   end
 

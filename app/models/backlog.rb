@@ -29,7 +29,7 @@ class Backlog < ActiveRecord::Base
       first_backlog_issue = Issue.find_by_id list.first
       first_backlog_issue.predecessor_id = nil
       first_backlog_issue.save
-    end 
+    end
   end
 
 end

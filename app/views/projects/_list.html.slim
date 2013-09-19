@@ -2,8 +2,8 @@ div.projects_main
   article.log
     ul.list_header
       li Alle Projekte
-      li#btn_in_header 
-        = link_to new_project_path, :class => "edit_project", :title => t('project.new') do 
+      li#btn_in_header
+        = link_to new_project_path, :class => "edit_project", :title => t('project.new') do
           = image_tag("new.png")
 
     table.projects_table = render @projects

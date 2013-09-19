@@ -25,7 +25,7 @@ class QuestionsController < ApplicationController
   # GET /questions/new.json
   def new
     @question = Question.new
-    
+
     @question_count = Question.count
 
     respond_to do |format|
