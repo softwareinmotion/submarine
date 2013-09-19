@@ -7,9 +7,9 @@
         - if @issue.errors[:base] && @issue.errors[:base][0]
           li
             = @issue.errors[:base][0]
-          - @issue.errors.delete :base
         - @issue.errors.messages.each do |key, msg|
           li
+            - @issue.errors.delete :base
             h3
               = t 'activerecord.attributes.issue.' + key.to_s
             = msg[0]
