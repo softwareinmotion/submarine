@@ -86,9 +86,9 @@ article.log*{'id' => list_type}
               = link_to( image_tag('box1.png', {:class => 'download_file'}), item.file_attachment.url, {:class=>"swimbox"})
             - if list_type == 'finished_issues'
               div.finished_at_timestamp
-                p Abgeschlossen am:
+                p.timestamp Abgeschlossen am:
                 = item.finished_at.localtime.to_formatted_s(:short)
             - else
               div.finished_at_timestamp
-                p Erstellt am:
+                p.timestamp Erstellt am:
                 = item.created_at.localtime.to_formatted_s(:short)
