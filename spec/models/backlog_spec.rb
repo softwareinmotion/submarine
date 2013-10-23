@@ -50,7 +50,7 @@ describe Backlog do
       issue2.reload.predecessor_id.should be_nil
     end
 
-    it 'should move the third element to the first position within the sprint backlog list' do 
+    it 'should move the third element to the first position within the sprint backlog list' do
       issue3 = FactoryGirl.create :issue, type: "Task", backlog_id: @sprint_backlog.id
       issue2 = FactoryGirl.create :issue, type: "Task", backlog_id: @sprint_backlog.id
       issue1 = FactoryGirl.create :issue, type: "Task", backlog_id: @sprint_backlog.id
@@ -141,7 +141,7 @@ describe Backlog do
       issue2 = FactoryGirl.create :issue, type: "Task", backlog_id: @backlog.id
       issue1 = FactoryGirl.create :issue, type: "Task", backlog_id: @backlog.id
 
-      # should move issue5 on the second poition of the backlog list 
+      # should move issue5 on the second poition of the backlog list
       issue5.backlog = @backlog
       issue5.predecessor_id = issue1.id
       issue5.save

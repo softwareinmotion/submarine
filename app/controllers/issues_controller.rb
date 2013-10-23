@@ -3,6 +3,7 @@ class IssuesController < ApplicationController
   def index
     @backlog_issues = sorted_list(Backlog.backlog.first_issue)
     @sprint_issues = sorted_list(Backlog.sprint_backlog.first_issue)
+    extension_whitelist
   end
 
   def new

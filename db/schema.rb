@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20130828085815) do
     t.datetime "updated_at",                                         :null => false
     t.integer  "backlog_id"
     t.integer  "lock_version",    :default => 0
-    t.datetime "finished_at",     :default => '2013-09-18 14:00:56'
+    t.datetime "finished_at",     :default => '2013-09-25 14:16:07'
     t.boolean  "ready_to_finish", :default => false
     t.string   "file_attachment"
   end
