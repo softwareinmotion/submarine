@@ -1,7 +1,6 @@
 ---
     environment: azubi_submarine
     chdir: /var/lib/azubi_submarine/current
-    address: LarsMarine
     user: railsprod
     group: rvm
     port: 3012
