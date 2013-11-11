@@ -19,7 +19,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
-  gem 'therubyracer', "~> 0.11.3"
+  gem 'therubyracer', "~> 0.12.0"
   gem 'jquery-rails', "~> 2.2.1"
   gem "jquery-ui-rails", "~> 4.0.1"
   gem 'execjs'
