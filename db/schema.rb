@@ -11,12 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130828085815) do
+ActiveRecord::Schema.define(:version => 20131113134021) do
 
   create_table "backlogs", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "carrier_wave_files", :force => true do |t|
+    t.string   "identifier"
+    t.string   "original_filename"
+    t.string   "content_type"
+    t.string   "size"
+    t.binary   "data"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "issues", :force => true do |t|
@@ -30,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20130828085815) do
     t.datetime "updated_at",                                         :null => false
     t.integer  "backlog_id"
     t.integer  "lock_version",    :default => 0
-    t.datetime "finished_at",     :default => '2013-09-25 14:16:07'
+    t.datetime "finished_at",     :default => '2013-11-13 13:45:13'
     t.boolean  "ready_to_finish", :default => false
     t.string   "file_attachment"
   end

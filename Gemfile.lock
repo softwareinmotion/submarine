@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/richardkmichael/carrierwave-activerecord.git
+  revision: 64cb13692cfb9b93d62ce199ec1aa301fbef2627
+  specs:
+    carrierwave-activerecord (0.1.0rc6)
+      activerecord (~> 3.2.0)
+      carrierwave (~> 0.8.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -244,7 +252,7 @@ DEPENDENCIES
   awesome_print
   capistrano
   capistrano-ext
-  carrierwave
+  carrierwave-activerecord!
   coffee-rails (~> 3.2.1)
   compass-rails
   database_cleaner

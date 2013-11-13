@@ -83,10 +83,10 @@ article.log*{'id' => list_type}
           div.description.short
             = simple_format(item.description)
             - if item.file_attachment? == true
-              - if @extension_whitelist.index(File.extname(item.file_attachment.path))
-                = link_to( image_tag('box1.png', {:class => 'download_file'}), item.file_attachment.url, {:class=>"swimbox"})
+              - if @extension_whitelist.index(File.extname(item.file_attachment.file.original_filename))
+                = link_to( image_tag('box1.png', {:class => 'download_file'}), "issues/#{item.id}/file_attachment", {:class=>"swimbox"})
               - else
-                = link_to( image_tag('box1.png', {:class => 'download_file'}), item.file_attachment.url)
+                = link_to( image_tag('box1.png', {:class => 'download_file'}), "issues/#{item.id}/file_attachment")
             - if list_type == 'finished_issues'
               div.finished_at_timestamp
                 p.timestamp Abgeschlossen am:

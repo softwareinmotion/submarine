@@ -10,7 +10,7 @@ gem 'thin'
 gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
 gem 'ruby_flipper'
 gem 'simple-navigation'
-gem 'carrierwave'
+gem 'carrierwave-activerecord', :git => 'git://github.com/richardkmichael/carrierwave-activerecord.git'
 gem "mini_magick"
 
 # Gems used only for assets and not required
@@ -52,7 +52,7 @@ group :test, :development do
   gem 'awesome_print'
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
-  
+
   gem 'yaml_db'
 end
 

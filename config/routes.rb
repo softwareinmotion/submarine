@@ -15,10 +15,12 @@ Submarine::Application.routes.draw do
   get 'contact_page' => 'navigation#contact_page', :as => 'contact_page'
   get 'impressum' => 'navigation#impressum', :as => 'impressum'
   get 'finished'=> 'questions#finished', :as => 'finished'
-  
+
   put 'issues/:id' => 'issues#status_handler', :as => 'status_handler'
 
-  resources :issues
+  resources :issues do
+    member { get 'file_attachment' }
+  end
   resources :projects
   resources :bugs, :controller => 'issues'
   resources :tasks, :controller => 'issues'

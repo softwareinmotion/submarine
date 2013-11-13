@@ -149,6 +149,11 @@ class IssuesController < ApplicationController
     @extension_whitelist = ['.jpg', '.jpeg', '.png', '.bmp', '.gif']
   end
 
+  def file_attachment
+    issue = Issue.find(params[:id])
+    send_data issue.file_attachment.read, filename: issue.file_attachment.file.filename
+  end
+
   private
 
   def prepare_form
