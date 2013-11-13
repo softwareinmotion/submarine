@@ -36,14 +36,17 @@
     = f.label :project_id
     - @projects.each do |project|
       div*{'class' => "radio_image #{project[0].downcase}", 'data-project-id' => "#{project[1]}"}
-        = image_tag(project[2])
+        - if project[2].nil?
+          = image_tag "fallback/default.png"
+        - else
+          = image_tag(project[2])
     = f.hidden_field :project_id, :value => (@issue.project_id ? @issue.project_id : @projects[0][1])
     = f.hidden_field :lock_version, :value => (@issue.lock_version)
   div.field
     = f.label 'Anhang'
     = f.file_field :file_attachment
     - if @issue.file_attachment? == true
-      = link_to image_tag('box1.png', {:class => 'download_file_attachment'}), @issue.file_attachment.url
+      = link_to image_tag('box1.png', {:class => 'download_file_attachment'}), @issue.file_attachment.file.url
   div.field
     - if @issue.file_attachment? == true
       = f.hidden_field :file_attachment_cache

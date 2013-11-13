@@ -27,7 +27,10 @@ article.log*{'id' => list_type}
 
         div.visuals_left
           div.project_logo
-            = image_tag(item.project.project_icon.url) if item.project
+            - if item.project.project_icon.file.nil?
+              = image_tag "fallback/default.png"
+            - else
+              = image_tag(item.project.project_icon.url)
           div.issue_type
             = image_tag("#{item.type.downcase}_heavy.png")
           div.issue_story_points

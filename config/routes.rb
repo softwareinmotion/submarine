@@ -21,7 +21,9 @@ Submarine::Application.routes.draw do
   resources :issues do
     member { get 'file_attachment' }
   end
-  resources :projects
+  resources :projects do
+    member { get 'project_icon' }
+  end
   resources :bugs, :controller => 'issues'
   resources :tasks, :controller => 'issues'
   resources :user_stories, :controller => 'issues'

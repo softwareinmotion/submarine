@@ -30,6 +30,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def project_icon
+    project = Project.find(params[:id])
+    send_data project.project_icon.read, filename: project.project_icon.file.filename
+  end
+
   def destroy
     @project = Project.find(params[:id])
     if Issue.where('project_id = ?',@project.id).where('backlog_id != ?', Backlog.finished_backlog).count == 0

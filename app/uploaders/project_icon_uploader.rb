@@ -11,22 +11,22 @@ class ProjectIconUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  storage :active_record
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
-  def store_dir
-    'uploads/'
-  end
+  # def store_dir
+  #   'uploads/'
+  # end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
-  def default_url
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-  #
-     "fallback/default.png"
-  end
+  # def default_url
+  # #   # For Rails 3.1+ asset pipeline compatibility:
+  # #   # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  # #
+  #   "fallback/default.png"
+  # end
 
   # Process files as they are uploaded:
   # process :scale => [60, 20]
