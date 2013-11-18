@@ -1,7 +1,7 @@
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
 
-set :stages, %w(production ent transformers admin ext seminar azubi)
+set :stages, %w(production ent transformers admin ext seminar azubi elap01)
 set :default_stage, "ent"
 
 default_run_options[:pty] = true
