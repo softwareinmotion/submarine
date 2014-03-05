@@ -7,7 +7,6 @@ tr.list_row
   td.name = project.name
   td.action
     = link_to  image_tag("edit.png"), edit_project_path(project)
-  - unless feature_active? :delete_project_icon_via_button
-    td.action
-      = link_to project, :method => :delete, :title => t('project.delete'), :confirm => "Sind Sie Sicher das Sie dieses Projekt Löschen wollen?" do
-        = image_tag("delete.png")
+  td.action
+    = link_to project, :method => :delete, :title => t('project.delete'), :confirm => "Sind Sie Sicher das Sie dieses Projekt Löschen wollen?" do
+      = image_tag("delete.png")

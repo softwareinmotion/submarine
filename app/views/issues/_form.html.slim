@@ -58,9 +58,10 @@
         = File.basename(@issue.file_attachment.file.original_filename)
 
   div.field
-    - if @issue.file_attachment? == true
-      = f.label 'Anhang löschen?'
-      = f.check_box :remove_file_attachment
+    - if feature_active? :delete_project_icon_via_button
+      - if @issue.file_attachment? == true
+        = f.label 'Anhang löschen?'
+        = f.check_box :remove_file_attachment
   div.actions
     = image_submit_tag "btn_save.png"
     = link_to issues_path, class: "button finish_edit" do

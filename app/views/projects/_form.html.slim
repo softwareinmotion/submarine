@@ -22,10 +22,10 @@
         p.project_text_label Es wird das default Icon verwendet.
         = image_tag("fallback/default.png", {:class => 'form_image'})
   div.field
-    - if @project.project_icon? == false
-    - else
-      = x.label 'Icon löschen?'
-      = x.check_box :remove_project_icon
+    - if feature_active? :delete_project_icon_via_button
+      - unless @project.project_icon?
+        = x.label 'Icon löschen?'
+        = x.check_box :remove_project_icon
   div.actions
     = image_submit_tag "btn_save.png"
     = link_to projects_path, class: "button finish_edit" do

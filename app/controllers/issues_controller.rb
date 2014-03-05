@@ -180,7 +180,7 @@ class IssuesController < ApplicationController
   end
 
   def issue_params type
-    params.require(type).permit("name", "description", "story_points", "project_id", "lock_version")
+    params.require(type).permit("name", "description", "story_points", "project_id", "lock_version", "file_attachment")
   end
 
 end
