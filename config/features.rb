@@ -1,9 +1,9 @@
-condition :swim do
-  (ENV['PRODUCT_VARIANT'] == 'swim')
+condition :presentation do
+  (ENV['PRODUCT_VARIANT'] == 'presentation')
 end
 
-condition :presentation do
-  (ENV['PRODUCT_VARIANT'] == 'presentation') or (not active? :swim)
+condition :swim do
+  (ENV['PRODUCT_VARIANT'] == 'swim') or (not active? :presentation)
 end
 
 feature :persist_present_demo, :presentation
