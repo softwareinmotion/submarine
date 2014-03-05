@@ -3,6 +3,5 @@ class Project < ActiveRecord::Base
 
   validates :name, :length => { :maximum => 50 }
   validates_presence_of :name
-  attr_accessible :name, :project_icon, :project_icon_cache, :remove_project_icon
   mount_uploader :project_icon, ProjectIconUploader
 end

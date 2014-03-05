@@ -1,61 +1,34 @@
+source 'http://gemserv.swim.de/'
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '4.0.3'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
+gem 'sqlite3', '~> 1.3.9'
+gem 'thin', '~> 1.6.2'
+gem 'pg', '~> 0.17.1'
+gem 'ruby_flipper', '~> 0.0.5'
+gem 'simple-navigation', '~> 3.12.2'
+gem "carrierwave-activerecord", "0.1.0rc7" # from http://gemserv.swim.de
+gem "mini_magick", '~> 3.7.0'
 
-gem 'sqlite3', '~> 1.3.7'
-gem 'thin'
-gem 'pg' # needs native extensions: sudo aptitude install libpq-dev
-gem 'ruby_flipper'
-gem 'simple-navigation'
-gem 'carrierwave-activerecord', :git => 'git://github.com/richardkmichael/carrierwave-activerecord.git'
-gem "mini_magick"
+gem 'sass-rails',   '~> 4.0.1'
+gem 'coffee-rails', '~> 4.0.1'
+gem 'uglifier', '>= 2.4.0'
+gem 'therubyracer', "~> 0.12.1"
+gem 'jquery-rails', "~> 3.1.0"
+gem "jquery-ui-rails", "~> 4.2.0"
+gem 'execjs', "~> 2.0.2"
+gem 'compass-rails', "~> 1.1.3"
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'therubyracer', "~> 0.12.0"
-  gem 'jquery-rails', "~> 2.2.1"
-  gem "jquery-ui-rails", "~> 4.0.1"
-  gem 'execjs'
-  gem 'compass-rails'
-end
+gem 'slim-rails', "~> 2.1.0"
 
-gem 'slim-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-gem 'capistrano'
-gem 'rvm-capistrano'
-gem 'capistrano-ext'
+gem 'capistrano', "~> 3.1.0"
 
 group :test, :development do
-  gem 'rspec-rails'
-  gem "factory_girl_rails"
-  gem "database_cleaner"
-  gem 'guard-rspec'
-  gem 'guard-spork'
-  gem 'guard-livereload'
-  gem 'spork'
-  gem 'watchr'
-  gem 'debugger'
-  gem 'awesome_print'
-  # Pretty printed test output
-  gem 'turn', '0.8.2', :require => false
-
-  gem 'yaml_db'
-end
-
-group :production do
-  gem 'pg'
+  gem 'rspec-rails', "~> 2.14.1"
+  gem "factory_girl_rails", "~> 4.4.1"
+  gem "database_cleaner", "~> 1.2.0"
+  gem 'guard-rspec', "~> 4.2.7"
+  gem 'awesome_print', "~> 1.2.0"
+  gem 'byebug', '~> 2.7.0'
 end

@@ -7,3 +7,4 @@ condition :presentation do
 end
 
 feature :persist_present_demo, :presentation
+feature :delete_project_icon_via_button, false

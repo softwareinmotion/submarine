@@ -24,7 +24,7 @@ class IssuesController < ApplicationController
       if Issue.children_type_names.include? type
         model_class = Kernel.const_get type
         params[:issue][:story_points] = nil if params[:issue][:story_points] == 'unknown'
-        @issue = model_class.new(params[:issue])
+        @issue = model_class.new(issue_params(:issue))
       end
     else
       types = Issue.children_type_names
@@ -33,7 +33,7 @@ class IssuesController < ApplicationController
         @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
         if params[@type.to_sym]
           model_class = Kernel.const_get t
-          @issue = model_class.new(params[@type.to_sym])
+          @issue = model_class.new(issue_params(@type.to_sym))
           params[@type.to_sym][:story_points] = nil if params[@type.to_sym][:story_points] == 'unknown'
           break
         end
@@ -72,7 +72,7 @@ class IssuesController < ApplicationController
     end
     params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
 
-    if @issue && @issue.update_attributes(params[@type])
+    if @issue && @issue.update_attributes(issue_params(@type))
       redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
     else
       prepare_form
@@ -177,6 +177,10 @@ class IssuesController < ApplicationController
       end
     end
     issues
+  end
+
+  def issue_params type
+    params.require(type).permit("name", "description", "story_points", "project_id", "lock_version")
   end
 
 end

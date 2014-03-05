@@ -15,8 +15,8 @@ class Issue < ActiveRecord::Base
   before_save :set_lock
   after_save :update_lock
 
-  scope :first_in_list, where(predecessor_id: nil)
-  scope :last_in_list, lambda { find_by_sql("select * from issues a where not exists (select * from issues b where b.predecessor_id = a.id)") }
+  scope :first_in_list, -> { where(predecessor_id: nil) }
+  scope :last_in_list, -> { find_by_sql("select * from issues a where not exists (select * from issues b where b.predecessor_id = a.id)") }
 
   def self.children_type_names
     ['UserStory', 'Task', 'Bug', 'Document']

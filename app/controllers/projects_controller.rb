@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new(project_params)
     if @project.save
       redirect_to projects_path, :notice => 'Projekt erfolgreich angelegt!'
     else
@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new(params[:name])
+    @project = Project.new
   end
 
   def edit
@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
 
   def update
     @project = Project.find(params[:id])
-    if @project.update_attributes(params[:project])
+    if @project.update_attributes(project_params)
       redirect_to projects_path, :notice => 'Erfolgreich Editiert'
     else
       render :action => 'edit'
@@ -43,5 +43,11 @@ class ProjectsController < ApplicationController
     else
       redirect_to projects_path, :notice => 'Projekte können nur Gelöscht werden wenn alle Issues abgeschlossen sind!'
     end
+  end
+
+  private
+
+  def project_params
+    params.require(:project).permit("name", "project_icon_cache", "project_icon", "remove_project_icon")
   end
 end
