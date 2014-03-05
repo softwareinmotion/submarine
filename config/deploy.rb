@@ -1,36 +1,22 @@
-require 'capistrano/ext/multistage'
-require 'bundler/capistrano'
-
-set :stages, %w(production ent transformers admin ext seminar azubi elap01)
-set :default_stage, "ent"
-
-default_run_options[:pty] = true
-
-set :application, 'submarine'
 set :scm, :git
-set :repository,  "ssh://entadmin@192.168.202.4/home/Projects/#{application}.git"
 
-set :use_sudo, false
-set :rake,      "bundle exec rake"
+set :format, :pretty
 
+set :log_level, :debug
 
-namespace :deploy do
-  task :start, :roles => [:web, :app] do 
-    run "cd #{deploy_to}/current && PRODUCT_VARIANT=#{product_variant} nohup bundle exec thin -C thin/#{stage}_config.yml -R thin/config.ru start" 
-  end
-  task :stop, :roles => [:web, :app] do 
-    run "cd #{deploy_to}/current && bundle exec thin -C thin/#{stage}_config.yml stop"
-  end
-  task :restart, :roles => [:web, :app], :except => { :no_release => true } do
-    deploy.stop
-    deploy.start
-  end
-  task :seed, :roles => [:web, :app] do
-    run "cd #{deploy_to}/current && bundle exec rake db:seed RAILS_ENV=#{rails_env}"
-  end
-end
-after "deploy:update_code" do
-  run "rm -rf  #{release_path}/public/uploads"
-  run "mkdir -p  #{shared_path}/uploads"
-  run "ln -nfs  #{shared_path}/uploads  #{release_path}/public/uploads"
-end
+set :repo_url,  "ssh://entadmin@192.168.202.4/home/Projects/submarine.git"
+set :keep_releases, 5
+
+set :deploy_to, -> { "/var/lib/submarine_#{fetch(:stage)}" }
+set :rails_env, 'production'
+
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{public/uploads}
+
+set :app_key, -> {Pathname("#{fetch(:deploy_to)}").basename}
+
+set :default_env, -> { { path: "#{fetch(:deploy_to)}/shared/bin:$PATH" } }
+
+set :bundle_without, 'development test'
+
+server 'SLAP03.swim.de', user: 'deploy', roles: %w{web app db}

@@ -1,15 +1,28 @@
-set :rvm_ruby_string, '1.9.3-p385@submarine'
-set :rvm_type, :system  # Copy the exact line. I really mean :user here
+# Load DSL and Setup Up Stages
+require 'capistrano/setup'
 
-require 'rvm/capistrano'
-# bundler bootstrap
-require 'bundler/capistrano'
+# Includes default deployment tasks
+require 'capistrano/deploy'
 
-load 'deploy' if respond_to?(:namespace) # cap2 differentiator
+# Includes tasks from other gems included in your Gemfile
+#
+# For documentation on these, see for example:
+#
+#   https://github.com/capistrano/rvm
+#   https://github.com/capistrano/rbenv
+#   https://github.com/capistrano/chruby
+#   https://github.com/capistrano/bundler
+#   https://github.com/capistrano/rails
+#
+# require 'capistrano/rvm'
+# require 'capistrano/rbenv'
+# require 'capistrano/chruby'
+require 'capistrano/bundler'
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
 
-# Uncomment if you are using Rails' asset pipeline
-load 'deploy/assets'
+require 'cap3_copy_strategy/tasks'
+require 'softwareinmotion_chef_deployment_defaults/tasks'
 
-Dir['vendor/gems/*/recipes/*.rb','vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
-
-load 'config/deploy' # remove this line to skip loading any of the default tasks
+# Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
+Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
