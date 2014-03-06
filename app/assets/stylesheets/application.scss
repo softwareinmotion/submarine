@@ -5,12 +5,12 @@
  *= require_self
 */
 
-/* "require_tree" resulted in a "stack level too deep" error in "rake assets:precompile". Therefore 
+/* "require_tree" resulted in a "stack level too deep" error in "rake assets:precompile". Therefore
  * the SASS import mechanism is used. */
 @import "compass";
-@import "issues.css.scss";
-@import "projects.css.scss";
-@import "swimbox.css";
+@import "issues";
+@import "projects";
+@import "swimbox";
 
 
 $strip-line: 1px solid #ddd;
@@ -70,12 +70,12 @@ header {
   position: fixed;
   top: 0;
   height: 85px;
-  
+
   .menu-left {
-    float: left; 
+    float: left;
     width: 30%;
   }
-  
+
   .menu-center {
     height: 85px;
     text-align: center;
@@ -83,12 +83,12 @@ header {
       margin-top: 50px;
     }
   }
-  
+
   .menu-right {
-    float: right; 
+    float: right;
     width: 30%;
-    
-    .stack { margin: 0; padding: 0; float: right; margin-right: 6px;}    
+
+    .stack { margin: 0; padding: 0; float: right; margin-right: 6px;}
     .wrapper { height:85px; display:table-cell; vertical-align:bottom; }
     .content { max-height:100px; overflow:auto; }
     .content div { padding: 0; margin: 0; }
@@ -150,18 +150,18 @@ footer {
     float: right;
     margin-right: 1.5em;
   }
-  
+
   .menu-left {
     display: block;
-    float: left; 
+    float: left;
     width: 30%;
     min-height: 10px;
   }
-  
+
   .menu-center {
     text-align: center;
   }
-  
+
   .menu-right {
     float: right;
     text-align: right;
@@ -228,7 +228,7 @@ li > span {
       list-style: none;
       padding-bottom: 3px;
       margin-bottom: 4px;
-      
+
       h3 {
         font-weight: bold;
         margin: 2px 0;
@@ -273,18 +273,18 @@ section {
 #locking_form {
   text-align: right;
   margin-top: 20px;
-  
+
   form { float: right;}
-  
+
   button {
-    
+
     font-size: 10pt;
     padding: 4px;
-    
+
     img {
-     vertical-align: middle; 
+     vertical-align: middle;
     }
-    
+
     span {
       vertical-align: middle;
     }

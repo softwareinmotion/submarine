@@ -49,6 +49,7 @@ module Submarine
     config.assets.version = '1.0'
     config.assets.paths << Rails.root.join("app", "assets", "javascripts")
     config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
     # add Javascript assets for all controller specific js files and css files
     config.assets.precompile += (Dir["#{Rails.root}/app/assets/javascripts/*.*"].map {|f| f.match (/\w+\.js/)})
     config.assets.precompile += (Dir["#{Rails.root}/app/assets/stylesheets/*.*"].map {|f| f.match (/\w+\.css/)})
