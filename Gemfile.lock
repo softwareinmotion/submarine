@@ -104,7 +104,7 @@ GEM
     jquery-ui-rails (4.2.0)
       railties (>= 3.2.16)
     json (1.8.1)
-    libv8 (3.16.14.3)
+    libv8 (3.16.14.7)
     listen (2.6.2)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
