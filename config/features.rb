@@ -8,3 +8,4 @@ end
 
 feature :persist_present_demo, :presentation
 feature :delete_project_icon_via_button, false
+feature :temp_changes_for_iso, false
