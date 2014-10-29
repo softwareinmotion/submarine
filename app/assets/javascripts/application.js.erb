@@ -9,7 +9,7 @@
 //= require jquery_tmpl
 //= require jquery_validate
 //= require swimbox.js
-//= require jquery.ui.all
+//= require jquery-ui
 //= require jquery.tablednd
 //= require jquery.transform2d
 //= require modernizr-2.6.2.min
@@ -41,7 +41,7 @@ SUBMARINE = {
     if($(ui.item).is("li")) {
       list_element = $(ui.item);
     } else {
-      list_element = $(ui.item).parents('li');  
+      list_element = $(ui.item).parents('li');
     }
 
     var check_for_backlog = $(ui.item);
@@ -68,15 +68,15 @@ SUBMARINE = {
       controls.removeClass('sprint_controls');
     }
 
-    var data = { moved_issue: list_element.attr("data-id"), 
+    var data = { moved_issue: list_element.attr("data-id"),
       predecessor: $(list_element).prev() && $(list_element).prev().attr("data-id"),
       lock_versions: {},
       backlog: $(list_element).parent().attr("id").split("_list")[0]};
     $('ul#backlog_list > li').each(function(i, li){
-      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
+      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version");
     });
     $('ul#sprint_backlog_list > li').each(function(i, li){
-      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
+      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version");
     });
     $.ajax({
       type: 'POST',
@@ -103,7 +103,7 @@ SUBMARINE = {
       $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");
-      $(this).parent().css('height', $(this).height());	  
+      $(this).parent().css('height', $(this).height());
     }
   },
 

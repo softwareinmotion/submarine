@@ -5,11 +5,11 @@ $article_default_width: 600px;
 
 @mixin ul_base {
   width: 100%;
-  list-style-type: none; 
-  margin: 0; 
-  padding: 0; 
-  float: left; 
-  margin-right: 10px; 
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  float: left;
+  margin-right: 10px;
 }
 
 @mixin ul_header {
@@ -56,12 +56,12 @@ $article_default_width: 600px;
   border: $default_border;
   margin-bottom: 50px;
   background: white;
-  
+
   ul.form_header {
     @include ul_header;
     $experimental-support-for-svg: true;
     @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
-    list-style-type: none; 
+    list-style-type: none;
     margin-bottom: 30px;
     padding: 0;
     margin-top: 0;
@@ -106,4 +106,3 @@ $article_default_width: 600px;
     width: 203px;
   }
 }
-
