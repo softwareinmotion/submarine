@@ -47,6 +47,12 @@ SUBMARINE = {
     var check_for_backlog = $(ui.item);
     var current_item_id = $(check_for_backlog).attr('id');
 
+    if(check_for_backlog.parents('ul#new_issues_list').size() > 0) {
+      $("#" + current_item_id + ' .delete_issue').css('display', 'inline');
+      $("#" + current_item_id + ' .finish_issue').css('display', 'none');
+      $("#" + current_item_id + ' .set_issue_ready').css('display', 'none');
+    }
+
     if (check_for_backlog.parents('ul#sprint_backlog_list').size() > 0) {
       $("#" + current_item_id + ' .delete_issue').css('display', 'none');
       $("#" + current_item_id + ' .finish_issue').css('display', 'inline');
@@ -78,6 +84,10 @@ SUBMARINE = {
     $('ul#sprint_backlog_list > li').each(function(i, li){
       data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version");
     });
+    $('ul#new_issues_list > li').each(function(i, li){
+      data.lock_versions[$(li).attr('data-id')] = $(li).attr('data-lock-version');
+    });
+
     $.ajax({
       type: 'POST',
       url: SUBMARINE.changeListURL,

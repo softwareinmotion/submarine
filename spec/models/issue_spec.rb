@@ -5,6 +5,7 @@ describe Issue do
     @sprint_backlog = create(:backlog, name: "sprint_backlog")
     @finished_backlog = create(:backlog, name: "finished_backlog")
   end
+
   describe '#close_gap' do
     it 'should delete an issue and close the gap if the first issue of the list is deleted' do 
       issue1 = create(:issue, type: "Task")
@@ -44,7 +45,6 @@ describe Issue do
   end
 
   describe '#finish' do
-
     it 'should finish the only one element in the list' do
       project = create(:project, name: 'Projekt1')
       issue = create(:task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: @sprint_backlog, project: project)
@@ -187,15 +187,12 @@ describe Issue do
 
   # don't test the framework
   describe "#create" do
-
     it "starts with lock_version number 0" do
       create(:issue).lock_version.should eq(0)
     end
-
   end
 
   describe "#update_attributes" do
-
     it "increments the lock number" do
       issue = create :issue
       issue.update_attributes :name => "Changed"
@@ -209,16 +206,12 @@ describe Issue do
       issue1.update_attributes :name => 'Changed first'
       expect { issue2.update_attributes :name => 'Changed second' }.to raise_error(ActiveRecord::StaleObjectError)
     end
-
   end
 
   describe "#move_to" do
-
     # x ... issue to move
     # 0 ... other issues
-
     context "changing priotity of an issue" do
-
       it "
       Start:  [ x     ]
       Finish: [ x     ]"  do
@@ -453,11 +446,24 @@ describe Issue do
         b.predecessor.should eq a
         b.descendant.should eq x
       end
+    end
 
+    feature_active? :temp_changes_for_iso do
+      context 'move issue between new_issues_list and product backlog' do
+        it '
+        Start:  [ x   ][    ]
+        Finish: [     ][ x  ]' do
+          x = create :issue, backlog: Backlog.new_issues_list
+          x.move_to Backlog.backlog
+          x.reload
+
+          expect(x.backlog).to eq(Backlog.backlog)
+          expect(x.predecessor).to be_nil
+        end
+      end
     end
 
     context "move issue between backlogs" do
-
       ## test effects on source list
       it "
       Start:  [ x     ] [       ]
@@ -537,7 +543,6 @@ describe Issue do
         b.backlog.should eq Backlog.backlog
       end
 
-
       ## test effects on target list
       it "
       Start:  [ x     ] [ a     ]
@@ -599,13 +604,10 @@ describe Issue do
       x = create :issue, backlog: Backlog.backlog
       a = create :issue, backlog: Backlog.sprint_backlog
 
-
       expect {
         x.move_to Backlog.backlog, new_predecessor: a
       }.to raise_error
-
     end
-
   end
 
   describe '#save_with_lock' do
@@ -618,7 +620,6 @@ describe Issue do
     end
 
     context "when having a lower lock versions in memory than in db" do
-
       it "raises an error when having a different lock version" do
         LockVersionHelper.lock_version = { }
         LockVersionHelper.lock_version[@issue.id.to_s] = 0
@@ -627,7 +628,6 @@ describe Issue do
           @issue.save
         }.to raise_error ActiveRecord::StaleObjectError
       end
-
     end
 
     context "when having the same lock version in memory and db" do
@@ -658,8 +658,6 @@ describe Issue do
 
         LockVersionHelper.lock_version[@issue.id.to_s].should be 2
       end
-
     end
   end
-
 end

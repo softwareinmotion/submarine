@@ -3,6 +3,7 @@ class IssuesController < ApplicationController
   def index
     @backlog_issues = sorted_list(Backlog.backlog.first_issue)
     @sprint_issues = sorted_list(Backlog.sprint_backlog.first_issue)
+
     extension_whitelist
   end
 
@@ -41,8 +42,14 @@ class IssuesController < ApplicationController
     end
 
     if @issue
-      old_first_issue = Backlog.backlog.first_issue
-      Backlog.backlog.issues << @issue
+      if feature_active? :temp_changes_for_iso
+        old_first_issue = Backlog.new_issues_list.first_issue
+        Backlog.new_issues_list.issues << @issue
+      else
+        old_first_issue = Backlog.backlog.first_issue
+        Backlog.backlog.issues << @issue
+      end
+
       @issue.predecessor_id = nil
     end
 
@@ -51,7 +58,12 @@ class IssuesController < ApplicationController
         old_first_issue.predecessor_id = @issue.id
         old_first_issue.save!
       end
-      redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
+
+      if feature_active? :temp_changes_for_iso
+        redirect_to new_issues_path, notice: 'Eintrag erfolgreich erstellt.'
+      else
+        redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
+      end
     else
       prepare_form
       render action: "new"
@@ -73,7 +85,11 @@ class IssuesController < ApplicationController
     params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
 
     if @issue && @issue.update_attributes(issue_params(@type))
-      redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+      if feature_active? :temp_changes_for_iso
+        redirect_to new_issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+      else
+        redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+      end
     else
       prepare_form
       @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
@@ -89,7 +105,12 @@ class IssuesController < ApplicationController
   def destroy
     @issue = Issue.find(params[:id])
     @issue.destroy
-    redirect_to issues_url
+
+    if feature_active? :temp_changes_for_iso
+      redirect_to new_issues_path, notice: 'Eintrag erfolgreich gelöscht.'
+    else
+      redirect_to issues_url
+    end
   end
 
   # moves backlog_item from one backlog to the other backlog
@@ -104,11 +125,13 @@ class IssuesController < ApplicationController
     predecessor = params[:predecessor] ? Issue.find(params[:predecessor]) : nil
     backlog = Backlog.find_by_name params[:backlog]
     LockVersionHelper::lock_version = params[:lock_versions]
+
     if predecessor
       moved_issue.move_to backlog, new_predecessor: predecessor
     else
       moved_issue.move_to backlog
     end
+
     moved_issue.ready_to_finish = false
     moved_issue.save
     render :json => LockVersionHelper::lock_version
@@ -126,6 +149,13 @@ class IssuesController < ApplicationController
 
   def finished_issues_list
     @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+  end
+
+  feature_active? :temp_changes_for_iso do
+    def new_issues_list
+      @new_issues_list = sorted_list Backlog.new_issues_list.first_issue
+      @backlog_issues = sorted_list(Backlog.backlog.first_issue)
+    end
   end
 
   def activate_issue
@@ -182,5 +212,4 @@ class IssuesController < ApplicationController
   def issue_params type
     params.require(type).permit("name", "description", "story_points", "project_id", "lock_version", "file_attachment")
   end
-
 end

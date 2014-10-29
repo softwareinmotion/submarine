@@ -13,6 +13,12 @@ class Backlog < ActiveRecord::Base
     Backlog.where(name: 'finished_backlog').first
   end
 
+  feature_active? :temp_changes_for_iso do
+    def self.new_issues_list
+      Backlog.where(name: 'new_issues').first
+    end
+  end
+
   def first_issue
     self.issues.first_in_list.first
   end
@@ -31,5 +37,4 @@ class Backlog < ActiveRecord::Base
       first_backlog_issue.save
     end
   end
-
 end

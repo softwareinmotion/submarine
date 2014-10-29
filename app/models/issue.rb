@@ -91,10 +91,9 @@ class Issue < ActiveRecord::Base
           new_descendant.save!
         end
       end
-      if self.backlog != backlog
-        self.backlog = backlog
-      end
-        self.save!
+
+      self.backlog = backlog if self.backlog != backlog
+      self.save!
     end
   end
 
@@ -113,5 +112,4 @@ class Issue < ActiveRecord::Base
 
     LockVersionHelper::lock_version[self.id.to_s] = self.lock_version
   end
-
 end
