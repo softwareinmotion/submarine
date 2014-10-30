@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     if @project.save
-      redirect_to projects_path, :notice => 'Projekt erfolgreich angelegt!'
+      redirect_to projects_path, :notice => t('project.successful_added')
     else
       render :action => 'new'
     end
@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
-      redirect_to projects_path, :notice => 'Erfolgreich editiert.'
+      redirect_to projects_path, :notice => t('project.successful_edited')
     else
       render :action => 'edit'
     end
@@ -38,9 +38,9 @@ class ProjectsController < ApplicationController
   def destroy
     if Issue.where('project_id = ?', @project.id).where('backlog_id != ?', Backlog.finished_backlog).count == 0
       @project.destroy
-      redirect_to projects_path, :notice => 'Erfolgreich gelöscht.'
+      redirect_to projects_path, :notice => t('project.successful_deleted')
     else
-      redirect_to projects_path, :notice => 'Projekte können nur gelöscht werden, wenn alle Issues abgeschlossen sind!'
+      redirect_to projects_path, :notice => t('project.not_destroyable')
     end
   end
 

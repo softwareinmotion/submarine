@@ -47,6 +47,11 @@ de:
     errors:
       data_staled: 'Das Backlog wurde in der Zwischenzeit geändert. Die Listen müssen neu geladen werden.'
 
+    successful_added: 'Eintrag erfolgreich erstellt.'
+    successful_edited: 'Eintrag erfolgreich bearbeitet.'
+    successful_deleted: 'Eintrag erfolgreich gelöscht.'
+    edited: 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
+
   backlog:
     edit: 'Bearbeiten'
     finish_editing: 'Bearbeiten beenden'
@@ -69,6 +74,11 @@ de:
         carrierwave_processing_error: "Cannot resize image."
         carrierwave_integrity_error: "Not an image."
         carrierwave_download_error: "Couldn't download image."
+
+    successful_added: 'Projekt erfolgreich angelegt.'
+    successful_edited: 'Projekt erfolgreich bearbeitet.'
+    successful_deleted: 'Projekt erfolgreich gelöscht.'
+    not_destroyable: 'Projekte können nur gelöscht werden, wenn alle Issues abgeschlossen sind!'
 
   errors:
     messages:

@@ -60,9 +60,9 @@ class IssuesController < ApplicationController
       end
 
       if feature_active? :temp_changes_for_iso
-        redirect_to new_issues_path, notice: 'Eintrag erfolgreich erstellt.'
+        redirect_to new_issues_path, notice: t('issue.successful_added')
       else
-        redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
+        redirect_to issues_path, notice: t('issue.successful_added')
       end
     else
       prepare_form
@@ -87,19 +87,19 @@ class IssuesController < ApplicationController
 
     if @issue && @issue.update(issue_params(@type))
       if feature_active? :temp_changes_for_iso
-        redirect_to new_issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+        redirect_to new_issues_path, notice: t('issue.successful_edited')
       else
-        redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+        redirect_to issues_path, notice: t('issue.successful_edited')
       end
     else
       prepare_form
-      @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
+      @issue.errors[:base] << t('issue.edited')
       render action: "edit"
     end
 
   rescue ActiveRecord::StaleObjectError
     prepare_form
-    @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
+    @issue.errors[:base] << t('issue.edited')
     render action: "edit"
   end
 
@@ -107,7 +107,7 @@ class IssuesController < ApplicationController
     @issue.destroy
 
     if feature_active? :temp_changes_for_iso
-      redirect_to new_issues_path, notice: 'Eintrag erfolgreich gelöscht.'
+      redirect_to new_issues_path, notice: t('issue.successful_deleted')
     else
       redirect_to issues_path
     end

@@ -84,7 +84,7 @@ describe IssuesController do
       it 'displays a success message' do
         post :create, valid_params
 
-        expect(flash[:notice]).to eq('Eintrag erfolgreich erstellt.')
+        expect(flash[:notice]).to eq(I18n.t('issue.successful_added'))
       end
 
       if feature_active? :temp_changes_for_iso
@@ -197,7 +197,7 @@ describe IssuesController do
       it 'displays a success message' do
         put :update, valid_params
 
-        expect(flash[:notice]).to eq('Eintrag erfolgreich bearbeitet.')
+        expect(flash[:notice]).to eq(I18n.t('issue.successful_edited'))
       end
 
       if feature_active? :temp_changes_for_iso
@@ -249,7 +249,7 @@ describe IssuesController do
       it 'displays a success message' do
         delete :destroy, id: issue.id
 
-        expect(flash[:notice]).to eq('Eintrag erfolgreich gelöscht.')
+        expect(flash[:notice]).to eq(I18n.t('issue.successful_deleted'))
       end
 
       it 'redirects to the new_issues_path' do

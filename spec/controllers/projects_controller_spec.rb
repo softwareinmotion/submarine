@@ -34,7 +34,7 @@ describe ProjectsController do
       it 'displays a success message' do
         post :create, valid_params
 
-        expect(flash[:notice]).to eq('Projekt erfolgreich angelegt!')
+        expect(flash[:notice]).to eq(I18n.t('project.successful_added'))
       end
 
       it 'redirects to projects_path' do
@@ -115,7 +115,7 @@ describe ProjectsController do
       it 'displays a success message' do
         put :update, valid_params
 
-        expect(flash[:notice]).to eq('Erfolgreich editiert.')
+        expect(flash[:notice]).to eq(I18n.t('project.successful_edited'))
       end
 
       it 'redirects to projects_path' do
@@ -160,7 +160,7 @@ describe ProjectsController do
       it 'displays a success message' do
         delete :destroy, id: project.id
 
-        expect(flash[:notice]).to eq('Erfolgreich gelöscht.')
+        expect(flash[:notice]).to eq(I18n.t('project.successful_deleted'))
       end
     end
 
@@ -171,7 +171,7 @@ describe ProjectsController do
       it 'displays an error message' do
         delete :destroy, id: project.id
 
-        expect(flash[:notice]).to eq('Projekte können nur gelöscht werden, wenn alle Issues abgeschlossen sind!')
+        expect(flash[:notice]).to eq(I18n.t('project.not_destroyable'))
       end
     end
   end
