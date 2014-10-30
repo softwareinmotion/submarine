@@ -1,4 +1,5 @@
 class IssuesController < ApplicationController
+  before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler]
 
   def index
     @backlog_issues = sorted_list(Backlog.backlog.first_issue)
@@ -14,7 +15,6 @@ class IssuesController < ApplicationController
   end
 
   def edit
-    @issue = Issue.find(params[:id])
     extension_whitelist
     prepare_form
   end
@@ -140,10 +140,9 @@ class IssuesController < ApplicationController
   end
 
   def finish_issue
-    issue = Issue.find(params[:id])
-    issue.finish
-    issue.finished_at = Time.now
-    issue.save
+    @issue.finish
+    @issue.finished_at = Time.now
+    @issue.save
     redirect_to issues_path
   end
 
@@ -159,19 +158,18 @@ class IssuesController < ApplicationController
   end
 
   def activate_issue
-    issue = Issue.find(params[:id])
-    issue.activate
+    @issue.activate
     redirect_to finished_issues_url
   end
 
   def status_handler
-    issue = Issue.find(params[:id])
-    if issue.ready_to_finish == true
-      issue.ready_to_finish = false
+    if @issue.ready_to_finish == true
+      @issue.ready_to_finish = false
     else
-      issue.ready_to_finish = true
+      @issue.ready_to_finish = true
     end
-    issue.save
+
+    @issue.save
     redirect_to issues_path
   end
 
@@ -180,11 +178,14 @@ class IssuesController < ApplicationController
   end
 
   def file_attachment
-    issue = Issue.find(params[:id])
-    send_data issue.file_attachment.read, filename: issue.file_attachment.file.filename
+    send_data @issue.file_attachment.read, filename: @issue.file_attachment.file.filename
   end
 
   private
+
+  def set_issue
+    @issue = Issue.find(params[:id])
+  end
 
   def prepare_form
     @projects = Project.all(:order => 'name ASC').collect do |project|

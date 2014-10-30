@@ -13,6 +13,7 @@ describe IssuesController do
     end
 
     it 'locates the requested issue' do
+      pending
       post :finish_issue, id: @issue
       assigns(:issue).should eq(@message)
     end
