@@ -29,10 +29,12 @@ class Backlog < ActiveRecord::Base
 
   def update_with_list list
     if list and list.length > 0
+
       list.each_with_index do |id, i|
         Issue.find(id).update_attributes!(:predecessor_id => (i == 0 ? nil : list[i-1]), :backlog => self)
       end
-      first_backlog_issue = Issue.find_by_id list.first
+
+      first_backlog_issue = Issue.find_by(id: list.first)
       first_backlog_issue.predecessor_id = nil
       first_backlog_issue.save
     end
