@@ -1,5 +1,5 @@
 section#main
-  = render :partial => 'list', :locals => {:list_type => 'new_issues', :list_items => @new_issues_list}
+  = render :partial => 'list', :locals => {:list_type => 'new_issues', :list_items => @new_issues}
   = render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues}
 
   div#refresh-dialog.no_js*{'title' => 'notification'}

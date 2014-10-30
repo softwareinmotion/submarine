@@ -5,7 +5,7 @@ FactoryGirl.define do
     type "Issue"
     association :project
   end
-  
+
   factory :bug do
     sequence(:name) {|n| "bug##{n}"}
     sequence(:description) {|n| "desc#{n}"}
@@ -22,5 +22,5 @@ FactoryGirl.define do
     sequence(:name) {|n| "user_story#{n}"}
     sequence(:description) {|n| "desc#{n}"}
     association :project
-  end 
+  end
 end

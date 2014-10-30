@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     @finished_issues_count = Backlog.finished_backlog.issues.count
 
     feature_active? :temp_changes_for_iso do
-      @new_issues_list_count = Backlog.new_issues_list.issues.count
+      @new_issues_count = Backlog.new_issues_list.issues.count
     end
   end
 end

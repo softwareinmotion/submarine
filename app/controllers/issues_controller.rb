@@ -73,6 +73,7 @@ class IssuesController < ApplicationController
   def update
     types = Issue.children_type_names
     @issue = nil
+
     types.each do |t|
       @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
       if params[@type]
@@ -84,7 +85,7 @@ class IssuesController < ApplicationController
     end
     params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
 
-    if @issue && @issue.update_attributes(issue_params(@type))
+    if @issue && @issue.update(issue_params(@type))
       if feature_active? :temp_changes_for_iso
         redirect_to new_issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
       else
@@ -103,13 +104,12 @@ class IssuesController < ApplicationController
   end
 
   def destroy
-    @issue = Issue.find(params[:id])
     @issue.destroy
 
     if feature_active? :temp_changes_for_iso
       redirect_to new_issues_path, notice: 'Eintrag erfolgreich gelöscht.'
     else
-      redirect_to issues_url
+      redirect_to issues_path
     end
   end
 
@@ -123,7 +123,7 @@ class IssuesController < ApplicationController
   def change_list
     moved_issue = Issue.find params[:moved_issue]
     predecessor = params[:predecessor] ? Issue.find(params[:predecessor]) : nil
-    backlog = Backlog.find_by_name params[:backlog]
+    backlog = Backlog.find_by(name: params[:backlog])
     LockVersionHelper::lock_version = params[:lock_versions]
 
     if predecessor
@@ -143,23 +143,25 @@ class IssuesController < ApplicationController
     @issue.finish
     @issue.finished_at = Time.now
     @issue.save
+
     redirect_to issues_path
   end
 
   def finished_issues_list
-    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+    @finished_issues = sorted_list(Backlog.finished_backlog.first_issue)
   end
 
   feature_active? :temp_changes_for_iso do
     def new_issues_list
-      @new_issues_list = sorted_list Backlog.new_issues_list.first_issue
+      @new_issues = sorted_list(Backlog.new_issues_list.first_issue)
       @backlog_issues = sorted_list(Backlog.backlog.first_issue)
     end
   end
 
   def activate_issue
     @issue.activate
-    redirect_to finished_issues_url
+
+    redirect_to finished_issues_path
   end
 
   def status_handler
@@ -188,7 +190,7 @@ class IssuesController < ApplicationController
   end
 
   def prepare_form
-    @projects = Project.all(:order => 'name ASC').collect do |project|
+    @projects = Project.all.collect do |project|
       [project.name, project.id, project.project_icon_url]
     end
     a_number = 0
@@ -200,13 +202,16 @@ class IssuesController < ApplicationController
 
   def sorted_list element
     issues = []
+
     if element
       issues << element
+
       while element.descendant do
         element = element.descendant
         issues << element
       end
     end
+
     issues
   end
 
