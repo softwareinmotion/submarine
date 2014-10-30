@@ -2,9 +2,13 @@ de:
   notification: "Hinweis"
   save: 'Speichern'
   cancel: 'Abbrechen'
-  errors_occured: 'Folgende Fehler sind aufgetreten'
+  errors_occured: 'Folgende Fehler sind aufgetreten:'
   finished_issues: 'Abgeschlossene Einträge'
   backlogs: 'Backlogs'
+  backlog_list: 'Backlog'
+  sprint_backlog: 'Sprint Backlog'
+  new_issues: 'Neue Einträge'
+
   activerecord:
     errors:
       models:
@@ -14,6 +18,7 @@ de:
               invalid: 'Die eingegebene Email-Adresse ist ungültig.'
               too_long: 'Die eingegebene Email-Adresse ist zu lang.'
               too_short: 'Die eingegebene Email-Adresse ist zu kurz.'
+
     attributes:
       issue:
         id: 'Nr.'
@@ -28,6 +33,7 @@ de:
       errors:
         messages:
           blank: 'Das Feld darf nicht leer sein.'
+
   issue:
     new: 'Eintrag erstellen'
     edit: 'Eintrag bearbeiten'
@@ -37,8 +43,10 @@ de:
     move: 'Eintrag verschieben'
     ready: 'Eintrag als wird bearbeitet setzen'
     pending: 'Eintrag als bearbeitet setzen'
+    no: 'Issues koennen nicht ohne Projekte angelegt werden.'
     errors:
       data_staled: 'Das Backlog wurde in der Zwischenzeit geändert. Die Listen müssen neu geladen werden.'
+
   backlog:
     edit: 'Bearbeiten'
     finish_editing: 'Bearbeiten beenden'
@@ -47,15 +55,21 @@ de:
     errors:
       locked_by_another_user: 'Die Listen konnten nicht gesperrt werden, weil jemand anderes sie bearbeitet.'
       lists_not_locked: 'Sie müssen auf "Bearbeiten" klicken, um die Listen bearbeiten zu können.'
+
   project:
-    delete: 'Löschen'
-    edit: 'Editieren'
+    all: 'Alle Projekte'
+    delete: 'Projekt löschen'
+    edit: 'Projekt editieren'
     new: 'Neues Projekt erstellen'
+    max_size: 'Die Maximale Bildgröße beträgt 40 x 20 Pixel.'
+    notice: 'Hinweis: Bilder werden nicht skaliert!'
+    default_icon: 'Es wird das default Icon verwendet.'
     errors:
       messages:
         carrierwave_processing_error: "Cannot resize image."
         carrierwave_integrity_error: "Not an image."
         carrierwave_download_error: "Couldn't download image."
+
   errors:
     messages:
       extension_white_list_error: "hat ein Falsches Format"

@@ -2,7 +2,7 @@
   - if @issue.errors.any?
     div#error_explanation
       h2
-        = t "errors_occured"
+        = t('errors_occured')
       ul
         - if @issue.errors[:base] && @issue.errors[:base][0]
           li

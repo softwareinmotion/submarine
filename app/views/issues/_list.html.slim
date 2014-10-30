@@ -3,43 +3,49 @@ article.log*{'id' => list_type}
     - if feature_active? :temp_changes_for_iso
       - case list_type
       - when 'sprint_backlog'
-        li Sprint Backlog
+        li
+          = t('sprint_backlog')
         li#story_points_sum.no_js
           span
           = image_tag "sp_sum_0.5_heavy.png", :id => "half_story_point"
           = image_tag "sp_0.5_heavy.png", :id => "half_story_point_small"
+
       - when 'backlog'
-        li Backlog
+        li = t('backlog_list')
       - when 'finished_issues'
         li
           = t 'finished_issues'
         li#btn_in_header
           = link_to issues_path, :title => t('backlogs') do
             = image_tag("show_backlogs.png")
+
       - when 'new_issues'
-        li Neue Einträge
+        li = t('new_issues')
         li#btn_in_header
           - if Project.all == []
-            = flash.now[:notice] = 'Issues koennen nicht ohne Projekte angelegt werden.'
+            = flash.now[:notice] = t('issue.no')
           - else
             = link_to new_issue_path,:title => t('issue.new') do
               = image_tag("new.png")
+
     - else
       - case list_type
       - when 'sprint_backlog'
-        li Sprint Backlog
+        li = t('sprint_backlog')
         li#story_points_sum.no_js
           span
           = image_tag "sp_sum_0.5_heavy.png", :id => "half_story_point"
           = image_tag "sp_0.5_heavy.png", :id => "half_story_point_small"
+
       - when 'backlog'
-        li Backlog
+        li = t('backlog_list')
         li#btn_in_header
           - if Project.all == []
-            = flash.now[:notice] = 'Issues koennen nicht ohne Projekte angelegt werden.'
+            = flash.now[:notice] = t('issue.no')
           - else
             = link_to new_issue_path,:title => t('issue.new') do
               = image_tag("new.png")
+
       - when 'finished_issues'
         li
           = t 'finished_issues'
