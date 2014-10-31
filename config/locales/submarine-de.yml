@@ -8,6 +8,7 @@ de:
   backlog_list: 'Backlog'
   sprint_backlog: 'Sprint Backlog'
   new_issues: 'Neue Einträge'
+  history: 'Historie'
 
   activerecord:
     errors:
@@ -44,6 +45,15 @@ de:
     ready: 'Eintrag als wird bearbeitet setzen'
     pending: 'Eintrag als bearbeitet setzen'
     no: 'Issues koennen nicht ohne Projekte angelegt werden.'
+    show: 'Eintrag einsehen'
+    state_created: 'Anforderung wurde erstellt.'
+    state_examined: 'Anforderung wurde geprüft und erfüllt alle Kriterien.'
+    state_planned: 'Anforderung wurde für einen Sprint eingeplant.'
+    state_done: 'Anforderung wurde umgesetzt, getestet & deployed.'
+    state_finished: 'Anforderung wurde abgenommen.'
+    created_at: 'Erstellt am:'
+    finished_at: 'Abgeschlossen am:'
+
     errors:
       data_staled: 'Das Backlog wurde in der Zwischenzeit geändert. Die Listen müssen neu geladen werden.'
 

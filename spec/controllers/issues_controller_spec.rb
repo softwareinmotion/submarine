@@ -360,6 +360,22 @@ describe IssuesController do
         expect(assigns(:backlog_issues)).to eq([issue])
       end
     end
+
+    describe '#show' do
+      let(:issue) { create :task, backlog: sprint_backlog }
+
+      it 'assigns the requested issue as @issue' do
+        get :show, id: issue.id
+
+        expect(assigns(:issue)).to eq(issue)
+      end
+
+      it 'renders the show view' do
+        get :show, id: issue.id
+
+        expect(response).to render_template(:show)
+      end
+    end
   end
 
   describe '#activate_issue' do

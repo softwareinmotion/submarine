@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029121657) do
+ActiveRecord::Schema.define(version: 20141031100656) do
 
   create_table "backlogs", force: true do |t|
     t.string   "name"
@@ -40,9 +40,12 @@ ActiveRecord::Schema.define(version: 20141029121657) do
     t.datetime "updated_at"
     t.integer  "backlog_id"
     t.integer  "lock_version",    default: 0
-    t.datetime "finished_at",     default: '2014-10-29 10:59:50'
+    t.datetime "finished_at"
     t.boolean  "ready_to_finish", default: false
     t.string   "file_attachment"
+    t.datetime "examined_at"
+    t.datetime "planned_at"
+    t.datetime "done_at"
   end
 
   create_table "projects", force: true do |t|

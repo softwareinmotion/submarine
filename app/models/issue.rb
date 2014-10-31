@@ -46,6 +46,12 @@ class Issue < ActiveRecord::Base
     backlog == Backlog.sprint_backlog
   end
 
+  feature_active? :temp_changes_for_iso do
+    def in_backlog?
+      backlog == Backlog.backlog
+    end
+  end
+
   def close_gap
     descendant = self.descendant
     if descendant

@@ -189,6 +189,24 @@ describe Issue do
     end
   end
 
+  feature_active? :temp_changes_for_iso do
+    describe '#in_backlog?' do
+      let(:issue) { create :task }
+
+      it 'returns true if backlog == backlog'  do
+        issue.update(backlog: Backlog.backlog)
+
+        expect(issue.in_backlog?).to eq(true)
+      end
+
+      it 'returns false otherwise' do
+        issue.update(backlog: Backlog.sprint_backlog)
+
+        expect(issue.in_backlog?).to eq(false)
+      end
+    end
+  end
+
   describe '#activate' do
     let(:project) { create :project, name: 'Projekt1' }
     let(:backlog) { create :backlog }

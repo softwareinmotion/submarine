@@ -1,5 +1,9 @@
 class IssuesController < ApplicationController
-  before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler]
+  if feature_active? :temp_changes_for_iso
+    before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler, :show]
+  else
+    before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler]
+  end
 
   def index
     @backlog_issues = sorted_list(Backlog.backlog.first_issue)
@@ -155,6 +159,9 @@ class IssuesController < ApplicationController
     def new_issues_list
       @new_issues = sorted_list(Backlog.new_issues_list.first_issue)
       @backlog_issues = sorted_list(Backlog.backlog.first_issue)
+    end
+
+    def show
     end
   end
 
