@@ -52,6 +52,9 @@ de:
     state_done: 'Anforderung wurde umgesetzt, getestet & deployed.'
     state_finished: 'Anforderung wurde abgenommen.'
     created_at: 'Erstellt am:'
+    examined_at: 'Geprüft am:'
+    planned_at: 'Eingeplant am:'
+    done_at: 'Umgesetzt am:'
     finished_at: 'Abgeschlossen am:'
 
     errors:

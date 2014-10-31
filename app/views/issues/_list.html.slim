@@ -12,6 +12,7 @@ article.log*{'id' => list_type}
 
       - when 'backlog'
         li = t('backlog_list')
+
       - when 'finished_issues'
         li
           = t 'finished_issues'
@@ -146,20 +147,39 @@ article.log*{'id' => list_type}
             = "##{item.id}"
           div.issue_name
             = item.name
+
         div.issue_line
           div.description.short
             = simple_format(item.description)
+
             - if item.file_attachment? == true
               - if @extension_whitelist.index(File.extname(item.file_attachment.file.original_filename))
                 = link_to( image_tag('box1.png', {:class => 'download_file'}), "issues/#{item.id}/file_attachment", {:class=>"swimbox"})
               - else
                 = link_to( image_tag('box1.png', {:class => 'download_file'}), "issues/#{item.id}/file_attachment")
 
-            - if list_type == 'finished_issues'
-              div.finished_at_timestamp
-                p.timestamp = t('issue.finished_at')
-                = item.finished_at.localtime.to_formatted_s(:short)
+            - if feature_active? :temp_changes_for_iso
+              div.date_at_timestamp
+                - case list_type
+                - when 'new_issues'
+                  p.timestamp = t('issue.created_at')
+                  = to_local(item.created_at)
+                - when 'backlog'
+                  p.timestamp = t('issue.examined_at')
+                  = to_local(item.examined_at)
+                - when 'sprint_backlog'
+                  p.timestamp = t('issue.planned_at')
+                  = to_local(item.planned_at)
+                - when 'finished_issues'
+                  p.timestamp = t('issue.finished_at')
+                  = to_local(item.finished_at)
+
             - else
-              div.finished_at_timestamp
-                p.timestamp = t('issue.created_at')
-                = item.created_at.localtime.to_formatted_s(:short)
+              - if list_type == 'finished_issues'
+                div.date_at_timestamp
+                  p.timestamp = t('issue.finished_at')
+                  = item.finished_at.localtime.to_formatted_s(:short)
+              - else
+                div.date_at_timestamp
+                  p.timestamp = t('issue.created_at')
+                  = item.created_at.localtime.to_formatted_s(:short)
