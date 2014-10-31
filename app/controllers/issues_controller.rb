@@ -172,13 +172,12 @@ class IssuesController < ApplicationController
   end
 
   def status_handler
-    if @issue.ready_to_finish == true
-      @issue.ready_to_finish = false
+    if @issue.done?
+      @issue.doing!
     else
-      @issue.ready_to_finish = true
+      @issue.done!
     end
 
-    @issue.save
     redirect_to issues_path
   end
 

@@ -435,8 +435,8 @@ describe IssuesController do
       Issue.stub(:find => issue)
     end
 
-    it 'calls save on the issue' do
-      expect(issue).to receive(:save)
+    it 'calls done? on the issue' do
+      expect(issue).to receive(:done?)
 
       put :status_handler, id: issue.id
     end
@@ -448,22 +448,22 @@ describe IssuesController do
     end
 
     context 'given an issue with ready_to_finish = true' do
-      it 'sets ready_to_finish to false' do
-        issue.update(ready_to_finish: true)
+      it 'calls doing! on the issue' do
+        issue.stub(:done? => true)
+
+        expect(issue).to receive(:doing!)
 
         put :status_handler, id: issue.id
-
-        expect(issue.reload.ready_to_finish).to eq(false)
       end
     end
 
     context 'given an issue with ready_to_finish = false' do
-      it 'sets ready_to_finish to true' do
-        issue.update(ready_to_finish: false)
+      it 'calls done! on the issue' do
+        issue.stub(:done? => false)
+
+        expect(issue).to receive(:done!)
 
         put :status_handler, id: issue.id
-
-        expect(issue.reload.ready_to_finish).to eq(true)
       end
     end
   end

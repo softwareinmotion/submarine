@@ -35,6 +35,8 @@ class Issue < ActiveRecord::Base
   end
 
   def activate
+    update_attributes(finished_at: nil)
+
     move_to Backlog.backlog
   end
 
@@ -50,6 +52,18 @@ class Issue < ActiveRecord::Base
     def in_backlog?
       backlog == Backlog.backlog
     end
+  end
+
+  def done!
+    update_attributes(ready_to_finish: true, done_at: DateTime.now)
+  end
+
+  def doing!
+    update_attributes(ready_to_finish: false, done_at: nil)
+  end
+
+  def done?
+    self.ready_to_finish == true
   end
 
   def close_gap
@@ -70,6 +84,7 @@ class Issue < ActiveRecord::Base
         descendant.predecessor = self.predecessor
         descendant.save!
       end
+
       self.predecessor = nil
       self.backlog = nil
       self.save!

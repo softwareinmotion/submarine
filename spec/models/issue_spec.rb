@@ -207,13 +207,71 @@ describe Issue do
     end
   end
 
+  describe '#done!' do
+    let(:issue) { create :task, ready_to_finish: false, done_at: nil }
+
+    before :each do
+      issue.done!
+    end
+
+    it 'sets ready_to_finish to true' do
+      expect(issue.ready_to_finish).to eq(true)
+    end
+
+    it 'sets done_at' do
+      expect(issue.done_at).to_not eq(nil)
+    end
+  end
+
+  describe '#doing!' do
+    let(:issue) { create :task, ready_to_finish: true, done_at: Time.now }
+
+    before :each do
+      issue.doing!
+    end
+
+    it 'sets ready_to_finish to false' do
+      expect(issue.ready_to_finish).to eq(false)
+    end
+
+    it 'sets done_at to nil' do
+      expect(issue.done_at).to eq(nil)
+    end
+
+    it 'persists the changes' do
+      expect(issue.reload.attributes).to include('ready_to_finish' => false, 'done_at' => nil)
+    end
+  end
+
+  describe '#done?' do
+    let(:issue) { create :task }
+
+    it 'returns true if ready_to_finish == true' do
+      issue.ready_to_finish = true
+
+      expect(issue.done?).to eq(true)
+    end
+
+    it 'returns false otherwise'  do
+      issue.ready_to_finish = false
+
+      expect(issue.done?).to eq(false)
+    end
+  end
+
   describe '#activate' do
     let(:project) { create :project, name: 'Projekt1' }
     let(:backlog) { create :backlog }
     let(:sprint_backlog) { create :backlog, name: 'sprint_backlog' }
     let(:finished_backlog) { create :backlog, name: 'finished_backlog' }
-    let(:issue) { create :task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: finished_backlog, project: project }
-    let(:issue2) { create :user_story, name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: backlog, project: project }
+    let(:issue) { create :task, name: 'Task 1', description: 'Das ist ein toller Task', backlog: finished_backlog, project: project, finished_at: DateTime.new(2014, 10, 31, 17, 0) }
+    let(:issue2) { create :user_story, name: 'Story 1', description: 'Das ist eine interessante Geschichte', backlog: backlog, project: project, finished_at: DateTime.new(2014, 10, 31, 17, 0) }
+
+    it 'sets finished_at to nil' do
+      issue.activate
+
+      expect(issue.reload.finished_at).to eq(nil)
+    end
 
     it 'activates the only finished element' do
       issue.activate

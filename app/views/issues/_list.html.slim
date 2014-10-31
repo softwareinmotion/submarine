@@ -168,8 +168,12 @@ article.log*{'id' => list_type}
                   p.timestamp = t('issue.examined_at')
                   = to_local(item.examined_at)
                 - when 'sprint_backlog'
-                  p.timestamp = t('issue.planned_at')
-                  = to_local(item.planned_at)
+                  - if item.done?
+                    p.timestamp = t('issue.done_at')
+                    = to_local(item.done_at)
+                  - else
+                    p.timestamp = t('issue.planned_at')
+                    = to_local(item.planned_at)
                 - when 'finished_issues'
                   p.timestamp = t('issue.finished_at')
                   = to_local(item.finished_at)
