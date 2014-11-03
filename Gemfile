@@ -36,4 +36,5 @@ group :test, :development do
   gem 'guard-rspec', '~> 4.2.8'
   gem 'awesome_print', '~> 1.2.0'
   gem 'byebug', '~> 2.7.0'
+  gem 'timecop', '~> 0.6.3'
 end
