@@ -5,6 +5,7 @@ section#main
 				= "##{@issue.id} "
 				= t'issue.edit'
 		= render 'form'
+
 javascript:
 	$(document).ready(function(){
   	$("div.sp_radio_images div.radio_image").click(SUBMARINE.check_sp_radio_image);
