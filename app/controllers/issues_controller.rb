@@ -145,7 +145,7 @@ class IssuesController < ApplicationController
 
   def finish_issue
     @issue.finish
-    @issue.finished_at = Time.now
+    @issue.finished_at = DateTime.now
     @issue.save
 
     redirect_to issues_path

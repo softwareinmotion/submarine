@@ -99,6 +99,36 @@ describe IssuesController do
 
           expect(response).to redirect_to(new_issues_path)
         end
+
+        it 'does not change examined_at' do
+          post :create, valid_params
+
+          expect(Issue.first.examined_at).to eq(nil)
+        end
+
+        it 'does not change planned_at' do
+          post :create, valid_params
+
+          expect(Issue.first.planned_at).to eq(nil)
+        end
+
+        it 'does not change done_at' do
+          post :create, valid_params
+
+          expect(Issue.first.done_at).to eq(nil)
+        end
+
+        it 'does not change finished_at' do
+          post :create, valid_params
+
+          expect(Issue.first.finished_at).to eq(nil)
+        end
+
+        it 'does not change ready_to_finish' do
+          post :create, valid_params
+
+          expect(Issue.first.ready_to_finish).to eq(false)
+        end
       else
         it 'adds the new issue to the backlog list' do
           post :create, valid_params
