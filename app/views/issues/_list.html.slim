@@ -133,10 +133,10 @@ article.log*{'id' => list_type}
                     = image_tag('delete.png')
 
                   - if item.ready_to_finish == true
-                    = link_to status_handler_path(item), :method => 'put' , :class => "set_issue_ready", :style => 'display: none;' do
+                    = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
                      = image_tag("issue_ready.png", :title => t('issue.ready'))
                   - else
-                    = link_to status_handler_path(item), :method => 'put' , :class => "set_issue_ready", :style => 'display: none;' do
+                    = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
                       = image_tag("issue_in_progress.png", :title => t('issue.pending'))
 
                   = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
