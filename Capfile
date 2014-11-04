@@ -22,7 +22,6 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 
 require 'cap3_copy_strategy/tasks'
-require 'softwareinmotion_chef_deployment_defaults/tasks'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
