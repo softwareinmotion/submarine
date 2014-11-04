@@ -27,6 +27,7 @@ gem 'capistrano-bundler', '~> 1.1.3'
 gem 'capistrano-rails', '~> 1.1.2'
 
 gem 'cap3_copy_strategy', '~> 0.0.1', :require => false
+gem 'softwareinmotion_chef_deployment_defaults', '~> 0.0.1', :require => false
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.14.1'
