@@ -121,20 +121,10 @@ ul.connectedSortable {
         width: 16px;
         text-align: center;
 
-        .edit_issue > img{
-          margin-top: 4px;
-        }
-        .delete_issue > img{
-          margin-top: 4px;
-        }
-        .finish_issue > img{
-          margin-top: 4px;
-        }
-        .set_issue_ready > img{
-          margin-top: 4px;
-        }
-        .activate_issue > img{
-          margin-top: 4px;
+        .edit_issue, .delete_issue, .finish_issue, .set_issue_ready, .activate_issue, .show_issue {
+          img {
+            margin-top: 4px;
+          }
         }
       }
 
@@ -198,7 +188,7 @@ ul.connectedSortable {
       margin-left: 60px;
       margin-right: 30px;
       height: 54px;
-      min-height: 54px;
+      min-height: 78px;
 
       div {
         float: left;
@@ -217,7 +207,7 @@ ul.connectedSortable {
           padding: 0px;
         }
       }
-      div.finished_at_timestamp{
+      div.date_at_timestamp{
         color: black;
         font-size: 8pt;
         height: 40px;
@@ -354,4 +344,24 @@ ul.connectedSortable {
   .timestamp {
     min-height: 10px;
   }
+}
+
+.history, .history-label  {
+  margin-left: 10px;
+}
+
+.value {
+  margin-left: 130px;
+}
+
+.history-label {
+  font-style: italic;
+  padding-right: 10px;
+  text-align: left;
+  width: 25%;
+  float: left;
+}
+
+.back {
+  width: 125px !important;
 }

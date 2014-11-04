@@ -2,7 +2,7 @@
   - if @issue.errors.any?
     div#error_explanation
       h2
-        = t "errors_occured"
+        = t('errors_occured')
       ul
         - if @issue.errors[:base] && @issue.errors[:base][0]
           li
@@ -16,9 +16,11 @@
   div.field
     = f.label :name
     = f.text_field :name
+
   div.field
     = f.label :description
-    = f.text_area :description
+    = f.text_area :description, rows: 10
+
   div.field.sp_radio_images.image_select
     = f.label :story_points
     div
@@ -26,12 +28,14 @@
         div*{'class' => "radio_image sp_#{number.to_s.gsub(".", "_")}", 'data-sp-value' => "#{number}"}
           = image_tag "#{image_path "sp_#{number}_light.png"}", 'data-img_heavy' => "#{image_path "sp_#{number}_heavy.png"}", 'data-img_light' => "#{image_path "sp_#{number}_light.png"}"
       = f.hidden_field :story_points, :value => (@issue.story_points ? @issue.formatted_story_points : @story_points[0])
+
   div.field.type_radio_images.image_select
     = f.label :type
     - @types.each do |type|
       div*{'class' => "radio_image #{type.downcase}", 'data-type' => "#{type}"}
         = image_tag "#{type.downcase}_light.png", :title => "#{type.titleize}", 'data-img_heavy' => image_path("#{type.downcase}_heavy.png"), 'data-img_light' => image_path("#{type.downcase}_light.png")
     = f.hidden_field :type, :value => (@issue.type ? @issue.type : @types[0])
+
   div.field.project_radio_images.image_select
     = f.label :project_id
     - @projects.each do |project|
@@ -42,11 +46,13 @@
           = image_tag(project[2])
     = f.hidden_field :project_id, :value => (@issue.project_id ? @issue.project_id : @projects[0][1])
     = f.hidden_field :lock_version, :value => (@issue.lock_version)
+
   div.field
     = f.label 'Anhang'
     = f.file_field :file_attachment
     - if @issue.file_attachment? == true
       = link_to image_tag('box1.png', {:class => 'download_file_attachment'}), @issue.file_attachment.file.url
+
   div.field
     - if @issue.file_attachment? == true
       = f.hidden_field :file_attachment_cache
@@ -62,6 +68,7 @@
       - if @issue.file_attachment? == true
         = f.label 'Anhang löschen?'
         = f.check_box :remove_file_attachment
+
   div.actions
     = image_submit_tag "btn_save.png"
     = link_to issues_path, class: "button finish_edit" do

@@ -4,10 +4,10 @@ class Issue < ActiveRecord::Base
   belongs_to :project
   belongs_to :predecessor, :class_name => 'Issue', :foreign_key => :predecessor_id
   belongs_to :backlog
-  mount_uploader :file_attachment, FileAttachmentUploader
-
   # next item in the list
   has_one :descendant, :class_name => 'Issue', :foreign_key => :predecessor_id
+
+  mount_uploader :file_attachment, FileAttachmentUploader
 
   validates :name, :type, :project, :description, presence: true
 
@@ -35,6 +35,12 @@ class Issue < ActiveRecord::Base
   end
 
   def activate
+    if feature_active? :temp_changes_for_iso
+      update_attributes(examined_at: DateTime.now, finished_at: nil, done_at: nil, planned_at: nil, ready_to_finish: false)
+    else
+      update_attributes(finished_at: nil, ready_to_finish: false)
+    end
+
     move_to Backlog.backlog
   end
 
@@ -44,6 +50,32 @@ class Issue < ActiveRecord::Base
 
   def in_sprint?
     backlog == Backlog.sprint_backlog
+  end
+
+  feature_active? :temp_changes_for_iso do
+    def in_new_issue_list?
+      backlog == Backlog.new_issues_list
+    end
+
+    def in_backlog?
+      backlog == Backlog.backlog
+    end
+  end
+
+  def done!
+    update_attributes(ready_to_finish: true, done_at: DateTime.now)
+  end
+
+  def doing!
+    if feature_active? :temp_changes_for_iso
+      update_attributes(planned_at: DateTime.now, ready_to_finish: false, done_at: nil)
+    else
+      update_attributes(ready_to_finish: false, done_at: nil)
+    end
+  end
+
+  def done?
+    self.ready_to_finish == true
   end
 
   def close_gap
@@ -64,6 +96,9 @@ class Issue < ActiveRecord::Base
         descendant.predecessor = self.predecessor
         descendant.save!
       end
+
+      log_move_changes(backlog) if feature_active? :temp_changes_for_iso
+
       self.predecessor = nil
       self.backlog = nil
       self.save!
@@ -91,10 +126,9 @@ class Issue < ActiveRecord::Base
           new_descendant.save!
         end
       end
-      if self.backlog != backlog
-        self.backlog = backlog
-      end
-        self.save!
+
+      self.backlog = backlog if self.backlog != backlog
+      self.save!
     end
   end
 
@@ -114,4 +148,23 @@ class Issue < ActiveRecord::Base
     LockVersionHelper::lock_version[self.id.to_s] = self.lock_version
   end
 
+  private
+
+  feature_active? :temp_changes_for_iso do
+    def log_move_changes new_list_type
+      case new_list_type
+
+      when Backlog.backlog
+        if self.in_new_issue_list? #comes from new_issues_list
+          update_attributes(examined_at: DateTime.now)
+        elsif self.in_sprint? #comes from sprint_backlog
+          update_attributes(examined_at: DateTime.now, planned_at: nil)
+        end
+      when Backlog.new_issues_list
+        update_attributes(examined_at: nil)
+      when Backlog.sprint_backlog
+        update_attributes(planned_at: DateTime.now)
+      end
+    end
+  end
 end

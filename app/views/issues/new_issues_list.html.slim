@@ -1,9 +1,6 @@
-meta name="keywords" content="scrum, backlog, sprint, user stories, tool"
-meta name="description" content="Sie wollen ein virtuelles Backlog, das mehrere Projekte unterstützt? Dann probieren Sie es mit submarine. Eine kostenlose Online-Demo steht Ihnen hier zur Verfügung."
-
 section#main
+  = render :partial => 'list', :locals => {:list_type => 'new_issues', :list_items => @new_issues}
   = render :partial => "list", :locals => {:list_type => 'backlog', :list_items => @backlog_issues}
-  = render :partial => "list", :locals => {:list_type => 'sprint_backlog', :list_items => @sprint_issues}
 
   div#refresh-dialog.no_js*{'title' => 'notification'}
     = t 'issue.errors.data_staled'
@@ -13,13 +10,11 @@ section#main
     $(function() {
       $('.no_js').removeClass('no_js');
 
-      $("#sprint_backlog_list, #backlog_list").sortable({
+      $("#backlog_list, #new_issues_list").sortable({
         connectWith: ".connectedSortable",
         start: function(event,ui) { $(ui.item).addClass("dragging"); },
         stop: SUBMARINE.changeListHandler
       }).disableSelection();
-
-      SUBMARINE.showStoryPointsSum();
 
       $("ul > li > div > div.description").bind("click", SUBMARINE.toggleDescription);
 

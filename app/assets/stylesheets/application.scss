@@ -70,6 +70,7 @@ header {
   position: fixed;
   top: 0;
   height: 85px;
+  left: 0;
 
   .menu-left {
     float: left;
@@ -79,8 +80,10 @@ header {
   .menu-center {
     height: 85px;
     text-align: center;
+
     h1 {
       margin-top: 50px;
+      margin-right: 350px;
     }
   }
 
@@ -360,9 +363,10 @@ noscript p {
 }
 
 #navigation {
-  width: 600px;
+  width: 700px;
   text-align: right;
   height: 25px;
+
   a {
     vertical-align: middle;
     height: inherit;

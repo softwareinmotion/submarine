@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131113134021) do
+ActiveRecord::Schema.define(version: 20141031100656) do
 
   create_table "backlogs", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "carrier_wave_files", force: true do |t|
@@ -36,19 +36,22 @@ ActiveRecord::Schema.define(version: 20131113134021) do
     t.float    "story_points"
     t.string   "type"
     t.integer  "project_id"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "backlog_id"
     t.integer  "lock_version",    default: 0
-    t.datetime "finished_at",     default: '2014-03-04 15:09:06'
+    t.datetime "finished_at"
     t.boolean  "ready_to_finish", default: false
     t.string   "file_attachment"
+    t.datetime "examined_at"
+    t.datetime "planned_at"
+    t.datetime "done_at"
   end
 
   create_table "projects", force: true do |t|
     t.string   "name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "project_icon"
   end
 
@@ -57,8 +60,8 @@ ActiveRecord::Schema.define(version: 20131113134021) do
     t.string   "email"
     t.string   "name"
     t.string   "question"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
