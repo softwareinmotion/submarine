@@ -91,7 +91,7 @@ class IssuesController < ApplicationController
 
     if @issue && @issue.update(issue_params(@type))
       if feature_active? :temp_changes_for_iso
-        redirect_to new_issues_path, notice: t('issue.successful_edited')
+        redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_edited')
       else
         redirect_to issues_path, notice: t('issue.successful_edited')
       end
@@ -111,7 +111,7 @@ class IssuesController < ApplicationController
     @issue.destroy
 
     if feature_active? :temp_changes_for_iso
-      redirect_to new_issues_path, notice: t('issue.successful_deleted')
+      redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_deleted')
     else
       redirect_to issues_path
     end

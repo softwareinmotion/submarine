@@ -200,7 +200,7 @@ describe IssuesController do
   end
 
   describe '#update' do
-    let!(:issue) { create :user_story }
+    let!(:issue) { create :user_story, backlog: Backlog.sprint_backlog }
 
     context 'given valid params' do
       let(:valid_params) {{ :id => issue.id, :user_story => { name: 'Issue1', description: 'Toller Issue', story_points: '1', type: 'UserStory', project_id: project.id } }}
@@ -231,10 +231,23 @@ describe IssuesController do
       end
 
       if feature_active? :temp_changes_for_iso
-        it 'redirects to the new_issues_path' do
-          put :update, valid_params
+        context 'given the current page is new_issues view' do
+          it 'redirects to the new_issues_path' do
+            issue.backlog = Backlog.new_issues_list
+            issue.save!
 
-          expect(response).to redirect_to(new_issues_path)
+            put :update, valid_params
+
+            expect(response).to redirect_to(new_issues_path)
+          end
+        end
+
+        context 'given the current page is issues view' do
+          it 'redirects to the issues_path' do
+            put :update, valid_params
+
+            expect(response).to redirect_to(issues_path)
+          end
         end
       else
         it 'redirects to the issues_path' do
@@ -263,7 +276,7 @@ describe IssuesController do
   end
 
   describe '#destroy' do
-    let(:issue) { create :user_story }
+    let(:issue) { create :user_story, backlog: Backlog.sprint_backlog }
 
     before :each do
       Issue.stub(:find => issue)
@@ -282,10 +295,23 @@ describe IssuesController do
         expect(flash[:notice]).to eq(I18n.t('issue.successful_deleted'))
       end
 
-      it 'redirects to the new_issues_path' do
-        delete :destroy, id: issue.id
+      context 'given the current page is new_issues view' do
+        it 'redirects to the new_issues_path' do
+          issue.backlog = Backlog.new_issues_list
+          issue.save!
 
-        expect(response).to redirect_to(new_issues_path)
+          delete :destroy, id: issue.id
+
+          expect(response).to redirect_to(new_issues_path)
+        end
+      end
+
+      context 'given the current page is issues view' do
+        it 'redirects to the issues_path' do
+          delete :destroy, id: issue.id
+
+          expect(response).to redirect_to(issues_path)
+        end
       end
     else
       it 'redirects to the issues_path' do
