@@ -3,7 +3,7 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
+//= require jquery-ui
 //= require jquery_tmpl
 //= require jquery_validate
 //= require jquery.tablednd
