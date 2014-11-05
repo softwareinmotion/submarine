@@ -45,5 +45,18 @@ namespace :deploy do
     end
   end
 
+  task :unmonitor_god_process do
+    on roles(:app) do
+      execute("sudo god unmonitor #{fetch(:app_key)}_group")
+    end
+  end
+
+  task :monitor_god_process_and_restart do
+    on roles(:app) do
+      execute("sudo god monitor #{fetch(:app_key)}_group")
+      execute("sudo god restart #{fetch(:app_key)}_group")
+    end
+  end
+
   after :finishing, 'deploy:cleanup'
 end
