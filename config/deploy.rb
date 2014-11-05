@@ -47,3 +47,6 @@ namespace :deploy do
 
   after :finishing, 'deploy:cleanup'
 end
+
+# needs to be done because since capistrano 3.1.0 restart is no longer run by default.
+after 'deploy:publishing', 'deploy:restart'
