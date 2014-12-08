@@ -29,7 +29,7 @@ article.log*{'id' => list_type}
 
                 - if item.ready_to_finish == true
                   = link_to status_handler_path(item), :method => 'put' , :class => "set_issue_ready" do
-                   = image_tag("issue_ready.png", :title => t('issue.ready'))
+                    = image_tag("issue_ready.png", :title => t('issue.ready'))
                 - else
                   = link_to status_handler_path(item), :method => 'put' , :class => "set_issue_ready" do
                     = image_tag("issue_in_progress.png", :title => t('issue.pending'))
@@ -53,7 +53,7 @@ article.log*{'id' => list_type}
 
                 - if item.ready_to_finish == true
                   = link_to status_handler_path(item), :method => 'put' , :class => "set_issue_ready", :style => 'display: none;' do
-                   = image_tag("issue_ready.png", :title => t('issue.ready'))
+                    = image_tag("issue_ready.png", :title => t('issue.ready'))
                 - else
                   = link_to status_handler_path(item), :method => 'put' , :class => "set_issue_ready", :style => 'display: none;' do
                     = image_tag("issue_in_progress.png", :title => t('issue.pending'))
@@ -82,7 +82,7 @@ article.log*{'id' => list_type}
 
                   - if item.ready_to_finish == true
                     = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
-                     = image_tag("issue_ready.png", :title => t('issue.ready'))
+                      = image_tag("issue_ready.png", :title => t('issue.ready'))
                   - else
                     = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
                       = image_tag("issue_in_progress.png", :title => t('issue.pending'))
