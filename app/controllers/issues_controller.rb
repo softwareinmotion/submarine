@@ -69,6 +69,7 @@ class IssuesController < ApplicationController
         redirect_to issues_path, notice: t('issue.successful_added')
       end
     else
+      extension_whitelist
       prepare_form
       render action: "new"
     end
