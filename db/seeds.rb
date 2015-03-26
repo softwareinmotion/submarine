@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-['backlog', 'sprint_backlog', 'finished_backlog'].each do |bl_name|
+['backlog', 'sprint_backlog', 'finished_backlog', 'new_issues'].each do |bl_name|
   unless Backlog.find_by_name bl_name
     Backlog.create! name: bl_name
   end

@@ -50,13 +50,13 @@
   div.field
     = f.label 'Anhang'
     = f.file_field :file_attachment
-    - if @issue.file_attachment? == true
-      = link_to image_tag('box1.png', {:class => 'download_file_attachment'}), @issue.file_attachment.file.url
+    - if @issue.file_attachment? == true && @issue.valid?
+      = link_to image_tag('box1.png', {:class => 'download_file_attachment'}), @issue.file_attachment.url
 
   div.field
-    - if @issue.file_attachment? == true
+    - if @issue.file_attachment? == true && @issue.valid?
       = f.hidden_field :file_attachment_cache
-      - if @extension_whitelist.index(File.extname(@issue.file_attachment.file.original_filename))
+      - if @extension_whitelist.include?(File.extname(@issue.file_attachment.file.original_filename))
         = f.label 'Vorschau'
         img*{'src' => "file_attachment", 'class' => 'issue_image_file' }
       - else
@@ -71,5 +71,5 @@
 
   div.actions
     = image_submit_tag "btn_save.png"
-    = link_to issues_path, class: "button finish_edit" do
+    = link_to request.referer, class: "button finish_edit" do
       = image_tag "btn_cancel.png"

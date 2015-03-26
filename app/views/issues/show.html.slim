@@ -26,27 +26,27 @@ section#main
     h4.history = t('history')
 
     .field
-      .history-label = @issue.created_at
+      .history-label = to_local(@issue.created_at)
       .value = t('issue.state_created')
 
     - if @issue.examined_at
       .field
-        .history-label = @issue.examined_at
+        .history-label = to_local(@issue.examined_at)
         .value = t('issue.state_examined')
 
     - if @issue.planned_at
       .field
-        .history-label = @issue.planned_at
+        .history-label = to_local(@issue.planned_at)
         .value = t('issue.state_planned')
 
     - if @issue.done_at
       .field
-        .history-label = @issue.done_at
+        .history-label = to_local(@issue.done_at)
         .value = t('issue.state_done')
 
     - if @issue.finished_at
       .field
-        .history-label = @issue.finished_at
+        .history-label = to_local(@issue.finished_at)
         .value = t('issue.state_finished')
 
     div.actions.back

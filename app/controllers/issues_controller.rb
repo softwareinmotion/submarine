@@ -69,6 +69,7 @@ class IssuesController < ApplicationController
         redirect_to issues_path, notice: t('issue.successful_added')
       end
     else
+      extension_whitelist
       prepare_form
       render action: "new"
     end
@@ -159,6 +160,7 @@ class IssuesController < ApplicationController
     def new_issues_list
       @new_issues = sorted_list(Backlog.new_issues_list.first_issue)
       @backlog_issues = sorted_list(Backlog.backlog.first_issue)
+      extension_whitelist
     end
 
     def show

@@ -22,9 +22,9 @@ gem 'compass-rails', '~> 1.1.3'
 
 gem 'slim-rails', '~> 2.1.5'
 
-gem 'capistrano', '~> 3.2.1'
-gem 'capistrano-bundler', '~> 1.1.3'
-gem 'capistrano-rails', '~> 1.1.2'
+gem 'capistrano', '~> 3.1.0'
+gem 'capistrano-bundler', '~> 1.1.1'
+gem 'capistrano-rails', '~> 1.1.1'
 
 gem 'cap3_copy_strategy', '~> 0.0.1', :require => false
 gem 'softwareinmotion_chef_deployment_defaults', '~> 0.0.1', :require => false

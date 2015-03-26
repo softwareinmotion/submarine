@@ -163,6 +163,12 @@ describe IssuesController do
         expect(response).to render_template(:new)
       end
 
+      it 'calls extension_whitelist' do
+        controller.should_receive(:extension_whitelist)
+
+        post :create, invalid_params
+      end
+
       it 'calls prepare_form' do
         expect(controller).to receive(:prepare_form)
 
@@ -414,6 +420,15 @@ describe IssuesController do
         get :new_issues_list
 
         expect(assigns(:backlog_issues)).to eq([issue])
+      end
+
+      it 'calls extension_whitelist' do
+        issue = create :user_story, backlog: backlog
+        controller.stub(:sorted_list).and_return([issue])
+
+        expect(controller).to receive(:extension_whitelist)
+
+        get :new_issues_list
       end
     end
 
