@@ -28,11 +28,23 @@ test:
   pool: 5
   timeout: 5000
 
+ci:
+  adapter: postgresql
+  encoding: utf8
+  database: <%= "#{ENV['DB_NAME_PREFIX'] || 'test'}#{ENV['RUN_NONCE']}" %>
+  host: localhost
+  port: 5432
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  pool: 5
+  timeout: 5000
+  prepared_statements: false
+
 production-ext:
   adapter: postgresql
   encoding: utf8
   database: submarine
-  host: localhost 
+  host: localhost
   port: 5432
   username: SubAdmin
   password: Pass2Swim!

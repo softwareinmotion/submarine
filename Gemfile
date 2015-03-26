@@ -29,7 +29,7 @@ gem 'capistrano-rails', '~> 1.1.2'
 gem 'cap3_copy_strategy', '~> 0.0.1', :require => false
 gem 'softwareinmotion_chef_deployment_defaults', '~> 0.0.1', :require => false
 
-group :test, :development do
+group :test, :development, :ci do
   gem 'rspec-rails', '~> 2.14.1'
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'database_cleaner', '~> 1.2.0'
@@ -37,4 +37,8 @@ group :test, :development do
   gem 'awesome_print', '~> 1.2.0'
   gem 'byebug', '~> 2.7.0'
   gem 'timecop', '~> 0.6.3'
+end
+
+group :ci do
+  gem 'ci_reporter_rspec', '~> 1.0.0'
 end
