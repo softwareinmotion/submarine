@@ -145,6 +145,8 @@ class IssuesController < ApplicationController
   end
 
   def finish_issue
+    extension_whitelist
+
     @issue.finish
     @issue.finished_at = DateTime.now
     @issue.save
@@ -153,6 +155,7 @@ class IssuesController < ApplicationController
   end
 
   def finished_issues_list
+    extension_whitelist
     @finished_issues = sorted_list(Backlog.finished_backlog.first_issue)
   end
 
