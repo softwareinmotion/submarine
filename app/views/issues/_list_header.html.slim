@@ -25,12 +25,6 @@ ul.list_header
         - unless Project.all.empty?
           = link_to new_issue_path,:title => t('issue.new') do
             = image_tag('new.png')
-        / - if Project.all == []
-        /   = flash.now[:notice] = t('issue.no_issue')
-        / - else
-        /   = link_to new_issue_path,:title => t('issue.new') do
-        /     = image_tag('new.png')
-
   - else
     - case list_type
     - when 'sprint_backlog'
