@@ -164,6 +164,10 @@ class IssuesController < ApplicationController
       @new_issues = sorted_list(Backlog.new_issues_list.first_issue)
       @backlog_issues = sorted_list(Backlog.backlog.first_issue)
       extension_whitelist
+
+      if Project.all.empty?
+        flash.now[:notice] = t('issue.no_issue')
+      end
     end
 
     def show
