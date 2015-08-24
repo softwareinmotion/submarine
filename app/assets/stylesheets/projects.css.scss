@@ -18,35 +18,38 @@ $article_default_width: 600px;
   border: $default_border;
   font-size: 14pt;
 }
-.projects_table{
+
+.projects_table {
   width: 600px;
   background-color: white;
   border-left: 1px solid #dddddd;
   border-right: 1px solid #dddddd;
-    .image{
-      width: 60px;
-      max-width: 60px;
-    }
-    .list_image {
-      max-width: 60px;
-    }
-    .name{
-      float: left;
-    }
-    .action{
-      float: right;
-      width: 16px;
-      margin-right: 5px;
-    }
+
+  .image {
+    width: 60px;
+    max-width: 60px;
+  }
+
+  .name {
+    float: left;
+  }
+
+  .action {
+    float: right;
+    width: 16px;
+    margin-right: 5px;
+  }
 }
 .projects_main {
   width: 602px;
   margin-left: auto;
   margin-right: auto;
 }
+
 .list_row {
   margin-top: 10px;
 }
+
 .projects_sub{
   background: white;
 }

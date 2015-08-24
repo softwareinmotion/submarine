@@ -4,11 +4,11 @@ class ProjectIconUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support                  :
   # include CarrierWave::RMagick
-  #include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
-  # include Sprockets::Helpers::RailsHelper
-  # include Sprockets::Helpers::IsolatedHelper
+  #include Sprockets::Helpers::RailsHelper
+  #include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
   storage :active_record
@@ -29,16 +29,11 @@ class ProjectIconUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process :scale => [60, 20]
-  #
+  process :scale => [60, 20]
 
-  #def scale(width, height)
-  #  resize_to_limit(width, height) if model.valid?
-  #end
-
-  # def scale(width, height)
-  #   # do something
-  # end
+  def scale(width, height)
+    resize_to_limit(width, height) if model.valid?
+  end
 
   # Create different versions of your uploaded files:
   # version :thumb do
