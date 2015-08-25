@@ -79,7 +79,6 @@ de:
     delete: 'Projekt löschen'
     edit: 'Projekt editieren'
     new: 'Neues Projekt erstellen'
-    max_size: 'Die Maximale Bildgröße beträgt 40 x 20 Pixel.'
     notice: 'Zu große Bilder werden Automatisch skaliert!'
     default_icon: 'Es wird das default Icon verwendet.'
     errors:
