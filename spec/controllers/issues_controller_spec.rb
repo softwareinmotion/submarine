@@ -404,6 +404,11 @@ describe IssuesController do
 
   feature_active? :temp_changes_for_iso do
     describe '#new_issues_list' do
+      it 'returns a flash message if project is nil' do
+        controller.new_issues_list
+        expect(flash[:notice]).to be_present
+      end
+
       it 'assigns all new issues (sorted) to @new_issues' do
         issue = create :user_story, backlog: new_issues
         controller.stub(:sorted_list).and_return([issue])
