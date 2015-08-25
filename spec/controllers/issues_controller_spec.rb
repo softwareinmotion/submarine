@@ -406,7 +406,7 @@ describe IssuesController do
     describe '#new_issues_list' do
       it 'returns a flash message if project is nil' do
         controller.new_issues_list
-        expect(flash[:notice]).to be_present
+        expect(flash[:notice]).to eq(I18n.t('issue.no_issue'))
       end
 
       it 'assigns all new issues (sorted) to @new_issues' do
