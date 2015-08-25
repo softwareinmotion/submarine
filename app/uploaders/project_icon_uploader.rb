@@ -32,7 +32,7 @@ class ProjectIconUploader < CarrierWave::Uploader::Base
   process :scale => [60, 20]
 
   def scale(width, height)
-    resize_to_limit(width, height) if model.valid?
+    resize_to_limit(width, height)
   end
 
   # Create different versions of your uploaded files:
