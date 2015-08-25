@@ -44,7 +44,7 @@ de:
     move: 'Eintrag verschieben'
     ready: 'Eintrag als wird bearbeitet setzen'
     pending: 'Eintrag als bearbeitet setzen'
-    no_issue: 'Issues koennen nicht ohne Projekte angelegt werden.'
+    no_issue: 'Einträge können nicht ohne Projekte angelegt werden.'
     show: 'Eintrag einsehen'
     state_created: 'Anforderung wurde erstellt.'
     state_examined: 'Anforderung wurde geprüft und erfüllt alle Kriterien.'
