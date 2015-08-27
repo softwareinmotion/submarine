@@ -1,9 +1,5 @@
 class IssuesController < ApplicationController
-  if feature_active? :temp_changes_for_iso
-    before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler, :show]
-  else
-    before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler]
-  end
+  before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler, :show]
 
   def index
     @backlog_issues = sorted_list(Backlog.backlog.first_issue)
@@ -46,14 +42,8 @@ class IssuesController < ApplicationController
     end
 
     if @issue
-      if feature_active? :temp_changes_for_iso
-        old_first_issue = Backlog.new_issues_list.first_issue
-        Backlog.new_issues_list.issues << @issue
-      else
-        old_first_issue = Backlog.backlog.first_issue
-        Backlog.backlog.issues << @issue
-      end
-
+      old_first_issue = Backlog.new_issues_list.first_issue
+      Backlog.new_issues_list.issues << @issue
       @issue.predecessor_id = nil
     end
 
@@ -62,12 +52,7 @@ class IssuesController < ApplicationController
         old_first_issue.predecessor_id = @issue.id
         old_first_issue.save!
       end
-
-      if feature_active? :temp_changes_for_iso
-        redirect_to new_issues_path, notice: t('issue.successful_added')
-      else
-        redirect_to issues_path, notice: t('issue.successful_added')
-      end
+      redirect_to new_issues_path, notice: t('issue.successful_added')
     else
       extension_whitelist
       prepare_form
@@ -91,11 +76,7 @@ class IssuesController < ApplicationController
     params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
 
     if @issue && @issue.update(issue_params(@type))
-      if feature_active? :temp_changes_for_iso
-        redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_edited')
-      else
-        redirect_to issues_path, notice: t('issue.successful_edited')
-      end
+      redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_edited')
     else
       prepare_form
       @issue.errors[:base] << t('issue.edited')
@@ -110,12 +91,7 @@ class IssuesController < ApplicationController
 
   def destroy
     @issue.destroy
-
-    if feature_active? :temp_changes_for_iso
-      redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_deleted')
-    else
-      redirect_to issues_path
-    end
+    redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_deleted')
   end
 
   # moves backlog_item from one backlog to the other backlog
@@ -159,19 +135,17 @@ class IssuesController < ApplicationController
     @finished_issues = sorted_list(Backlog.finished_backlog.first_issue)
   end
 
-  feature_active? :temp_changes_for_iso do
-    def new_issues_list
-      @new_issues = sorted_list(Backlog.new_issues_list.first_issue)
-      @backlog_issues = sorted_list(Backlog.backlog.first_issue)
-      extension_whitelist
+  def new_issues_list
+    @new_issues = sorted_list(Backlog.new_issues_list.first_issue)
+    @backlog_issues = sorted_list(Backlog.backlog.first_issue)
+    extension_whitelist
 
-      if Project.all.empty?
-        flash.now[:notice] = t('issue.no_issue')
-      end
+    if Project.all.empty?
+      flash.now[:notice] = t('issue.no_issue')
     end
+  end
 
-    def show
-    end
+  def show
   end
 
   def activate_issue

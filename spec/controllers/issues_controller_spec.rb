@@ -5,9 +5,7 @@ describe IssuesController do
   let(:backlog) { create :backlog }
   let(:sprint_backlog) { create :backlog, name: 'sprint_backlog' }
   let(:finished_backlog) { create :backlog, name: 'finished_backlog' }
-  feature_active? :temp_changes_for_iso do
-    let(:new_issues) { create :backlog, name: 'new_issues' }
-  end
+  let(:new_issues) { create :backlog, name: 'new_issues' }
 
   describe '#index' do
     it 'assigns all backlog issues (sorted) to @backlog_issues' do
@@ -87,60 +85,46 @@ describe IssuesController do
         expect(flash[:notice]).to eq(I18n.t('issue.successful_added'))
       end
 
-      if feature_active? :temp_changes_for_iso
-        it 'adds the new issue to the new_issues list' do
-          post :create, valid_params
+      it 'adds the new issue to the new_issues list' do
+        post :create, valid_params
 
-          expect(Backlog.new_issues_list.issues).to include(Issue.first)
-        end
+        expect(Backlog.new_issues_list.issues).to include(Issue.first)
+      end
 
-        it 'redirects to the new_issues_path' do
-          post :create, valid_params
+      it 'redirects to the new_issues_path' do
+        post :create, valid_params
 
-          expect(response).to redirect_to(new_issues_path)
-        end
+        expect(response).to redirect_to(new_issues_path)
+      end
 
-        it 'does not change examined_at' do
-          post :create, valid_params
+      it 'does not change examined_at' do
+        post :create, valid_params
 
-          expect(Issue.first.examined_at).to eq(nil)
-        end
+        expect(Issue.first.examined_at).to eq(nil)
+      end
 
-        it 'does not change planned_at' do
-          post :create, valid_params
+      it 'does not change planned_at' do
+        post :create, valid_params
 
-          expect(Issue.first.planned_at).to eq(nil)
-        end
+        expect(Issue.first.planned_at).to eq(nil)
+      end
 
-        it 'does not change done_at' do
-          post :create, valid_params
+      it 'does not change done_at' do
+        post :create, valid_params
 
-          expect(Issue.first.done_at).to eq(nil)
-        end
+        expect(Issue.first.done_at).to eq(nil)
+      end
 
-        it 'does not change finished_at' do
-          post :create, valid_params
+      it 'does not change finished_at' do
+        post :create, valid_params
 
-          expect(Issue.first.finished_at).to eq(nil)
-        end
+        expect(Issue.first.finished_at).to eq(nil)
+      end
 
-        it 'does not change ready_to_finish' do
-          post :create, valid_params
+      it 'does not change ready_to_finish' do
+        post :create, valid_params
 
-          expect(Issue.first.ready_to_finish).to eq(false)
-        end
-      else
-        it 'adds the new issue to the backlog list' do
-          post :create, valid_params
-
-          expect(Backlog.backlog.issues).to include(Issue.first)
-        end
-
-        it 'redirects to the issues_path' do
-          post :create, valid_params
-
-          expect(response).to redirect_to(issues_path)
-        end
+        expect(Issue.first.ready_to_finish).to eq(false)
       end
     end
 
@@ -236,26 +220,18 @@ describe IssuesController do
         expect(flash[:notice]).to eq(I18n.t('issue.successful_edited'))
       end
 
-      if feature_active? :temp_changes_for_iso
-        context 'given the current page is new_issues view' do
-          it 'redirects to the new_issues_path' do
-            issue.backlog = Backlog.new_issues_list
-            issue.save!
+      context 'given the current page is new_issues view' do
+        it 'redirects to the new_issues_path' do
+          issue.backlog = Backlog.new_issues_list
+          issue.save!
 
-            put :update, valid_params
+          put :update, valid_params
 
-            expect(response).to redirect_to(new_issues_path)
-          end
+          expect(response).to redirect_to(new_issues_path)
         end
+      end
 
-        context 'given the current page is issues view' do
-          it 'redirects to the issues_path' do
-            put :update, valid_params
-
-            expect(response).to redirect_to(issues_path)
-          end
-        end
-      else
+      context 'given the current page is issues view' do
         it 'redirects to the issues_path' do
           put :update, valid_params
 
@@ -294,32 +270,24 @@ describe IssuesController do
       delete :destroy, id: 42
     end
 
-    if feature_active? :temp_changes_for_iso
-      it 'displays a success message' do
+    it 'displays a success message' do
+      delete :destroy, id: issue.id
+
+      expect(flash[:notice]).to eq(I18n.t('issue.successful_deleted'))
+    end
+
+    context 'given the current page is new_issues view' do
+      it 'redirects to the new_issues_path' do
+        issue.backlog = Backlog.new_issues_list
+        issue.save!
+
         delete :destroy, id: issue.id
 
-        expect(flash[:notice]).to eq(I18n.t('issue.successful_deleted'))
+        expect(response).to redirect_to(new_issues_path)
       end
+    end
 
-      context 'given the current page is new_issues view' do
-        it 'redirects to the new_issues_path' do
-          issue.backlog = Backlog.new_issues_list
-          issue.save!
-
-          delete :destroy, id: issue.id
-
-          expect(response).to redirect_to(new_issues_path)
-        end
-      end
-
-      context 'given the current page is issues view' do
-        it 'redirects to the issues_path' do
-          delete :destroy, id: issue.id
-
-          expect(response).to redirect_to(issues_path)
-        end
-      end
-    else
+    context 'given the current page is issues view' do
       it 'redirects to the issues_path' do
         delete :destroy, id: issue.id
 
@@ -402,55 +370,53 @@ describe IssuesController do
     end
   end
 
-  feature_active? :temp_changes_for_iso do
-    describe '#new_issues_list' do
-      it 'returns a flash message if project is nil' do
-        controller.new_issues_list
-        expect(flash[:notice]).to eq(I18n.t('issue.no_issue'))
-      end
-
-      it 'assigns all new issues (sorted) to @new_issues' do
-        issue = create :user_story, backlog: new_issues
-        controller.stub(:sorted_list).and_return([issue])
-
-        get :new_issues_list
-
-        expect(assigns(:new_issues)).to eq([issue])
-      end
-
-      it 'assigns all backlog issues (sorted) to @backlog_issues' do
-        issue = create :user_story, backlog: backlog
-        controller.stub(:sorted_list).and_return([issue])
-
-        get :new_issues_list
-
-        expect(assigns(:backlog_issues)).to eq([issue])
-      end
-
-      it 'calls extension_whitelist' do
-        issue = create :user_story, backlog: backlog
-        controller.stub(:sorted_list).and_return([issue])
-
-        expect(controller).to receive(:extension_whitelist)
-
-        get :new_issues_list
-      end
+  describe '#new_issues_list' do
+    it 'returns a flash message if project is nil' do
+      controller.new_issues_list
+      expect(flash[:notice]).to eq(I18n.t('issue.no_issue'))
     end
 
-    describe '#show' do
-      let(:issue) { create :task, backlog: sprint_backlog }
+    it 'assigns all new issues (sorted) to @new_issues' do
+      issue = create :user_story, backlog: new_issues
+      controller.stub(:sorted_list).and_return([issue])
 
-      it 'assigns the requested issue as @issue' do
-        get :show, id: issue.id
+      get :new_issues_list
 
-        expect(assigns(:issue)).to eq(issue)
-      end
+      expect(assigns(:new_issues)).to eq([issue])
+    end
 
-      it 'renders the show view' do
-        get :show, id: issue.id
+    it 'assigns all backlog issues (sorted) to @backlog_issues' do
+      issue = create :user_story, backlog: backlog
+      controller.stub(:sorted_list).and_return([issue])
 
-        expect(response).to render_template(:show)
-      end
+      get :new_issues_list
+
+      expect(assigns(:backlog_issues)).to eq([issue])
+    end
+
+    it 'calls extension_whitelist' do
+      issue = create :user_story, backlog: backlog
+      controller.stub(:sorted_list).and_return([issue])
+
+      expect(controller).to receive(:extension_whitelist)
+
+      get :new_issues_list
+    end
+  end
+
+  describe '#show' do
+    let(:issue) { create :task, backlog: sprint_backlog }
+
+    it 'assigns the requested issue as @issue' do
+      get :show, id: issue.id
+
+      expect(assigns(:issue)).to eq(issue)
+    end
+
+    it 'renders the show view' do
+      get :show, id: issue.id
+
+      expect(response).to render_template(:show)
     end
   end
 

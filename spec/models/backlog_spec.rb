@@ -45,13 +45,11 @@ describe Backlog do
     end
   end
 
-  feature_active? :temp_changes_for_iso do
-    describe '.finished_backlog' do
-      it 'returns the first entry of backlogs with name=new_issues' do
-        backlog = create :backlog, name: 'new_issues'
+  describe '.finished_backlog' do
+    it 'returns the first entry of backlogs with name=new_issues' do
+      backlog = create :backlog, name: 'new_issues'
 
-        expect(Backlog.new_issues_list).to eq(backlog)
-      end
+      expect(Backlog.new_issues_list).to eq(backlog)
     end
   end
 

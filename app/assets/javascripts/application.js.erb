@@ -200,21 +200,15 @@ SUBMARINE = {
   },
 
   updateBacklogNavigation: function() {
-    <% if(feature_active? :temp_changes_for_iso) %>
-      if(window.location.pathname == '/new_issues') {
-        var new_caption = "Neue Einträge (" + SUBMARINE.counter.getNewIssueCount() + ")";
-        $('a#new_issues_list').text(new_caption);
-        var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.sprint_count + ")" ;
-        $('a#backlogs').text(caption);
-      } else {
-        var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.counter.getSprintBacklogCount() + ")";
-        $("#backlogs").text(caption);
-      }
-
-    <% else %>
+    if(window.location.pathname == '/new_issues') {
+      var new_caption = "Neue Einträge (" + SUBMARINE.counter.getNewIssueCount() + ")";
+      $('a#new_issues_list').text(new_caption);
+      var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.sprint_count + ")" ;
+      $('a#backlogs').text(caption);
+    } else {
       var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.counter.getSprintBacklogCount() + ")";
       $("#backlogs").text(caption);
-    <% end %>
+    }
   },
 
   counter: {

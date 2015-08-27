@@ -156,40 +156,38 @@ describe Issue do
       expect(issue.in_sprint?).to be_false
     end
 
-    feature_active? :temp_changes_for_iso do
-      before :each do
-        issue.update(examined_at: DateTime.new(2014, 10, 29, 8, 0), planned_at: DateTime.new(2014, 10, 30, 9, 0), done_at: DateTime.new(2014, 10, 30, 17, 0), ready_to_finish: true)
-      end
+    before :each do
+      issue.update(examined_at: DateTime.new(2014, 10, 29, 8, 0), planned_at: DateTime.new(2014, 10, 30, 9, 0), done_at: DateTime.new(2014, 10, 30, 17, 0), ready_to_finish: true)
+    end
 
-      it 'does not change created_at' do
-        issue.finish
+    it 'does not change created_at' do
+      issue.finish
 
-        expect(issue.reload.created_at).to eq(issue.created_at)
-      end
+      expect(issue.reload.created_at).to eq(issue.created_at)
+    end
 
-      it 'does not change examined_at' do
-        issue.finish
+    it 'does not change examined_at' do
+      issue.finish
 
-        expect(issue.reload.examined_at).to eq(issue.examined_at)
-      end
+      expect(issue.reload.examined_at).to eq(issue.examined_at)
+    end
 
-       it 'does not change planned_at' do
-        issue.finish
+     it 'does not change planned_at' do
+      issue.finish
 
-        expect(issue.reload.planned_at).to eq(issue.planned_at)
-      end
+      expect(issue.reload.planned_at).to eq(issue.planned_at)
+    end
 
-      it 'does not change done_at' do
-        issue.finish
+    it 'does not change done_at' do
+      issue.finish
 
-        expect(issue.reload.done_at).to eq(issue.done_at)
-      end
+      expect(issue.reload.done_at).to eq(issue.done_at)
+    end
 
-      it 'does not change ready_to_finish' do
-        issue.finish
+    it 'does not change ready_to_finish' do
+      issue.finish
 
-        expect(issue.reload.ready_to_finish).to eq(issue.ready_to_finish)
-      end
+      expect(issue.reload.ready_to_finish).to eq(issue.ready_to_finish)
     end
   end
 
@@ -225,185 +223,183 @@ describe Issue do
     end
   end
 
-  feature_active? :temp_changes_for_iso do
-    describe '#in_new_issue_list?' do
-      let(:issue) { create :task }
+  describe '#in_new_issue_list?' do
+    let(:issue) { create :task }
 
-      it 'returns true if backlog == new_issues_list'  do
-        issue.update(backlog: Backlog.new_issues_list)
+    it 'returns true if backlog == new_issues_list'  do
+      issue.update(backlog: Backlog.new_issues_list)
 
-        expect(issue.in_new_issue_list?).to eq(true)
-      end
-
-      it 'returns false otherwise' do
-        issue.update(backlog: Backlog.sprint_backlog)
-
-        expect(issue.in_new_issue_list?).to eq(false)
-      end
+      expect(issue.in_new_issue_list?).to eq(true)
     end
 
-    describe '#in_backlog?' do
-      let(:issue) { create :task }
+    it 'returns false otherwise' do
+      issue.update(backlog: Backlog.sprint_backlog)
 
-      it 'returns true if backlog == backlog'  do
-        issue.update(backlog: Backlog.backlog)
+      expect(issue.in_new_issue_list?).to eq(false)
+    end
+  end
 
-        expect(issue.in_backlog?).to eq(true)
-      end
+  describe '#in_backlog?' do
+    let(:issue) { create :task }
 
-      it 'returns false otherwise' do
-        issue.update(backlog: Backlog.sprint_backlog)
+    it 'returns true if backlog == backlog'  do
+      issue.update(backlog: Backlog.backlog)
 
-        expect(issue.in_backlog?).to eq(false)
-      end
+      expect(issue.in_backlog?).to eq(true)
     end
 
-    describe '#log_move_changes' do
-      let(:issue) { create :user_story, examined_at: nil, planned_at: nil, done_at: nil, finished_at: nil, ready_to_finish: false }
-      let(:now) { Time.new(2014, 10, 30, 8, 0) }
+    it 'returns false otherwise' do
+      issue.update(backlog: Backlog.sprint_backlog)
 
+      expect(issue.in_backlog?).to eq(false)
+    end
+  end
+
+  describe '#log_move_changes' do
+    let(:issue) { create :user_story, examined_at: nil, planned_at: nil, done_at: nil, finished_at: nil, ready_to_finish: false }
+    let(:now) { Time.new(2014, 10, 30, 8, 0) }
+
+    before :each do
+      Timecop.freeze(now)
+    end
+
+    # move item from new_issue_list to backlog
+    context 'given the current list type is new_issues and the new list type is backlog' do
       before :each do
-        Timecop.freeze(now)
+        issue.backlog = Backlog.new_issues_list
+        issue.save!
+
+        issue.send(:log_move_changes, Backlog.backlog)
       end
 
-      # move item from new_issue_list to backlog
-      context 'given the current list type is new_issues and the new list type is backlog' do
-        before :each do
-          issue.backlog = Backlog.new_issues_list
-          issue.save!
-
-          issue.send(:log_move_changes, Backlog.backlog)
-        end
-
-        it 'does not change created_at' do
-          expect(issue.reload.created_at).to eq(issue.created_at)
-        end
-
-        it 'sets examined_at to DateTime.now' do
-          expect(issue.reload.examined_at).to eq(now)
-        end
-
-        it 'does not change planned_at' do
-          expect(issue.reload.planned_at).to eq(nil)
-        end
-
-        it 'does not change done_at' do
-          expect(issue.reload.done_at).to eq(nil)
-        end
-
-        it 'does not change finished_at' do
-          expect(issue.reload.finished_at).to eq(nil)
-        end
-
-        it 'does not change ready_to_finish' do
-          expect(issue.reload.ready_to_finish).to eq(false)
-        end
+      it 'does not change created_at' do
+        expect(issue.reload.created_at).to eq(issue.created_at)
       end
 
-      # move item from backlog back to new_issues_list
-      context 'given the current list type is backlog and the new list type is new_issues' do
-        before :each do
-          issue.examined_at = DateTime.new(2014, 10, 29, 16, 0)
-          issue.backlog = Backlog.backlog
-          issue.save!
-
-          issue.send(:log_move_changes, Backlog.new_issues_list)
-        end
-
-        it 'does not change created_at' do
-          expect(issue.reload.created_at).to eq(issue.created_at)
-        end
-
-        it 'sets examined_at to nil' do
-          expect(issue.reload.examined_at).to eq(nil)
-        end
-
-        it 'does not change planned_at' do
-          expect(issue.reload.planned_at).to eq(nil)
-        end
-
-        it 'does not change done_at' do
-          expect(issue.reload.done_at).to eq(nil)
-        end
-
-        it 'does not change finished_at' do
-          expect(issue.reload.finished_at).to eq(nil)
-        end
-
-        it 'does not change ready_to_finish' do
-          expect(issue.reload.ready_to_finish).to eq(false)
-        end
+      it 'sets examined_at to DateTime.now' do
+        expect(issue.reload.examined_at).to eq(now)
       end
 
-      # move item from backlog to sprint backlog
-      context 'given the current list type is backlog and the new list type is sprint_backlog' do
-        before :each do
-          issue.examined_at = DateTime.new(2014, 10, 29, 8, 0)
-          issue.backlog = Backlog.backlog
-          issue.save!
-
-          issue.send(:log_move_changes, Backlog.sprint_backlog)
-        end
-
-        it 'does not change created_at' do
-          expect(issue.reload.created_at).to eq(issue.created_at)
-        end
-
-        it 'does not change examined_at' do
-          expect(issue.reload.examined_at).to eq(issue.examined_at)
-        end
-
-        it 'sets planned_at to DateTime.now' do
-          expect(issue.reload.planned_at).to eq(now)
-        end
-
-        it 'does not change done_at' do
-          expect(issue.reload.done_at).to eq(nil)
-        end
-
-        it 'does not change finished_at' do
-          expect(issue.reload.finished_at).to eq(nil)
-        end
-
-        it 'does not change ready_to_finish' do
-          expect(issue.reload.ready_to_finish).to eq(false)
-        end
+      it 'does not change planned_at' do
+        expect(issue.reload.planned_at).to eq(nil)
       end
 
-      # move item from sprint_backlog back to backlog
-      context 'given the current list type is sprint_backlog and the new list type is backlog' do
-        before :each do
-          issue.examined_at = DateTime.new(2014, 10, 20, 16, 0)
-          issue.planned_at = DateTime.new(2014, 10, 25, 7, 30)
-          issue.backlog = Backlog.sprint_backlog
-          issue.save!
+      it 'does not change done_at' do
+        expect(issue.reload.done_at).to eq(nil)
+      end
 
-          issue.send(:log_move_changes, Backlog.backlog)
-        end
+      it 'does not change finished_at' do
+        expect(issue.reload.finished_at).to eq(nil)
+      end
 
-        it 'does not change created_at' do
-          expect(issue.reload.created_at).to eq(issue.created_at)
-        end
+      it 'does not change ready_to_finish' do
+        expect(issue.reload.ready_to_finish).to eq(false)
+      end
+    end
 
-        it 'updates examined_at' do
-          expect(issue.reload.examined_at).to eq(now)
-        end
+    # move item from backlog back to new_issues_list
+    context 'given the current list type is backlog and the new list type is new_issues' do
+      before :each do
+        issue.examined_at = DateTime.new(2014, 10, 29, 16, 0)
+        issue.backlog = Backlog.backlog
+        issue.save!
 
-        it 'sets planned_at to nil' do
-          expect(issue.reload.planned_at).to eq(nil)
-        end
+        issue.send(:log_move_changes, Backlog.new_issues_list)
+      end
 
-        it 'does not change done_at' do
-          expect(issue.reload.done_at).to eq(nil)
-        end
+      it 'does not change created_at' do
+        expect(issue.reload.created_at).to eq(issue.created_at)
+      end
 
-        it 'does not change finished_at' do
-          expect(issue.reload.done_at).to eq(nil)
-        end
+      it 'sets examined_at to nil' do
+        expect(issue.reload.examined_at).to eq(nil)
+      end
 
-        it 'does not change ready_to_finish' do
-          expect(issue.reload.ready_to_finish).to eq(false)
-        end
+      it 'does not change planned_at' do
+        expect(issue.reload.planned_at).to eq(nil)
+      end
+
+      it 'does not change done_at' do
+        expect(issue.reload.done_at).to eq(nil)
+      end
+
+      it 'does not change finished_at' do
+        expect(issue.reload.finished_at).to eq(nil)
+      end
+
+      it 'does not change ready_to_finish' do
+        expect(issue.reload.ready_to_finish).to eq(false)
+      end
+    end
+
+    # move item from backlog to sprint backlog
+    context 'given the current list type is backlog and the new list type is sprint_backlog' do
+      before :each do
+        issue.examined_at = DateTime.new(2014, 10, 29, 8, 0)
+        issue.backlog = Backlog.backlog
+        issue.save!
+
+        issue.send(:log_move_changes, Backlog.sprint_backlog)
+      end
+
+      it 'does not change created_at' do
+        expect(issue.reload.created_at).to eq(issue.created_at)
+      end
+
+      it 'does not change examined_at' do
+        expect(issue.reload.examined_at).to eq(issue.examined_at)
+      end
+
+      it 'sets planned_at to DateTime.now' do
+        expect(issue.reload.planned_at).to eq(now)
+      end
+
+      it 'does not change done_at' do
+        expect(issue.reload.done_at).to eq(nil)
+      end
+
+      it 'does not change finished_at' do
+        expect(issue.reload.finished_at).to eq(nil)
+      end
+
+      it 'does not change ready_to_finish' do
+        expect(issue.reload.ready_to_finish).to eq(false)
+      end
+    end
+
+    # move item from sprint_backlog back to backlog
+    context 'given the current list type is sprint_backlog and the new list type is backlog' do
+      before :each do
+        issue.examined_at = DateTime.new(2014, 10, 20, 16, 0)
+        issue.planned_at = DateTime.new(2014, 10, 25, 7, 30)
+        issue.backlog = Backlog.sprint_backlog
+        issue.save!
+
+        issue.send(:log_move_changes, Backlog.backlog)
+      end
+
+      it 'does not change created_at' do
+        expect(issue.reload.created_at).to eq(issue.created_at)
+      end
+
+      it 'updates examined_at' do
+        expect(issue.reload.examined_at).to eq(now)
+      end
+
+      it 'sets planned_at to nil' do
+        expect(issue.reload.planned_at).to eq(nil)
+      end
+
+      it 'does not change done_at' do
+        expect(issue.reload.done_at).to eq(nil)
+      end
+
+      it 'does not change finished_at' do
+        expect(issue.reload.done_at).to eq(nil)
+      end
+
+      it 'does not change ready_to_finish' do
+        expect(issue.reload.ready_to_finish).to eq(false)
       end
     end
   end
@@ -426,28 +422,26 @@ describe Issue do
       expect(issue.done_at).to eq(now)
     end
 
-    feature_active? :temp_changes_for_iso do
-      it 'does not change created_at' do
-        expect(issue.reload.created_at).to eq(issue.created_at)
-      end
+    it 'does not change created_at' do
+      expect(issue.reload.created_at).to eq(issue.created_at)
+    end
 
-      it 'does not change examined_at' do
-        issue.update(examined_at: DateTime.new(2014, 10, 28, 8, 0))
+    it 'does not change examined_at' do
+      issue.update(examined_at: DateTime.new(2014, 10, 28, 8, 0))
 
-        expect(issue.reload.examined_at).to eq(issue.examined_at)
-      end
+      expect(issue.reload.examined_at).to eq(issue.examined_at)
+    end
 
-      it 'does not change planned_at' do
-        issue.update(examined_at: DateTime.new(2014, 10, 28, 8, 0), planned_at: DateTime.new(2014, 10, 29, 17, 0))
+    it 'does not change planned_at' do
+      issue.update(examined_at: DateTime.new(2014, 10, 28, 8, 0), planned_at: DateTime.new(2014, 10, 29, 17, 0))
 
-        expect(issue.reload.planned_at).to eq(issue.planned_at)
-      end
+      expect(issue.reload.planned_at).to eq(issue.planned_at)
+    end
 
-      it 'does not change finished_at' do
-        issue.update(examined_at: DateTime.new(2014, 10, 28, 8, 0), planned_at: DateTime.new(2014, 10, 29, 17, 0), finished_at: nil)
+    it 'does not change finished_at' do
+      issue.update(examined_at: DateTime.new(2014, 10, 28, 8, 0), planned_at: DateTime.new(2014, 10, 29, 17, 0), finished_at: nil)
 
-        expect(issue.reload.finished_at).to eq(issue.finished_at)
-      end
+      expect(issue.reload.finished_at).to eq(issue.finished_at)
     end
   end
 
@@ -477,28 +471,26 @@ describe Issue do
       expect(issue.reload.attributes).to include('ready_to_finish' => false, 'done_at' => nil)
     end
 
-    feature_active? :temp_changes_for_iso do
-      before :each do
-        issue.update(examined_at: DateTime.new(2014, 10, 20, 8, 0), planned_at: DateTime.new(2014, 10, 25, 8, 0))
-      end
+    before :each do
+      issue.update(examined_at: DateTime.new(2014, 10, 20, 8, 0), planned_at: DateTime.new(2014, 10, 25, 8, 0))
+    end
 
-      it 'updates planned_at' do
-        issue.doing!
+    it 'updates planned_at' do
+      issue.doing!
 
-        expect(issue.reload.planned_at).to eq(now)
-      end
+      expect(issue.reload.planned_at).to eq(now)
+    end
 
-      it 'does not change examined_at' do
-        issue.doing!
+    it 'does not change examined_at' do
+      issue.doing!
 
-        expect(issue.reload.examined_at).to eq(issue.examined_at)
-      end
+      expect(issue.reload.examined_at).to eq(issue.examined_at)
+    end
 
-      it 'does not change finished_at' do
-        issue.doing!
+    it 'does not change finished_at' do
+      issue.doing!
 
-        expect(issue.reload.finished_at).to eq(nil)
-      end
+      expect(issue.reload.finished_at).to eq(nil)
     end
   end
 
@@ -532,28 +524,26 @@ describe Issue do
       expect(issue.reload.finished_at).to eq(nil)
     end
 
-    feature_active? :temp_changes_for_iso do
-      before :each do
-        issue.update(examined_at: DateTime.new(2014, 10, 20, 8, 0), planned_at: DateTime.new(2014, 10, 23, 16, 0), done_at: DateTime.new(2014, 10, 25, 16, 0))
-      end
+    before :each do
+      issue.update(examined_at: DateTime.new(2014, 10, 20, 8, 0), planned_at: DateTime.new(2014, 10, 23, 16, 0), done_at: DateTime.new(2014, 10, 25, 16, 0))
+    end
 
-      it 'updates examined_at' do
-        issue.activate
+    it 'updates examined_at' do
+      issue.activate
 
-        expect(issue.reload.examined_at).to_not eq(nil)
-      end
+      expect(issue.reload.examined_at).to_not eq(nil)
+    end
 
-      it 'sets planned_at to nil' do
-        issue.activate
+    it 'sets planned_at to nil' do
+      issue.activate
 
-        expect(issue.reload.planned_at).to eq(nil)
-      end
+      expect(issue.reload.planned_at).to eq(nil)
+    end
 
-      it 'sets done_at to nil' do
-        issue.activate
+    it 'sets done_at to nil' do
+      issue.activate
 
-        expect(issue.reload.done_at).to eq(nil)
-      end
+      expect(issue.reload.done_at).to eq(nil)
     end
 
     it 'sets ready_to_finish to false' do
@@ -668,12 +658,10 @@ describe Issue do
   describe '#move_to' do
     let!(:x) { create :issue, backlog: Backlog.backlog }
 
-    feature_active? :temp_changes_for_iso do
-      it 'calls log_move_changes on self' do
-        expect(x).to receive(:log_move_changes).with(Backlog.backlog)
+    it 'calls log_move_changes on self' do
+      expect(x).to receive(:log_move_changes).with(Backlog.backlog)
 
-        x.move_to(Backlog.backlog)
-      end
+      x.move_to(Backlog.backlog)
     end
 
     # x ... issue to move
@@ -909,18 +897,16 @@ describe Issue do
       end
     end
 
-    feature_active? :temp_changes_for_iso do
-      context 'move issue between new_issues_list and product backlog' do
-        it '
-        Start:  [ x   ][    ]
-        Finish: [     ][ x  ]' do
-          x = create :issue, backlog: Backlog.new_issues_list
-          x.move_to Backlog.backlog
-          x.reload
+    context 'move issue between new_issues_list and product backlog' do
+      it '
+      Start:  [ x   ][    ]
+      Finish: [     ][ x  ]' do
+        x = create :issue, backlog: Backlog.new_issues_list
+        x.move_to Backlog.backlog
+        x.reload
 
-          expect(x.backlog).to eq(Backlog.backlog)
-          expect(x.predecessor).to be_nil
-        end
+        expect(x.backlog).to eq(Backlog.backlog)
+        expect(x.predecessor).to be_nil
       end
     end
 

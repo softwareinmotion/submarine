@@ -35,12 +35,7 @@ class Issue < ActiveRecord::Base
   end
 
   def activate
-    if feature_active? :temp_changes_for_iso
-      update_attributes(examined_at: DateTime.now, finished_at: nil, done_at: nil, planned_at: nil, ready_to_finish: false)
-    else
-      update_attributes(finished_at: nil, ready_to_finish: false)
-    end
-
+    update_attributes(examined_at: DateTime.now, finished_at: nil, done_at: nil, planned_at: nil, ready_to_finish: false)
     move_to Backlog.backlog
   end
 
@@ -52,14 +47,12 @@ class Issue < ActiveRecord::Base
     backlog == Backlog.sprint_backlog
   end
 
-  feature_active? :temp_changes_for_iso do
-    def in_new_issue_list?
-      backlog == Backlog.new_issues_list
-    end
+  def in_new_issue_list?
+    backlog == Backlog.new_issues_list
+  end
 
-    def in_backlog?
-      backlog == Backlog.backlog
-    end
+  def in_backlog?
+    backlog == Backlog.backlog
   end
 
   def done!
@@ -67,11 +60,7 @@ class Issue < ActiveRecord::Base
   end
 
   def doing!
-    if feature_active? :temp_changes_for_iso
-      update_attributes(planned_at: DateTime.now, ready_to_finish: false, done_at: nil)
-    else
-      update_attributes(ready_to_finish: false, done_at: nil)
-    end
+    update_attributes(planned_at: DateTime.now, ready_to_finish: false, done_at: nil)
   end
 
   def done?
@@ -97,7 +86,7 @@ class Issue < ActiveRecord::Base
         descendant.save!
       end
 
-      log_move_changes(backlog) if feature_active? :temp_changes_for_iso
+      log_move_changes(backlog)
 
       self.predecessor = nil
       self.backlog = nil
@@ -150,21 +139,19 @@ class Issue < ActiveRecord::Base
 
   private
 
-  feature_active? :temp_changes_for_iso do
-    def log_move_changes new_list_type
-      case new_list_type
+  def log_move_changes new_list_type
+    case new_list_type
 
-      when Backlog.backlog
-        if self.in_new_issue_list? #comes from new_issues_list
-          update_attributes(examined_at: DateTime.now)
-        elsif self.in_sprint? #comes from sprint_backlog
-          update_attributes(examined_at: DateTime.now, planned_at: nil)
-        end
-      when Backlog.new_issues_list
-        update_attributes(examined_at: nil)
-      when Backlog.sprint_backlog
-        update_attributes(planned_at: DateTime.now)
+    when Backlog.backlog
+      if self.in_new_issue_list? #comes from new_issues_list
+        update_attributes(examined_at: DateTime.now)
+      elsif self.in_sprint? #comes from sprint_backlog
+        update_attributes(examined_at: DateTime.now, planned_at: nil)
       end
+    when Backlog.new_issues_list
+      update_attributes(examined_at: nil)
+    when Backlog.sprint_backlog
+      update_attributes(planned_at: DateTime.now)
     end
   end
 end

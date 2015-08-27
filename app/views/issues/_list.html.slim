@@ -37,9 +37,8 @@ article.log*{'id' => list_type}
                 = link_to item, :method => :delete, :class => 'delete_issue', :style => 'display: none;', :title => t('issue.delete') do
                   = image_tag("delete.png")
 
-                - feature_active? :temp_changes_for_iso do
-                  = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
-                    = image_tag('document.png')
+                = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
+                  = image_tag('document.png')
 
               - if list_type == 'backlog'
                 = link_to edit_issue_path(item), :class => 'edit_issue',:title => t('issue.edit') do
@@ -58,37 +57,34 @@ article.log*{'id' => list_type}
                   = link_to status_handler_path(item), :method => 'put' , :class => "set_issue_ready", :style => 'display: none;' do
                     = image_tag("issue_in_progress.png", :title => t('issue.pending'))
 
-                - feature_active? :temp_changes_for_iso do
-                  = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
-                    = image_tag('document.png')
+                = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
+                  = image_tag('document.png')
 
               - if list_type == 'finished_issues'
                 = link_to activate_issue_path(item), :method => :post, :class => 'activate_issue', :title => t('issue.activate') do
                   = image_tag("activate_issue.png")
-                - feature_active? :temp_changes_for_iso do
-                  = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
-                    = image_tag('document.png')
+                = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
+                  = image_tag('document.png')
 
-              - feature_active? :temp_changes_for_iso do
-                - if list_type == 'new_issues'
-                  = link_to edit_issue_path(item), class: 'edit_issue', title: t('issue.edit') do
-                    = image_tag('edit.png')
+              - if list_type == 'new_issues'
+                = link_to edit_issue_path(item), class: 'edit_issue', title: t('issue.edit') do
+                  = image_tag('edit.png')
 
-                  = link_to finish_issue_path(item), :method => :post, :class => 'finish_issue', :style => 'display: none;', :title => t('issue.finish') do
-                    = image_tag("finish_issue.png")
+                = link_to finish_issue_path(item), :method => :post, :class => 'finish_issue', :style => 'display: none;', :title => t('issue.finish') do
+                  = image_tag("finish_issue.png")
 
-                  = link_to item, :method => :delete, class: 'delete_issue', title: t('issue.delete') do
-                    = image_tag('delete.png')
+                = link_to item, :method => :delete, class: 'delete_issue', title: t('issue.delete') do
+                  = image_tag('delete.png')
 
-                  - if item.ready_to_finish == true
-                    = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
-                      = image_tag("issue_ready.png", :title => t('issue.ready'))
-                  - else
-                    = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
-                      = image_tag("issue_in_progress.png", :title => t('issue.pending'))
+                - if item.ready_to_finish == true
+                  = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
+                    = image_tag("issue_ready.png", :title => t('issue.ready'))
+                - else
+                  = link_to status_handler_path(item), :method => 'put' , :class => 'set_issue_ready', :style => 'display: none;' do
+                    = image_tag("issue_in_progress.png", :title => t('issue.pending'))
 
-                  = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
-                    = image_tag('document.png')
+                = link_to issue_path(item), class: 'show_issue', title: t('issue.show') do
+                  = image_tag('document.png')
 
         div.issue_line_title
           div.issue_id
@@ -106,35 +102,24 @@ article.log*{'id' => list_type}
               - else
                 = link_to( image_tag('box1.png', {:class => 'download_file'}), "issues/#{item.id}/file_attachment")
 
-            - if feature_active? :temp_changes_for_iso
-              div.date_at_timestamp
-                - case list_type
-                - when 'new_issues'
-                  p.timestamp = t('issue.created_at')
-                  = to_local(item.created_at)
-                - when 'backlog'
-                  p.timestamp = t('issue.examined_at')
-                  = to_local(item.examined_at)
-                - when 'sprint_backlog'
-                  - if item.done?
-                    p.timestamp = t('issue.done_at')
-                    = to_local(item.done_at)
-                  - else
-                    p.timestamp = t('issue.planned_at')
-                    = to_local(item.planned_at)
-                - when 'finished_issues'
-                  p.timestamp = t('issue.finished_at')
-                  = to_local(item.finished_at)
-
-            - else
-              - if list_type == 'finished_issues'
-                div.date_at_timestamp
-                  p.timestamp = t('issue.finished_at')
-                  = item.finished_at.localtime.to_formatted_s(:short)
-              - else
-                div.date_at_timestamp
-                  p.timestamp = t('issue.created_at')
-                  = item.created_at.localtime.to_formatted_s(:short)
+            div.date_at_timestamp
+              - case list_type
+              - when 'new_issues'
+                p.timestamp = t('issue.created_at')
+                = to_local(item.created_at)
+              - when 'backlog'
+                p.timestamp = t('issue.examined_at')
+                = to_local(item.examined_at)
+              - when 'sprint_backlog'
+                - if item.done?
+                  p.timestamp = t('issue.done_at')
+                  = to_local(item.done_at)
+                - else
+                  p.timestamp = t('issue.planned_at')
+                  = to_local(item.planned_at)
+              - when 'finished_issues'
+                p.timestamp = t('issue.finished_at')
+                = to_local(item.finished_at)
 
 javascript:
   SUBMARINE.sprint_count = "#{@sprintbacklog_count}";

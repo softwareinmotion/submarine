@@ -13,10 +13,8 @@ class Backlog < ActiveRecord::Base
     Backlog.where(name: 'finished_backlog').first
   end
 
-  feature_active? :temp_changes_for_iso do
-    def self.new_issues_list
-      Backlog.where(name: 'new_issues').first
-    end
+  def self.new_issues_list
+    Backlog.where(name: 'new_issues').first
   end
 
   def first_issue
