@@ -1,0 +1,63 @@
+section#main
+  article.issue_form
+    ul.form_header
+      li = t('issue.show')
+
+    .field
+      label = t('activerecord.attributes.issue.name')
+      .value = @issue.name
+
+    .field
+      label = t('activerecord.attributes.issue.description')
+      .value = @issue.description
+
+    .field
+      label = t('activerecord.attributes.issue.story_points')
+      .value = @issue.story_points
+
+    .field
+      label = t('activerecord.attributes.issue.type')
+      .value = @issue.type
+
+    .field
+      label = t('activerecord.attributes.issue.project_id')
+      .value = @issue.project.name
+
+    h4.history = t('history')
+
+    .field
+      .history-label = to_local(@issue.created_at)
+      .value = t('issue.state_created')
+
+    - if @issue.examined_at
+      .field
+        .history-label = to_local(@issue.examined_at)
+        .value = t('issue.state_examined')
+
+    - if @issue.planned_at
+      .field
+        .history-label = to_local(@issue.planned_at)
+        .value = t('issue.state_planned')
+
+    - if @issue.done_at
+      .field
+        .history-label = to_local(@issue.done_at)
+        .value = t('issue.state_done')
+
+    - if @issue.finished_at
+      .field
+        .history-label = to_local(@issue.finished_at)
+        .value = t('issue.state_finished')
+
+    div.actions.back
+      - if @issue.finished?
+        = link_to finished_issues_path, class: 'button finish_edit' do
+          = image_tag 'btn_back.png'
+
+      - elsif @issue.in_sprint? || @issue.in_backlog?
+        = link_to issues_path, class: 'button finish_edit' do
+          = image_tag 'btn_back.png'
+
+      - else
+        = link_to new_issues_path, class: 'button finish_edit' do
+          = image_tag 'btn_back.png'

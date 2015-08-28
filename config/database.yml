@@ -1,17 +1,129 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
-  timeout: 5000
+   adapter: postgresql
+   encoding: utf8
+   database: submarine
+   host: localhost
+   port: 5432
+   username: postgres
+   password: postgres
+   pool: 5
+   timeout: 5000
+#development:
+#  adapter: sqlite3
+#  database: db/development.sqlite3
+#  pool: 5
+#  timeout: 5000
 
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
 test:
   adapter: sqlite3
   database: db/test.sqlite3
   pool: 5
   timeout: 5000
 
+ci:
+  adapter: postgresql
+  encoding: utf8
+  database: <%= "#{ENV['DB_NAME_PREFIX'] || 'test'}#{ENV['RUN_NONCE']}" %>
+  host: localhost
+  port: 5432
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  pool: 5
+  timeout: 5000
+  prepared_statements: false
+
+production-ext:
+  adapter: postgresql
+  encoding: utf8
+  database: submarine
+  host: localhost
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
+production-ent:
+  adapter: postgresql
+  encoding: utf8
+  database: submarine-test
+  host: ent
+  port: 5432
+  username: postgres
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: utf8
+  database: submarine
+  host: submarine
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
+production_local:
+  adapter: postgresql
+  encoding: utf8
+  database: submarine
+  host: localhost
+  port: 5432
+  username: postgres
+  password: postgres
+  pool: 5
+  timeout: 5000
+
+production-transformers:
+  adapter: postgresql
+  encoding: utf8
+  database: transformers.submarine
+  host: submarine
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
+admin_submarine:
+  adapter: postgresql
+  encoding: utf8
+  database: admin.submarine
+  host: submarine
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
+seminar_submarine:
+  adapter: postgresql
+  encoding: utf8
+  database: SubmarineSeminar
+  host: DB-SubSeminar
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
+  pool: 5
+  timeout: 5000
+
+azubi_submarine:
+  adapter: postgresql
+  encoding: utf8
+  database: SubmarineAzubi
+  host: DB-SubAzubi
+  port: 5432
+  username: SubAdmin
+  password: Pass2Swim!
   pool: 5
   timeout: 5000

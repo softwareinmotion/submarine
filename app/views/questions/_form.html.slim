@@ -1,0 +1,18 @@
+h2 Noch Fragen? Her damit!
+= form_for @question do |q|
+  div.field
+    = q.label :betreff
+    = q.text_field :betreff
+  div.field
+    = q.label :question
+    = q.text_area :question
+  div.field
+    = q.label :name
+    = q.text_field :name
+  div.field
+    = q.label :email
+    = q.email_field :email
+  = q.submit 'Absenden', :class => 'question_submit'
+  = link_to "Zurück zur Hauptseite", index_url
+p.question_counter
+  = @question_count

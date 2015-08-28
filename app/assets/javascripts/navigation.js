@@ -3,11 +3,11 @@
 // You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 //= require jquery
 //= require jquery_ujs
-//= require jquery_ui
+//= require jquery-ui
 //= require jquery_tmpl
 //= require jquery_validate
 //= require jquery.tablednd
+//= require swimbox.js
 //= require jquery.transform2d
-//= require lightbox
 //= require modernizr-2.6.2.min
 //= require_self

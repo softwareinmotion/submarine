@@ -1,17 +1,21 @@
 class IssuesController < ApplicationController
-  
+  before_action :set_issue, only: [:edit, :file_attachment, :destroy, :finish_issue, :activate_issue, :status_handler, :show]
+
   def index
     @backlog_issues = sorted_list(Backlog.backlog.first_issue)
     @sprint_issues = sorted_list(Backlog.sprint_backlog.first_issue)
+
+    extension_whitelist
   end
 
   def new
     @issue = Issue.new
+    extension_whitelist
     prepare_form
   end
 
   def edit
-    @issue = Issue.find(params[:id])
+    extension_whitelist
     prepare_form
   end
 
@@ -21,7 +25,7 @@ class IssuesController < ApplicationController
       if Issue.children_type_names.include? type
         model_class = Kernel.const_get type
         params[:issue][:story_points] = nil if params[:issue][:story_points] == 'unknown'
-        @issue = model_class.new(params[:issue])
+        @issue = model_class.new(issue_params(:issue))
       end
     else
       types = Issue.children_type_names
@@ -30,7 +34,7 @@ class IssuesController < ApplicationController
         @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
         if params[@type.to_sym]
           model_class = Kernel.const_get t
-          @issue = model_class.new(params[@type.to_sym])
+          @issue = model_class.new(issue_params(@type.to_sym))
           params[@type.to_sym][:story_points] = nil if params[@type.to_sym][:story_points] == 'unknown'
           break
         end
@@ -38,8 +42,8 @@ class IssuesController < ApplicationController
     end
 
     if @issue
-      old_first_issue = Backlog.backlog.first_issue
-      Backlog.backlog.issues << @issue
+      old_first_issue = Backlog.new_issues_list.first_issue
+      Backlog.new_issues_list.issues << @issue
       @issue.predecessor_id = nil
     end
 
@@ -48,8 +52,10 @@ class IssuesController < ApplicationController
         old_first_issue.predecessor_id = @issue.id
         old_first_issue.save!
       end
-      redirect_to issues_path, notice: 'Eintrag erfolgreich erstellt.'
+
+      redirect_to new_issues_path, notice: t('issue.successful_added')
     else
+      extension_whitelist
       prepare_form
       render action: "new"
     end
@@ -58,6 +64,7 @@ class IssuesController < ApplicationController
   def update
     types = Issue.children_type_names
     @issue = nil
+
     types.each do |t|
       @type = t.gsub(/(.)([A-Z])/,'\1_\2').downcase
       if params[@type]
@@ -67,26 +74,26 @@ class IssuesController < ApplicationController
         break
       end
     end
-    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'     
 
-    if @issue && @issue.update_attributes(params[@type])
-      redirect_to issues_path, notice: 'Eintrag erfolgreich bearbeitet.'
+    params[@type][:story_points] = nil if params[@type][:story_points] == 'unknown'
+
+    if @issue && @issue.update(issue_params(@type))
+      redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_edited')
     else
       prepare_form
-      @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
+      @issue.errors[:base] << t('issue.edited')
       render action: "edit"
     end
 
   rescue ActiveRecord::StaleObjectError
     prepare_form
-    @issue.errors[:base] << 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
-    render action: "edit"  
+    @issue.errors[:base] << t('issue.edited')
+    render action: "edit"
   end
 
   def destroy
-    @issue = Issue.find(params[:id])
     @issue.destroy
-    redirect_to issues_url
+    redirect_to (@issue.in_new_issue_list? ? new_issues_path : issues_path), notice: t('issue.successful_deleted')
   end
 
   # moves backlog_item from one backlog to the other backlog
@@ -99,41 +106,83 @@ class IssuesController < ApplicationController
   def change_list
     moved_issue = Issue.find params[:moved_issue]
     predecessor = params[:predecessor] ? Issue.find(params[:predecessor]) : nil
-    backlog = Backlog.find_by_name params[:backlog]
-
+    backlog = Backlog.find_by(name: params[:backlog])
     LockVersionHelper::lock_version = params[:lock_versions]
+
     if predecessor
       moved_issue.move_to backlog, new_predecessor: predecessor
     else
       moved_issue.move_to backlog
     end
-    
+
+    moved_issue.ready_to_finish = false
+    moved_issue.save
     render :json => LockVersionHelper::lock_version
   ensure
     LockVersionHelper::lock_version = nil
   end
 
   def finish_issue
-    issue = Issue.find(params[:id])
-    issue.finish
+    extension_whitelist
+
+    @issue.finish
+    @issue.finished_at = DateTime.now
+    @issue.save
+
     redirect_to issues_path
   end
 
-  def finished_issues_list 
-    @finished_issues = sorted_list Backlog.finished_backlog.first_issue
+  def finished_issues_list
+    extension_whitelist
+    @finished_issues = sorted_list(Backlog.finished_backlog.first_issue)
+  end
+
+  def new_issues_list
+    @new_issues = sorted_list(Backlog.new_issues_list.first_issue)
+    @backlog_issues = sorted_list(Backlog.backlog.first_issue)
+    extension_whitelist
+
+    if Project.all.empty?
+      flash.now[:notice] = t('issue.no_issue')
+    end
+  end
+
+  def show
   end
 
   def activate_issue
-    issue = Issue.find(params[:id])
-    issue.activate
-    redirect_to finished_issues_url
+    @issue.activate
+
+    redirect_to finished_issues_path
+  end
+
+  def status_handler
+    if @issue.done?
+      @issue.doing!
+    else
+      @issue.done!
+    end
+
+    redirect_to issues_path
+  end
+
+  def extension_whitelist
+    @extension_whitelist = ['.jpg', '.jpeg', '.png', '.bmp', '.gif']
+  end
+
+  def file_attachment
+    send_data @issue.file_attachment.read, filename: @issue.file_attachment.file.filename
   end
 
   private
 
+  def set_issue
+    @issue = Issue.find(params[:id])
+  end
+
   def prepare_form
-    @projects = Project.all(:order => 'name ASC').collect do |project|
-      [project.name, project.id]
+    @projects = Project.all.collect do |project|
+      [project.name, project.id, project.project_icon_url]
     end
     a_number = 0
     @types = Issue.children_type_names.map do |name|
@@ -144,14 +193,21 @@ class IssuesController < ApplicationController
 
   def sorted_list element
     issues = []
+
     if element
       issues << element
+
       while element.descendant do
         element = element.descendant
         issues << element
       end
     end
+
     issues
+  end
+
+  def issue_params type
+    params.require(type).permit("name", "description", "story_points", "project_id", "lock_version", "file_attachment")
   end
 
 end

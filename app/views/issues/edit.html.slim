@@ -1,0 +1,16 @@
+section#main
+	article.issue_form
+		ul.form_header
+			li
+				= "##{@issue.id} "
+				= t'issue.edit'
+		= render 'form'
+
+javascript:
+	$(document).ready(function(){
+  	$("div.sp_radio_images div.radio_image").click(SUBMARINE.check_sp_radio_image);
+  	$("div.type_radio_images div.radio_image").click(SUBMARINE.check_type_radio_image);
+  	$("div.project_radio_images div.radio_image").click(SUBMARINE.check_project_radio_image);
+
+  	SUBMARINE.preselect_radio_images('#{@issue.formatted_story_points}', '#{@issue.type}', '#{@issue.project.name}');
+	});

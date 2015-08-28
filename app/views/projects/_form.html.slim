@@ -1,0 +1,31 @@
+= form_for(@project) do |x|
+  - if @project.errors.any?
+    div#error_explanation
+      h2 = t('errors_occured')
+      ul
+        - @project.errors.full_messages.each do |msg|
+          li = msg
+  div.field
+    = x.label :name
+    = x.text_field :name
+    = x.hidden_field :project_icon_cache
+  div.field
+    p.project_text_label = t('project.notice')
+  div.field
+    = x.file_field :project_icon
+  div.field
+    - if @project.project_icon?
+      = image_tag(@project.project_icon_url, {:class => 'form_image'})
+    - else
+      div.form_field
+        p.project_text_label = t('project.default_icon')
+        = image_tag('fallback/default.png', {:class => 'form_image'})
+  div.field
+    - if feature_active? :delete_project_icon_via_button
+      - unless @project.project_icon?
+        = x.label 'Icon löschen?'
+        = x.check_box :remove_project_icon
+  div.actions
+    = image_submit_tag 'btn_save.png'
+    = link_to projects_path, class: 'button finish_edit' do
+      = image_tag 'btn_cancel.png'

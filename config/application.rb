@@ -31,6 +31,7 @@ module Submarine
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
+    config.i18n.enforce_available_locales = true
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :de
@@ -48,6 +49,8 @@ module Submarine
     config.assets.version = '1.0'
     config.assets.paths << Rails.root.join("app", "assets", "javascripts")
     config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
     # add Javascript assets for all controller specific js files and css files
     config.assets.precompile += (Dir["#{Rails.root}/app/assets/javascripts/*.*"].map {|f| f.match (/\w+\.js/)})
     config.assets.precompile += (Dir["#{Rails.root}/app/assets/stylesheets/*.*"].map {|f| f.match (/\w+\.css/)})

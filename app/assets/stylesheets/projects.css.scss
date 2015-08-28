@@ -1,0 +1,111 @@
+@import "compass";
+
+$default_border: 1px solid #ddd;
+$article_default_width: 600px;
+
+@mixin ul_base {
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  float: left;
+  margin-right: 10px;
+}
+
+@mixin ul_header {
+  height: 43px;
+  border-radius: 2px 2px;
+  border: $default_border;
+  font-size: 14pt;
+}
+
+.projects_table {
+  width: 600px;
+  background-color: white;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+
+  .image {
+    width: 60px;
+    max-width: 60px;
+  }
+
+  .name {
+    float: left;
+  }
+
+  .action {
+    float: right;
+    width: 16px;
+    margin-right: 5px;
+  }
+}
+.projects_main {
+  width: 602px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.list_row {
+  margin-top: 10px;
+}
+
+.projects_sub{
+  background: white;
+}
+
+.project_form {
+  width: $article_default_width;
+  border: $default_border;
+  margin-bottom: 50px;
+  background: white;
+
+  ul.form_header {
+    @include ul_header;
+    $experimental-support-for-svg: true;
+    @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
+    list-style-type: none;
+    margin-bottom: 30px;
+    padding: 0;
+    margin-top: 0;
+
+    li {
+      float: left;
+      padding: 10px 5px;
+    }
+  }
+  .project_text_label {
+    width: 400px;
+    margin-left: 130px;
+  }
+  .field {
+    padding-bottom: 8px;
+    clear: both;
+  }
+
+  .form_image{
+    margin-left: 130px;
+    max-width: 400px;
+  }
+
+  label {
+    width: 120px;
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+  }
+  input[type="file"] {
+    margin-left: 130px;
+    width: 400px;
+  }
+
+  input[type="text"] {
+    width: 400px;
+  }
+
+  .actions {
+    margin: 15px auto;
+    display: block;
+    width: 203px;
+  }
+}

@@ -2,9 +2,14 @@ de:
   notification: "Hinweis"
   save: 'Speichern'
   cancel: 'Abbrechen'
-  errors_occured: 'Folgende Fehler sind aufgetreten'
+  errors_occured: 'Folgende Fehler sind aufgetreten:'
   finished_issues: 'Abgeschlossene Einträge'
   backlogs: 'Backlogs'
+  backlog_list: 'Backlog'
+  sprint_backlog: 'Sprint Backlog'
+  new_issues: 'Neue Einträge'
+  history: 'Historie'
+
   activerecord:
     errors:
       models:
@@ -14,6 +19,7 @@ de:
               invalid: 'Die eingegebene Email-Adresse ist ungültig.'
               too_long: 'Die eingegebene Email-Adresse ist zu lang.'
               too_short: 'Die eingegebene Email-Adresse ist zu kurz.'
+
     attributes:
       issue:
         id: 'Nr.'
@@ -25,18 +31,40 @@ de:
         question: 'Frage'
       question:
         question: 'Frage'
-      errors:        
+      errors:
         messages:
           blank: 'Das Feld darf nicht leer sein.'
+
   issue:
     new: 'Eintrag erstellen'
     edit: 'Eintrag bearbeiten'
-    delete: 'Eintrag löschen' 
+    delete: 'Eintrag löschen'
     finish: 'Eintrag abschließen'
     activate: 'Eintrag reaktivieren'
     move: 'Eintrag verschieben'
+    ready: 'Eintrag als wird bearbeitet setzen'
+    pending: 'Eintrag als bearbeitet setzen'
+    no_issue: 'Einträge können nicht ohne Projekte angelegt werden.'
+    show: 'Eintrag einsehen'
+    state_created: 'Anforderung wurde erstellt.'
+    state_examined: 'Anforderung wurde geprüft und erfüllt alle Kriterien.'
+    state_planned: 'Anforderung wurde für einen Sprint eingeplant.'
+    state_done: 'Anforderung wurde umgesetzt, getestet & deployed.'
+    state_finished: 'Anforderung wurde abgenommen.'
+    created_at: 'Erstellt am:'
+    examined_at: 'Geprüft am:'
+    planned_at: 'Eingeplant am:'
+    done_at: 'Umgesetzt am:'
+    finished_at: 'Abgeschlossen am:'
+
     errors:
       data_staled: 'Das Backlog wurde in der Zwischenzeit geändert. Die Listen müssen neu geladen werden.'
+
+    successful_added: 'Eintrag erfolgreich erstellt.'
+    successful_edited: 'Eintrag erfolgreich bearbeitet.'
+    successful_deleted: 'Eintrag erfolgreich gelöscht.'
+    edited: 'Der Eintrag konnte nicht abgespeichert werden, da er zwischenzeitlich bearbeitet wurde.'
+
   backlog:
     edit: 'Bearbeiten'
     finish_editing: 'Bearbeiten beenden'
@@ -45,3 +73,25 @@ de:
     errors:
       locked_by_another_user: 'Die Listen konnten nicht gesperrt werden, weil jemand anderes sie bearbeitet.'
       lists_not_locked: 'Sie müssen auf "Bearbeiten" klicken, um die Listen bearbeiten zu können.'
+
+  project:
+    all: 'Alle Projekte'
+    delete: 'Projekt löschen'
+    edit: 'Projekt editieren'
+    new: 'Neues Projekt erstellen'
+    notice: 'Zu große Bilder werden Automatisch skaliert!'
+    default_icon: 'Es wird das default Icon verwendet.'
+    errors:
+      messages:
+        carrierwave_processing_error: "Cannot resize image."
+        carrierwave_integrity_error: "Not an image."
+        carrierwave_download_error: "Couldn't download image."
+
+    successful_added: 'Projekt erfolgreich angelegt.'
+    successful_edited: 'Projekt erfolgreich bearbeitet.'
+    successful_deleted: 'Projekt erfolgreich gelöscht.'
+    not_destroyable: 'Projekte können nur gelöscht werden, wenn alle Issues abgeschlossen sind!'
+
+  errors:
+    messages:
+      extension_white_list_error: "hat ein Falsches Format"

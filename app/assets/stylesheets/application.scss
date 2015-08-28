@@ -5,11 +5,12 @@
  *= require_self
 */
 
-/* "require_tree" resulted in a "stack level too deep" error in "rake assets:precompile". Therefore 
+/* "require_tree" resulted in a "stack level too deep" error in "rake assets:precompile". Therefore
  * the SASS import mechanism is used. */
 @import "compass";
-@import "issues.css.scss";
-
+@import "issues";
+@import "projects";
+@import "swimbox";
 
 $strip-line: 1px solid #ddd;
 $width: 1240px;
@@ -68,25 +69,28 @@ header {
   position: fixed;
   top: 0;
   height: 85px;
-  
+  left: 0;
+
   .menu-left {
-    float: left; 
+    float: left;
     width: 30%;
   }
-  
+
   .menu-center {
     height: 85px;
     text-align: center;
+
     h1 {
       margin-top: 50px;
+      margin-right: 350px;
     }
   }
-  
+
   .menu-right {
-    float: right; 
+    float: right;
     width: 30%;
-    
-    .stack { margin: 0; padding: 0; float: right; margin-right: 6px;}    
+
+    .stack { margin: 0; padding: 0; float: right; margin-right: 6px;}
     .wrapper { height:85px; display:table-cell; vertical-align:bottom; }
     .content { max-height:100px; overflow:auto; }
     .content div { padding: 0; margin: 0; }
@@ -148,18 +152,18 @@ footer {
     float: right;
     margin-right: 1.5em;
   }
-  
+
   .menu-left {
     display: block;
-    float: left; 
+    float: left;
     width: 30%;
     min-height: 10px;
   }
-  
+
   .menu-center {
     text-align: center;
   }
-  
+
   .menu-right {
     float: right;
     text-align: right;
@@ -226,7 +230,7 @@ li > span {
       list-style: none;
       padding-bottom: 3px;
       margin-bottom: 4px;
-      
+
       h3 {
         font-weight: bold;
         margin: 2px 0;
@@ -271,18 +275,18 @@ section {
 #locking_form {
   text-align: right;
   margin-top: 20px;
-  
+
   form { float: right;}
-  
+
   button {
-    
+
     font-size: 10pt;
     padding: 4px;
-    
+
     img {
-     vertical-align: middle; 
+     vertical-align: middle;
     }
-    
+
     span {
       vertical-align: middle;
     }
@@ -309,42 +313,47 @@ noscript p {
 }
 
 .ui-dialog {
-    @include box-shadow(black 0px 0px 10px);
+  @include box-shadow(black 0px 0px 10px);
 
-    background: white;
-    border-color: gray;
-    border-width: 1px;
+  background: white;
+  border-color: gray;
+  border-width: 1px;
+  border-style: solid;
+
+  .ui-dialog-titlebar {
+    border-color: #CCC;
     border-style: solid;
+    border-width: 0 0 2px 0;
+    padding: 5px;
+    font-size: 12pt;
+    font-style: bold;
+    $experimental-support-for-svg: true;
+    @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
+  }
 
-    .ui-dialog-titlebar {
-      border-color: #CCC;
-      border-style: solid;
-      border-width: 0 0 2px 0;
-      padding: 5px;
-      font-size: 12pt;
-      font-style: bold;
-      $experimental-support-for-svg: true;
-      @include background-image(linear-gradient(#F2F1F0 0%,#DDD 30px));
-    }
-    .ui-button {
-      margin: 5px;
-      float: right;
-      background: none;
-      border: none;
-      width: 101px;
-      height: 32px;
-      background-image: url(/assets/btn_background.png);
-      cursor: pointer;
-    }
+  .ui-button-text-only {
+    margin: 5px;
+    float: right;
+    background: none;
+    border: none;
+    width: 101px;
+    height: 32px;
+    background-image: url(/assets/btn_background.png);
+    cursor: pointer;
+  }
 
-    .ui-dialog-buttonset {
-      width: 100%;
-      display: table;
-    }
+  .ui-dialog-titlebar-close{
+    display: none;
+  }
 
-    .ui-dialog-content {
-      padding: 5px;
-    }
+  .ui-dialog-buttonset {
+    width: 100%;
+    display: table;
+  }
+
+  .ui-dialog-content {
+    padding: 5px;
+  }
 }
 
 .ui-widget-overlay {
@@ -355,9 +364,10 @@ noscript p {
 }
 
 #navigation {
-  width: 500px;
+  width: 700px;
   text-align: right;
   height: 25px;
+
   a {
     vertical-align: middle;
     height: inherit;

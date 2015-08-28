@@ -6,9 +6,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery_ui
 //= require jquery_tmpl
 //= require jquery_validate
+//= require swimbox.js
+//= require jquery-ui
 //= require jquery.tablednd
 //= require jquery.transform2d
 //= require modernizr-2.6.2.min
@@ -37,10 +38,30 @@ SUBMARINE = {
     $(ui.item).removeClass("dragging");
     var moved_issue_id;
     var list_element;
-    if($(event.target).is("li")) {
-      list_element = $(event.target);
+    if($(ui.item).is("li")) {
+      list_element = $(ui.item);
     } else {
-      list_element = $(event.target).parents('li'); 
+      list_element = $(ui.item).parents('li');
+    }
+
+    var check_for_backlog = $(ui.item);
+    var current_item_id = $(check_for_backlog).attr('id');
+
+    if(check_for_backlog.parents('ul#new_issues_list').size() > 0) {
+      $("#" + current_item_id + ' .delete_issue').css('display', 'inline');
+      $("#" + current_item_id + ' .finish_issue').css('display', 'none');
+      $("#" + current_item_id + ' .set_issue_ready').css('display', 'none');
+    }
+
+    if (check_for_backlog.parents('ul#sprint_backlog_list').size() > 0) {
+      $("#" + current_item_id + ' .delete_issue').css('display', 'none');
+      $("#" + current_item_id + ' .finish_issue').css('display', 'inline');
+      $("#" + current_item_id + ' .set_issue_ready').css('display', 'inline');
+    }
+    if(check_for_backlog.parents('ul#backlog_list').size() > 0){
+      $("#" + current_item_id + ' .delete_issue').css('display', 'inline');
+      $("#" + current_item_id + ' .finish_issue').css('display', 'none');
+      $("#" + current_item_id + ' .set_issue_ready').css('display', 'none');
     }
 
     var controls = list_element.find('.controls_container');
@@ -53,16 +74,20 @@ SUBMARINE = {
       controls.removeClass('sprint_controls');
     }
 
-    var data = { moved_issue: list_element.attr("data-id"), 
+    var data = { moved_issue: list_element.attr("data-id"),
       predecessor: $(list_element).prev() && $(list_element).prev().attr("data-id"),
       lock_versions: {},
       backlog: $(list_element).parent().attr("id").split("_list")[0]};
     $('ul#backlog_list > li').each(function(i, li){
-      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
+      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version");
     });
     $('ul#sprint_backlog_list > li').each(function(i, li){
-      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version"); 
+      data.lock_versions[$(li).attr("data-id")] = $(li).attr("data-lock-version");
     });
+    $('ul#new_issues_list > li').each(function(i, li){
+      data.lock_versions[$(li).attr('data-id')] = $(li).attr('data-lock-version');
+    });
+
     $.ajax({
       type: 'POST',
       url: SUBMARINE.changeListURL,
@@ -88,16 +113,8 @@ SUBMARINE = {
       $(this).parent().css('height', $(this).height());
     } else {
       $(this).addClass("short");
-      $(this).parent().css('height', $(this).height() + 2);	  
+      $(this).parent().css('height', $(this).height());
     }
-  },
-
-  showControls: function(event){
-    $(this).find('div.controls').fadeIn(80);
-  },
-
-  hideControls: function(event){
-    $(this).find('div.controls').fadeOut(80);
   },
 
   showStoryPointsSum: function(){
@@ -183,8 +200,15 @@ SUBMARINE = {
   },
 
   updateBacklogNavigation: function() {
-    var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.counter.getSprintBacklogCount() + ")";
-    $("#backlogs").text(caption);
+    if(window.location.pathname == '/new_issues') {
+      var new_caption = "Neue Einträge (" + SUBMARINE.counter.getNewIssueCount() + ")";
+      $('a#new_issues_list').text(new_caption);
+      var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.sprint_count + ")" ;
+      $('a#backlogs').text(caption);
+    } else {
+      var caption = "Backlogs (" + SUBMARINE.counter.getBacklogCount() + "/" + SUBMARINE.counter.getSprintBacklogCount() + ")";
+      $("#backlogs").text(caption);
+    }
   },
 
   counter: {
@@ -194,6 +218,10 @@ SUBMARINE = {
 
     getSprintBacklogCount: function() {
       return $("#sprint_backlog_list li").length;
+    },
+
+    getNewIssueCount: function() {
+      return $('#new_issues_list li').length;
     }
   }
 }

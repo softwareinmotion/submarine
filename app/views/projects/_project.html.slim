@@ -1,0 +1,12 @@
+tr.list_row
+  td.image
+    - if project.project_icon.file.nil?
+      = image_tag 'fallback/default.png'
+    - else
+      = image_tag(project.project_icon)
+  td.name = project.name
+  td.action
+    = link_to image_tag('edit.png', title: t('project.edit')), edit_project_path(project)
+  td.action
+    = link_to project, :method => :delete, :title => t('project.delete'), :confirm => 'Sind Sie Sicher das Sie dieses Projekt Löschen wollen?' do
+      = image_tag('delete.png')

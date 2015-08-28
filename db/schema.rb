@@ -9,42 +9,59 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713130727) do
+ActiveRecord::Schema.define(version: 20141105082244) do
 
-  create_table "backlogs", :force => true do |t|
+  create_table "backlogs", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "issues", :force => true do |t|
+  create_table "carrier_wave_files", force: true do |t|
+    t.string   "identifier"
+    t.string   "original_filename"
+    t.string   "content_type"
+    t.string   "size"
+    t.binary   "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issues", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "predecessor_id"
     t.float    "story_points"
     t.string   "type"
     t.integer  "project_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "backlog_id"
-    t.integer  "lock_version",   :default => 0
+    t.integer  "lock_version",    default: 0
+    t.datetime "finished_at"
+    t.boolean  "ready_to_finish", default: false
+    t.string   "file_attachment"
+    t.datetime "examined_at"
+    t.datetime "planned_at"
+    t.datetime "done_at"
   end
 
-  create_table "projects", :force => true do |t|
+  create_table "projects", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "project_icon"
   end
 
-  create_table "questions", :force => true do |t|
+  create_table "questions", force: true do |t|
     t.string   "betreff"
     t.string   "email"
     t.string   "name"
     t.string   "question"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

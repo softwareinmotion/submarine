@@ -1,0 +1,26 @@
+ul.list_header
+  - case list_type
+  - when 'sprint_backlog'
+    li
+      = t('sprint_backlog')
+    li#story_points_sum.no_js
+      span
+      = image_tag 'sp_sum_0.5_heavy.png', :id => 'half_story_point'
+      = image_tag 'sp_0.5_heavy.png', :id => 'half_story_point_small'
+
+  - when 'backlog'
+    li = t('backlog_list')
+
+  - when 'finished_issues'
+    li
+      = t 'finished_issues'
+    li#btn_in_header
+      = link_to issues_path, :title => t('backlogs') do
+        = image_tag('show_backlogs.png')
+
+  - when 'new_issues'
+    li = t('new_issues')
+    li#btn_in_header
+      - unless Project.all.empty?
+        = link_to new_issue_path,:title => t('issue.new') do
+          = image_tag('new.png')

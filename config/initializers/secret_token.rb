@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Submarine::Application.config.secret_token = '98d76bb8e366fe3415ba2dc5f158e56f6af2ccc99c9e6490da214cebb4358731ba14f6a11bf911129a22619607ca31ae26f9265aeb8903028d6f4a14a9d39259'
+Submarine::Application.config.secret_key_base = '2b84e81e3699d5f67c57bdbc909819ffd67e4accf5fe9f70ace44420fd7a752b392798282fd5eeba2819341203c6c449fed70c5b2657f17ccbe6be9234347ba62b8432c56d0eb6e55510ae005b1d74f1'

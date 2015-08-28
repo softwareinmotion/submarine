@@ -19,3 +19,6 @@ public/assets/*
 **.swp
 .DS_Store
 .redcar
+
+#Ignore all Temp uplaods of carrierwave
+public/uploads

@@ -1,0 +1,16 @@
+meta name="keywords" content="scrum, backlog, sprint, user stories, tool, contact"
+section.contact_data
+  article#contact_data
+    h2 Noch Fragen? Her damit!
+    - form_for @question do |q|
+      = q.label :betreff
+      = q.text_field :betreff
+      = q.label :question
+      = q.text_field :question
+      = q.label :email
+      = q.text_field :email
+      = q.submit
+    input*{'type' => "button", 'value' => "Absenden"}
+    = link_to "Zurück zur Hauptseite", index_url
+  span
+    | &nbsp;
