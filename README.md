@@ -1,6 +1,6 @@
 # submarine - ein Scrum-Backlog-Tool
 
-submarine ist ein Scrum-Tool für Backlogs. Es unterstützt Sie bei der Planung ihrer Sprints. Mehr Infos zu submarine gibt's unter www.scrum-backlog.de.
+submarine ist ein Scrum-Tool für Backlogs. Es unterstützt Sie bei der Planung ihrer Sprints.
 
 ## Installation
 
@@ -25,16 +25,15 @@ Damit ist die Installation von submarine abgeschlossen.
 
 submarine kann mit 'rails s' gestartet werden und mit Strg + C beendet werden.
 
-### Daten pflegen
 
-Es gibt leider zur Zeit noch kein User Interface zum Anlegen von Projekten.
-Deshalb müssen diese über ein Tool, zum Beispiel mit dem SQLite Database Browser, angelegt werden (http://sqlitebrowser.sourceforge.net/). Eine andere Möglichkeit ist das Anlegen über die Rails-Konsole. Dazu im submarine-Verzeichnis 'rails c' eingeben. Mit dem folgenden Befehl kann ein neues Projekt angelegt werden:
-Project.create(name: „Projektname“)
-submarine verwendet Bilder. Dafür müssen im Ordner app/assets/images für jedes Projekt zwei png-Dateien abgelegt werden:
-* projektname_heavy.png
-* projektname_light.png
+## Features
 
-## Geplante Features
+### Vorhandene Features
 
+* Benutzeroberfläche zur Aufgabenverwaltung
 * Benutzeroberfläche zur Projektverwaltung
-* Drucken des Sprint Backlogs
+* die Aufgabenverwaltung beinhaltet die Richtlinien nach ISO 9001
+
+### Geplante Features
+
+* Kommentieren der Aufgaben im Sprint - Backlog
